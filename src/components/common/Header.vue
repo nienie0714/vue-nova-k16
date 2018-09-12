@@ -1,10 +1,18 @@
 <template>
   <div class="header">
     <!-- 折叠按钮 -->
-    <div class="collapse-btn" @click="collapseChage">
+    <!-- <div class="collapse-btn" @click="collapseChage">
       <i class="el-icon-menu"></i>
+    </div> -->
+    <div class="logo">
+      <span class="logospan">
+      <i><b>NovaStar</b></i>
+    </span>
+      <span class="logospan">|</span>
+      <span class="logospan">
+      NovaPro UHD Jr
+    </span>
     </div>
-    <div class="logo">后台管理系统</div>
     <div class="header-right">
       <div class="header-user-con">
         <!-- 全屏显示 -->
@@ -13,6 +21,7 @@
             <i class="el-icon-rank"></i>
           </el-tooltip>
         </div>
+        <span>|</span>
         <!-- 消息中心 -->
         <!-- <div class="btn-bell">
           <el-tooltip effect="dark" :content="message?`有${message}条未读消息`:`消息中心`" placement="bottom">
@@ -23,7 +32,7 @@
           <span class="btn-bell-badge" v-if="message"></span>
         </div> -->
         <!-- 用户头像 -->
-        <!-- <div class="user-avator"><img src="static/img/img.jpg"></div> -->
+        <div class="user-avator"><img src="static/img/img.jpg"></div>
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
@@ -38,7 +47,7 @@
   </div>
 </template>
 <script>
-  import bus from '../common/bus';
+  import bus from './bus';
   export default {
     data() {
       return {
@@ -107,20 +116,24 @@
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    height: 70px;
-    font-size: 22px;
+    height: 40px;
+    font-size: 18px;
+    background-color: #23292f;
     color: #fff;
   }
   .collapse-btn {
     float: left;
     padding: 0 21px;
     cursor: pointer;
-    line-height: 70px;
+    line-height: 40px;
   }
   .header .logo {
     float: left;
-    width: 250px;
-    line-height: 70px;
+    font-size: 16px;
+    line-height: 40px;
+  }
+  .logospan {
+    margin-left: 15px;
   }
   .header-right {
     float: right;
@@ -128,19 +141,18 @@
   }
   .header-user-con {
     display: flex;
-    height: 70px;
+    height: 40px;
     align-items: center;
   }
   .btn-fullscreen {
     transform: rotate(45deg);
-    margin-right: 5px;
+    margin-top: 5px;
+    margin-right: 15px;
     font-size: 24px;
   }
   .btn-bell,
   .btn-fullscreen {
     position: relative;
-    width: 30px;
-    height: 30px;
     text-align: center;
     border-radius: 15px;
     cursor: pointer;
@@ -166,8 +178,8 @@
   }
   .user-avator img {
     display: block;
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
   }
   .el-dropdown-link {

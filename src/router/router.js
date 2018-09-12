@@ -1,55 +1,43 @@
 const routes = [
     {
+        name: 'home',
         path: '/',
-        redirect: '/product'
+        component: () => import('../components/page/home')
     },
     {
-        path: '/',
-        component: resolve => require(['../components/common/Home.vue'], resolve),
-        meta: { title: '自述文件' },
-        children: [
-            {
-                path: '/user',
-                component: resolve => require(['../components/page/User.vue'], resolve),
-                meta: { title: '用户管理', keepAlive: false }
-            },
-            {
-                path: '/product',
-                component: resolve => require(['../components/page/product.vue'], resolve),
-                meta: { title: '产品管理', keepAlive: false }
-            },
-            {
-                path: '/Role',
-                component: resolve => require(['../components/page/Role.vue'], resolve),
-                meta: { title: '角色管理', keepAlive: false }
-            },
-            {
-                name: 'Firmware',
-                path: '/Firmware',
-                component: resolve => require(['../components/page/Firmware.vue'], resolve),
-                meta: { title: '固件包', keepAlive: false }
-            },
-            {
-                path: '/tabs',
-                component: resolve => require(['../components/page/Tabs.vue'], resolve),
-                meta: { title: 'tab选项卡' }
-            }
-        ]
+        name: 'aaa',
+        path: '/aaa',
+        component: () => import('../components/page/aaa')
     },
+    // {
+    //     path: '/',
+    //     component: resolve => require(['../components/page/home.vue'], resolve),
+    //     meta: { title: '自述文件' },
+    //     children: [
+    //         {
+    //             path: '/index',
+    //             component: resolve => require(['../components/page/index.vue'], resolve),
+    //             meta: { title: '用户管理', keepAlive: false }
+    //         }
+    //     ]
+    // },
     {
+        name: 'login',
         path: '/login',
-        component: resolve => require(['../components/page/Login.vue'], resolve)
+        component: resolve => require(['../components/page/login.vue'], resolve)
     },
     {
+        name: '404',
         path: '/404',
         component: resolve => require(['../components/page/404.vue'], resolve)
     },
     {
+        name: 403,
         path: '/403',
         component: resolve => require(['../components/page/403.vue'], resolve)
     },
     {
-        path: '*',
+        path: '/',
         redirect: '/404'
     }
 ];
