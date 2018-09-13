@@ -40,14 +40,15 @@
     methods: {
       ...mapActions(['ajax']),
       postLogin() {
-        this.ajax({
-          name: 'postLogin',
-          data: this.ruleForm
-        }).then(res => {
-          console.log(res);
-          localStorage.setItem('ms_username', this.ruleForm.username);
-          this.$router.push({ path: "/" });
-        });
+        // this.ajax({
+        //   name: 'postLogin',
+        //   data: this.ruleForm
+        // }).then(res => {
+        //   console.log(res);
+        //   localStorage.setItem('ms_username', this.ruleForm.username);
+        //   this.$router.push({ path: "/" });
+        // });
+        this.$router.push({ path: "/" });
       },
       getUser() {
         // htp.get('api/users').then(res => {

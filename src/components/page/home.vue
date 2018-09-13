@@ -80,8 +80,8 @@
 </script>
 <style lang="less" scoped>
   .menues-container {
-    // width: 52%;
-    // height: 60%;
+    width: 1000px;
+    height: 530px;
     background: rgba(233, 0, 0, 0.8);
     margin: 30px;
     display: flex;
