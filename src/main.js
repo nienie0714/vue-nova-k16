@@ -6,10 +6,14 @@ import store from './store';
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 // import '../static/css/theme-green/index.css';       // 浅绿色主题
 import 'babel-polyfill';
-import Blob from './utils/Blob.js';
-import Export2Excel from './utils/Export2Excel.js';
+import components from './components/common/index'; // 加载公共组件
 
 Vue.use(ElementUI, { size: 'small' });
+
+Object.keys(components).forEach(key => {
+    var name = key.replace(/(\w)/, v => v.toUpperCase()); //首字母大写
+    Vue.component(`v${name}`, components[key]);
+});
 
 new Vue({
     router,
