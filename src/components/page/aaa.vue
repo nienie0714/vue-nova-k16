@@ -9,26 +9,29 @@
           <span>输入设置</span>
         </div>
       </div>
-      <div class="content">
-        <div class="tabs">
-          <div class="tab" v-for="(item, index) in tabsList" :class="{active: active == index}" @click="active = index" :key="index">
-            <b>{{item}}</b>
+      <div class="content-box">
+        <div class="content" :class="{conactive: slide}">
+          <div class="tabs">
+            <div class="tab" v-for="(item, index) in tabsList" :class="{active: active == index}" @click="active = index" :key="index">
+              <b>{{item}}</b>
+            </div>
           </div>
-        </div>
-        <div class="contents">
-          <div class="tabcontent1" v-show="active == 0">
-            <div class="DPc">关于DP的EDID设置</div>
-            <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'abc'" :content="'asdfsdfsdf'" :list="list" v-model="value"></v-box>
-            <!-- {{value}} -->
-          </div>
-          <div class="tabcontent2" v-show="active == 1">
-            bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-          </div>
-          <div class="tabcontent3" v-show="active == 2">
-            ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-          </div>
-          <div class="tabcontent4" v-show="active == 3">
-            ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+          <div class="contents">
+            <div class="tabcontent1" v-show="active == 0">
+              <div class="DPc">关于DP的EDID设置</div>
+              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'abc'" :content="'asdfsdfsdf'" :list="list" v-model="value"></v-box>
+              <!-- {{value}} -->
+            </div>
+            <div class="tabcontent2" v-show="active == 1">
+              bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+            </div>
+            <div class="tabcontent3" v-show="active == 2">
+              ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+            </div>
+            <div class="tabcontent4" v-show="active == 3">
+              ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+            </div>
+            <el-button @click="slide = !slide">a</el-button>
           </div>
         </div>
       </div>
@@ -43,7 +46,8 @@
         tabsList: ["DP", "HDMI", "SDI", "DVI"],
         active: 0,
         list: ["bac", "bad", "adf", "asdf", "sdr", "sdf", "we", "we"],
-        value: 90
+        value: 90,
+        slide: false
       }
     },
     created() {
