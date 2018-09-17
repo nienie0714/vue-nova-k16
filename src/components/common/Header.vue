@@ -36,10 +36,14 @@
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
-                        {{username}} <i class="el-icon-caret-bottom"></i>
-                    </span>
+            {{username}} <i class="el-icon-caret-bottom"></i>
+          </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
+            <el-dropdown-item divided command="chinese">
+              {{$t('chinese')}}</el-dropdown-item>
+            <el-dropdown-item divided command="english">
+              {{$t('english')}}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -48,6 +52,8 @@
 </template>
 <script>
   import bus from './bus';
+  import { mapMutations } from 'vuex';
+
   export default {
     data() {
       return {
@@ -64,11 +70,18 @@
       }
     },
     methods: {
+      ...mapMutations(['setLang']),
       // 用户名下拉菜单选择事件
       handleCommand(command) {
         if(command == 'loginout') {
           localStorage.removeItem('ms_username')
           this.$router.push('/login');
+        } else if(command == 'chinese') {
+          this.setLang('zh');
+          window.location.reload();
+        } else if(command == 'english') {
+          this.setLang('en');
+          window.location.reload();
         }
       },
       // 侧边栏折叠

@@ -33,6 +33,7 @@ export default new Vuex.Store({
         setLang(state, data) {
             state.lang = data;
             setLoc('lang', data);
+            // setLoc('lang', 'zh');
         },
         setProductId(state, data) {
             state.productId = data;

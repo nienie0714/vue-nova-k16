@@ -49,6 +49,9 @@
     created() {
       this.value2 = this.value;  // 将父组件传递的值赋值给自组件的data，即value2
     },
+    methods: {
+
+    },
     watch: {  // 用于父组件监听值，watch是一个对象，里面包含的都是键值对，function就相当于一个键值对
       value2() {  //-> value2: function(){}    
         this.$emit('input', this.value2); // 自组建向父传递   第一个参数是  父@name  子name  / 父v-model子必须写input  第二个参数是要传递的值

@@ -136,37 +136,37 @@ let xhr = config => {
         };
 
         switch (method) {
+            // case 'get':
+            // case 'delete':
+            //     return new Promise((resolve, reject) => {
+            //         axios[method](url, {
+            //             params: data,
+            //             headers
+            //         })
+            //             .then(res => {
+            //                 checkStatus(resolve, reject, res, config);
+            //             })
+            //             .catch(res => {
+            //                 reject(res);
+            //             });
+            //     });
+            // case 'post':
+            // case 'put':
+            //     return new Promise((resolve, reject) => {
+            //         axios[method](url, data, {
+            //             headers
+            //         })
+            //             .then(res => {
+            //                 checkStatus(resolve, reject, res, config);
+            //             })
+            //             .catch(res => {
+            //                 reject(res);
+            //             });
+            //     });
             case 'get':
-            case 'delete':
-                return new Promise((resolve, reject) => {
-                    axios[method](url, {
-                        params: data,
-                        headers
-                    })
-                        .then(res => {
-                            checkStatus(resolve, reject, res, config);
-                        })
-                        .catch(res => {
-                            reject(res);
-                        });
-                });
-            case 'post':
-            case 'put':
-                return new Promise((resolve, reject) => {
-                    axios[method](url, data, {
-                        headers
-                    })
-                        .then(res => {
-                            checkStatus(resolve, reject, res, config);
-                        })
-                        .catch(res => {
-                            reject(res);
-                        });
-                });
-            case 'delete':
                 return new Promise((resolve, reject) => {
                     axios
-                        .delete(url, {
+                        .get(url, {
                             params: data,
                             headers
                         })

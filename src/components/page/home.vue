@@ -86,7 +86,7 @@
   .menues-container {
     width: 1000px;
     height: 530px;
-    background: rgba(233, 0, 0, 0.8);
+    // background: rgba(233, 0, 0, 0.8);
     margin: 30px;
     display: flex;
     flex-wrap: wrap;
@@ -103,7 +103,7 @@
         opacity: 0.8;
       }
       &.aaa {
-        background: rgba(0, 0, 0, 0.8) url('../../assets/home/u51.svg') center center no-repeat / 164px 164px;
+        background: rgba(0, 0, 0, 0.8) url('../../assets/home/u51.svg') center center no-repeat / 64px 64px;
       }
       &.bbb {
         background: rgba(0, 0, 0, 0.8) url('../../assets/home/u177.svg') center center no-repeat / 64px 64px;
