@@ -7,5 +7,5 @@
   #app {
     background: url('./assets/u11.png') center center no-repeat / cover;
   }
-  @import '../static/css/main.css';
+  @import '../static/css/main.less';
 </style>

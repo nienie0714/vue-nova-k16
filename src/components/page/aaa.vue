@@ -2,36 +2,72 @@
   <div class="aaa">
     <div class="wrapper">
       <v-header></v-header>
-      <div class="content-box">
+      <!-- 页面名称 -->
+      <div class="jrtitle">
         <div class="snav">
           <img src="@/assets/icon/u343.png" alt="" @click="$router.go(-1);">
           <img src="@/assets/home/u123.svg" alt="">
           <span>输入设置</span>
+          <el-button @click="slide = !slide">a</el-button>
         </div>
       </div>
       <div class="content-box">
-        <div class="content" :class="{conactive: slide}">
-          <div class="tabs">
-            <div class="tab" v-for="(item, index) in tabsList" :class="{active: active == index}" @click="active = index" :key="index">
-              <b>{{item}}</b>
-            </div>
+        <!-- tab -->
+        <div class="tabs">
+          <div class="tab" v-for="(item, index) in tabsList" :class="{active: active == index}" @click="active = index" :key="index">
+            <b>{{item}}</b>
           </div>
-          <div class="contents">
-            <div class="tabcontent1" v-show="active == 0">
-              <div class="DPc">关于DP的EDID设置</div>
-              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'abc'" :content="'asdfsdfsdf'" :list="list" v-model="value"></v-box>
-              <!-- {{value}} -->
+        </div>
+        <!-- content -->
+        <div class="content" :class="{active: slide}">
+          <div class="container">
+            <div class="tabdp" v-show="active == 0">
+              <div class="tabtitle">关于DP的EDID设置</div>
+              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :content="'3840×2160@ 60Hz'"></v-box>
+              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设分辨率'" :content="'1920*1080'" :list="list1"></v-box>
+              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :content="'60'" :list="list2"></v-box>
+              <!-- <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :content="'60'" :list="list2" v-model="value"></v-box>  {{value}}-->
             </div>
             <div class="tabcontent2" v-show="active == 1">
-              bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+              <div class="tabtitle">关于HDMI的EDID设置</div>
             </div>
             <div class="tabcontent3" v-show="active == 2">
-              ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+              <div class="tabtitle">关于SDI的EDID设置</div>
             </div>
             <div class="tabcontent4" v-show="active == 3">
-              ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+              <div class="tabtitle">关于DPI的EDID设置</div>
+              <v-box class="zindex" :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'DVI输入模式'" :content="'单链模式'" :list="dvimodel"></v-box>
+              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :content="'3840×2160@ 60Hz'"></v-box>
+              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :content="'3840×2160@ 60Hz'"></v-box>
+              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :content="'3840×2160@ 60Hz'"></v-box>
+              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :content="'3840×2160@ 60Hz'"></v-box>
+              <div></div>
+              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设分辨率'" :content="'1920*1080'" :list="list1"></v-box>
+              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :content="'60'" :list="list2"></v-box>
             </div>
-            <el-button @click="slide = !slide">a</el-button>
+          </div>
+          <div class="subcontainer">
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>333</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
+            <div>222</div>
           </div>
         </div>
       </div>
@@ -45,8 +81,9 @@
       return {
         tabsList: ["DP", "HDMI", "SDI", "DVI"],
         active: 0,
-        list: ["bac", "bad", "adf", "asdf", "sdr", "sdf", "we", "we"],
-        value: 90,
+        list1: ["800*600", "1024*768", "1280*720", "1280*768", "1920*1080", "3840*2160 (默认)"],
+        list2: ["23.98", "24", "25", "29.97", "30", "60(默认)"],
+        dvimodel: ["单链模式", "双链模式"],
         slide: false
       }
     },
@@ -59,23 +96,14 @@
 </script>
 
 <style scoped lang="less">
-  .snav {
-    height: 22px;
-    line-height: 22px;
-    color: rgba(255, 255, 255, 1);
-    img {
-      display: inline-block;
-      width: 25px;
-      height: 25px;
-    }
-  }
-
   .tabs {
-    width: 100%;
+    width: 1800px;
     height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: absolute;
+    z-index: 11;
     .tab {
       width: 24.8%;
       height: 100%;
@@ -95,6 +123,15 @@
         border: none;
         background-color: rgba(209, 58, 29, 1);
       }
+    }
+  }
+  .tabtitle {
+    padding: 20px 30px;
+    color: white;
+  }
+  .zindex {
+    .card-top {
+      z-index: 12 !important;
     }
   }
 </style>

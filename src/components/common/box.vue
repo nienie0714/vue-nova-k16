@@ -5,7 +5,7 @@
       <!-- 卡片：标题+内容 -->
       <div class="card-icon" @click="dropcard = !dropcard" v-if="showdrop">
         <transition name="bounce">
-          <span v-if="dropcard"><img src="@/assets/icon/u343.png" alt=""></span>
+          <span v-if="dropcard"><img class="up" src="@/assets/icon/u389.png" alt=""></span>
           <span v-else><img src="@/assets/icon/u389.png" alt=""></span>
         </transition>
       </div>
@@ -22,10 +22,10 @@
         </el-slider>
       </div>
     </div>
-    <!-- 卡片下拉框 -->
     <div class="card-drop" :class="{actives: dropcard}">
       <div v-for="item in list">{{item}}</div>
     </div>
+    <!-- 卡片下拉框 -->
   </div>
 </template>
 <script>
@@ -61,9 +61,11 @@
 </script>
 <style lang="less" scoped>
   .card {
+    float: left;
     box-sizing: border-box;
     width: 240px;
     height: 123px;
+    margin: 2px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -77,7 +79,7 @@
       color: rgba(255, 255, 255, 1);
       margin-bottom: 2px;
       padding: 15px 10px;
-      z-index: 10;
+      z-index: 1;
       .card-title {
         width: 90%;
         margin-bottom: 10px;
@@ -87,6 +89,9 @@
         img {
           width: 20px;
           height: 20px;
+        }
+        .up {
+          transform: rotate(180deg);
         }
       }
       .card-btm {
@@ -107,8 +112,9 @@
       overflow-y: auto;
       cursor: pointer;
       > div {
+        font-size: 14px;
         width: 100%;
-        padding: 8px;
+        padding: 4px;
         box-sizing: border-box;
         transition: 0.3s;
       }
