@@ -8,18 +8,14 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production', //在非生产环境下，使用严格模式
     state: {
-        common: getSen('common') || {
-            session: ''
-        },
+        common: getSen('common') || {}, // 接收常规接口每次传进来的数据
         cacheData: getSen('cacheData') || {},
-        lang: getLoc('lang') || 'zh',
-        productId: getSen('productId') || null
+        lang: getLoc('lang') || 'zh'
     },
     getters: {
         getCommon: state => state.common,
         getCacheData: state => serialize(state.cacheData),
-        getLang: state => state.lang,
-        getproductId: state => state.productId
+        getLang: state => state.lang
     },
     mutations: {
         setCommon(state, data) {
@@ -34,10 +30,6 @@ export default new Vuex.Store({
             state.lang = data;
             setLoc('lang', data);
             // setLoc('lang', 'zh');
-        },
-        setProductId(state, data) {
-            state.productId = data;
-            setSen('productId', data);
         }
     },
     actions: {

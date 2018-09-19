@@ -23,10 +23,10 @@
           <div class="container">
             <div class="tabdp" v-show="active == 0">
               <div class="tabtitle">关于DP的EDID设置</div>
-              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :content="'3840×2160@ 60Hz'"></v-box>
-              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设分辨率'" :content="'1920*1080'" :list="list1"></v-box>
-              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :content="'60'" :list="list2"></v-box>
-              <!-- <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :content="'60'" :list="list2" v-model="value"></v-box>  {{value}}-->
+              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-box>
+              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设分辨率'" :defaultcontent="'1920*1080'" :list="list1"></v-box>
+              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :defaultcontent="'60'" :list="list2"></v-box>
+              <!-- <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :defaultcontent="'60'" :list="list2" v-model="value"></v-box>  {{value}}-->
             </div>
             <div class="tabcontent2" v-show="active == 1">
               <div class="tabtitle">关于HDMI的EDID设置</div>
@@ -36,14 +36,14 @@
             </div>
             <div class="tabcontent4" v-show="active == 3">
               <div class="tabtitle">关于DPI的EDID设置</div>
-              <v-box class="zindex" :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'DVI输入模式'" :content="'单链模式'" :list="dvimodel"></v-box>
-              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :content="'3840×2160@ 60Hz'"></v-box>
-              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :content="'3840×2160@ 60Hz'"></v-box>
-              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :content="'3840×2160@ 60Hz'"></v-box>
-              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :content="'3840×2160@ 60Hz'"></v-box>
+              <v-box class="zindex" :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'DVI输入模式'" :defaultcontent="'单链模式'" :list="dvimodel"></v-box>
+              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-box>
+              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-box>
+              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-box>
+              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-box>
               <div></div>
-              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设分辨率'" :content="'1920*1080'" :list="list1"></v-box>
-              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :content="'60'" :list="list2"></v-box>
+              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设分辨率'" :defaultcontent="'1920*1080'" :list="list1"></v-box>
+              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :defaultcontent="'60'" :list="list2"></v-box>
             </div>
           </div>
           <div class="subcontainer">
@@ -82,7 +82,7 @@
         tabsList: ["DP", "HDMI", "SDI", "DVI"],
         active: 0,
         list1: ["800*600", "1024*768", "1280*720", "1280*768", "1920*1080", "3840*2160 (默认)"],
-        list2: ["23.98", "24", "25", "29.97", "30", "60(默认)"],
+        list2: ["23.98", "24", "25", "29.97", "30", "60 (默认)"],
         dvimodel: ["单链模式", "双链模式"],
         slide: false
       }

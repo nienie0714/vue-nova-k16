@@ -2,19 +2,19 @@
   <div class="home">
     <div class="wrapper">
       <v-header></v-header>
-      <div class="menues-container">
+      <div class="menues-container" :class="{active: active}">
         <div class="menu-box" v-for="(router, index) in routers" :key="index" :class="router.className" @click="go(router)">
           <div>{{router.name}}</div>
         </div>
       </div>
       <div class="mask">
-
-        <div class="slide-box" :class="{active: ishidden}">
-
+        <div class="slide-box" :class="{subactive: subactive}">
         </div>
-
       </div>
-      <el-button @click="ishidden=!ishidden">click</el-button>
+      <el-button @click="active=!active">翻转</el-button>
+      <el-button @click="subactive=!subactive">副框</el-button>
+      <div class="btn" @click="btnactive=!btnactive">功能</div>
+      <div class="btn" @click="btnactive=btnactive">接口</div>
       <div>
       </div>
     </div>
@@ -25,7 +25,7 @@
   //import vHead from '../common/header.vue'; // 常规引用组件
   import bus from '../common/bus';
   import { mapGetters } from 'vuex';
-  import { getLoc } from '../../utils';
+
   export default {
     data() {
       return {
@@ -67,7 +67,9 @@
           className: 'ccc'
         }
         ],
-        ishidden: true
+        active: false,
+        subactive: true,
+        btnactive: false
       };
     },
     // components: {
@@ -112,6 +114,12 @@
         background: rgba(0, 0, 0, 0.8) url('../../assets/home/u51.svg') center center no-repeat / 64px 64px;
       }
     }
+    // transform-origin: right;
+    transition: all 1s linear;
+    &.active {
+      transform-style: preserve-3d;
+      transform: rotateY(180deg);
+    }
   }
   .slide-box {
     width: 100%;
@@ -119,7 +127,7 @@
     background: rgba(57, 62, 67, 0.8);
     transform: translateX(0);
     transition: transform ease 0.5s;
-    &.active {
+    &.subactive {
       transform: translateX(100%);
     }
   }
@@ -131,6 +139,17 @@
     top: 50%;
     transform: translate(-50%, -50%);
     overflow: hidden;
+  }
+  .btn {
+    height: 30px;
+    width: 90px;
+    float: left;
+    border: solid 2px white;
+    color: white;
+    &.btnactive {
+      color: rgba(0, 0, 0, 0);
+      background-color: white;
+    }
   }
 </style>
 

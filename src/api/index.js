@@ -89,17 +89,31 @@ axios.interceptors.response.use(
 //检查接口请求状态
 function checkStatus(resolve, reject, response, config) {
     if (response && response.status === 200) {
-        if (response.data.errorCode === 1) {
-            resolve(response.data.data);
+        if (response.data.ERRC === 0) {
+            resolve(response.data);
         } else {
             if (!config.error) {
-                Message(response.data.errorMsg);
+                if (response.data.ERRC === 1) {
+                    Message('请求超时');
+                } else if (response.data.ERRC === 2) {
+                    Message('校验错误');
+                } else if (response.data.ERRC === 3) {
+                    Message('该操作关键字未定义');
+                } else if (response.data.ERRC === 4) {
+                    Message('参数值越界，不合理');
+                } else if (response.data.ERRC === 5) {
+                    Message('EDID设置不支持，执行无效');
+                } else if (response.data.ERRC === 6) {
+                    Message('EDID设置失败');
+                } else if (response.data.ERRC === 7) {
+                    Message('上传失败');
+                }
             }
             reject(response.data);
         }
     } else {
         Message(response.message || '请求失败');
-        reject(response.message);
+        reject(response.data);
     }
 }
 

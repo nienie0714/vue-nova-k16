@@ -22,10 +22,10 @@
         </el-slider>
       </div>
     </div>
-    <div class="card-drop" :class="{actives: dropcard}">
-      <div v-for="item in list">{{item}}</div>
-    </div>
     <!-- 卡片下拉框 -->
+    <div class="card-drop" :class="{actives: dropcard}">
+      <div v-for="(item, index) in list" :key="index" @click="getData(index)">{{item}}</div>
+    </div>
   </div>
 </template>
 <script>
@@ -33,24 +33,29 @@
     data() {
       return {
         dropcard: false,
-        value2: 0
+        value2: 0,
+        content: ''
       };
     },
     props: [
-      'showdrop',     // 控制上下三角号是否显示
-      'showtitle',    // 控制标题显示
-      'showcontent',  // 控制内容显示
-      'title',        // 标题
-      'content',      // 内容
-      'list',         // 下拉菜单列表
-      'showslider',   // 滑动 
-      'value'         // 这里必须写value,才能和父组件的v-model对应上  其他普通情况 写父@name的name
+      'showdrop',            // 控制上下三角号是否显示
+      'showtitle',           // 控制标题显示
+      'showcontent',         // 控制内容显示
+      'title',               // 标题
+      'defaultcontent',      // 内容
+      'list',                // 下拉菜单列表
+      'showslider',          // 滑动 
+      'value'                // 这里必须写value,才能和父组件的v-model对应上  其他普通情况 写父@name的name
     ],
     created() {
       this.value2 = this.value;  // 将父组件传递的值赋值给自组件的data，即value2
+      this.content = this.defaultcontent;  // 将父组件传递的值赋值给自组件的data
     },
     methods: {
-
+      getData(index) {
+        this.content = this.list[index];
+        this.dropcard = false;
+      }
     },
     watch: {  // 用于父组件监听值，watch是一个对象，里面包含的都是键值对，function就相当于一个键值对
       value2() {  //-> value2: function(){}    

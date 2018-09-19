@@ -40,23 +40,21 @@
     methods: {
       ...mapActions(['ajax']),
       postLogin() {
+        let command = '';
+        for(let i = 0; i <= 25; i++) {
+          command += Math.floor(Math.random() * 10);
+        }
+        // console.log(command);
         // this.ajax({
-        //   name: 'postLogin',
-        //   data: this.ruleForm
+        //   name: 'url',
+        //   data: { RW: 1, DevID:0, Account:command, _: command }
         // }).then(res => {
         //   console.log(res);
-        //   localStorage.setItem('ms_username', this.ruleForm.username);
+        //   localStorage.setItem('_', command);
         //   this.$router.push({ path: "/" });
         // });
+        localStorage.setItem('_', command);
         this.$router.push({ path: "/" });
-      },
-      getUser() {
-        // htp.get('api/users').then(res => {
-        //     console.log(res);
-        //     if(res.status === 200) {
-
-        //     }
-        // })
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
