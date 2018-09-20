@@ -5,38 +5,22 @@
       <i class="el-icon-menu"></i>
     </div> -->
     <div class="logo">
-      <span class="logospan">
-      <i><b>NovaStar</b></i>
-    </span>
-      <span class="logospan">|</span>
-      <span class="logospan">
-      NovaPro UHD Jr
-    </span>
+      <img src="../../assets/icon_logo.png">
+      <div class="proname">
+        NovaPro UHD Jr
+      </div>
     </div>
     <div class="header-right">
       <div class="header-user-con">
         <!-- 全屏显示 -->
         <div class="btn-fullscreen" @click="handleFullScreen">
           <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
-            <i class="el-icon-rank"></i>
+            <img src="../../assets/icon/icon_fullscreen.png">
           </el-tooltip>
         </div>
-        <span>|</span>
-        <!-- 消息中心 -->
-        <!-- <div class="btn-bell">
-          <el-tooltip effect="dark" :content="message?`有${message}条未读消息`:`消息中心`" placement="bottom">
-            <router-link to="/tabs">
-              <i class="el-icon-bell"></i>
-            </router-link>
-          </el-tooltip>
-          <span class="btn-bell-badge" v-if="message"></span>
-        </div> -->
-        <!-- 用户头像 -->
-        <div class="user-avator"><img src="static/img/img.jpg"></div>
-        <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
-            {{username}} <i class="el-icon-caret-bottom"></i>
+            <img src="../../assets/icon/icon_lang.png">
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
@@ -57,16 +41,7 @@
   export default {
     data() {
       return {
-        collapse: false,
-        fullscreen: false,
-        name: 'linxin',
-        message: 2
-      }
-    },
-    computed: {
-      username() {
-        let username = localStorage.getItem('ms_username');
-        return username ? username : this.name;
+        fullscreen: false
       }
     },
     methods: {
@@ -83,11 +58,6 @@
           this.setLang('en');
           window.location.reload();
         }
-      },
-      // 侧边栏折叠
-      collapseChage() {
-        this.collapse = !this.collapse;
-        bus.$emit('collapse', this.collapse);
       },
       // 全屏事件
       handleFullScreen() {
@@ -116,11 +86,6 @@
         }
         this.fullscreen = !this.fullscreen;
       }
-    },
-    mounted() {
-      if(document.body.clientWidth < 1500) {
-        this.collapseChage();
-      }
     }
   }
 </script>
@@ -129,28 +94,25 @@
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    height: 40px;
+    height: 80px;
     font-size: 18px;
-    background-color: #23292f;
     color: #fff;
-  }
-  .collapse-btn {
-    float: left;
-    padding: 0 21px;
-    cursor: pointer;
-    line-height: 40px;
   }
   .header .logo {
     float: left;
-    font-size: 16px;
-    line-height: 40px;
+    display: flex;
+    align-items: center;
   }
-  .logospan {
+  .proname {
     margin-left: 15px;
+    display: inline-block;
   }
   .header-right {
+    height: 80px;
+    display: flex;
+    align-items: center;
     float: right;
-    padding-right: 50px;
+    padding-right: 40px;
   }
   .header-user-con {
     display: flex;
@@ -158,7 +120,6 @@
     align-items: center;
   }
   .btn-fullscreen {
-    transform: rotate(45deg);
     margin-top: 5px;
     margin-right: 15px;
     font-size: 24px;
@@ -201,5 +162,9 @@
   }
   .el-dropdown-menu__item {
     text-align: center;
+  }
+  img {
+    border: none;
+    outline: none;
   }
 </style>

@@ -5,9 +5,9 @@ const routes = [
         component: () => import('../components/page/home')
     },
     {
-        name: 'aaa',
-        path: '/aaa',
-        component: () => import('../components/page/aaa')
+        name: 'input',
+        path: '/input',
+        component: () => import('../components/page/input')
     },
     // {
     //     path: '/',
