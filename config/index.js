@@ -11,12 +11,20 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/proxy': {
-                target: 'http://172.16.5.135/:80',
+                target: 'http://172.16.5.135:80/',
+                // target: 'http://192.168.10.228:80/',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/proxy': ''
                 }
             },
+            // '/proxy': {
+            //     target: 'http://172.16.6.100:7001/',
+            //     changeOrigin: true,
+            //     pathRewrite: {
+            //         '^/proxy': ''
+            //     }
+            // },
             '/ms': {
                 target: 'https://www.easy-mock.com/mock/592501a391470c0ac1fab128',
                 changeOrigin: true

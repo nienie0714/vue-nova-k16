@@ -8,12 +8,15 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production', //在非生产环境下，使用严格模式
     state: {
-        common: getSen('common') || {}, // 接收常规接口每次传进来的数据
+        common: getSen('common') || {
+            dpSta: 1,
+            hdmiSta: 2
+        }, // 接收常规接口每次传进来的数据
         cacheData: getSen('cacheData') || {},
         lang: getLoc('lang') || 'zh'
     },
     getters: {
-        getCommon: state => state.common,
+        getCommon: state => serialize(state.common),
         getCacheData: state => serialize(state.cacheData),
         getLang: state => state.lang
     },

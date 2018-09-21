@@ -79,7 +79,7 @@
   </div>
 </template>
 <script>
-  import { mapState, mapActions, mapMutations } from 'vuex';
+  import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
   import { getLoc } from '../../utils';
   export default {
     name: 'aaa',
@@ -101,25 +101,38 @@
     created() {
       this._ = getLoc('_') || "0000";
       this.dp();
+      console.log(this.getCommon);
+    },
+    computed: {
+      ...mapGetters(['getCommon'])
     },
     methods: {
       ...mapActions(['ajax']),
-      ...mapMutations(['getCommon', 'setCommon']),
+      ...mapMutations(['setCommon']),
+      dpInterval() {
+        // var int=self.setInterval("clock()",50)
+        // window.clearInterval(int)
+        setInterval(this.dp, 2000);
+      },
+      hdmiInterval() {
+        setInterval(this.hdmi, 2000);
+      },
       dp() {
         // /page/panel/leds.cgi?RW=0&DevID=0&In0_ResW=0&In0_ResH=0&In0_ResR=0&_=1450258914396
         // { "In0_ResW":1280, "In0_ResH":100, "In0_ResR":60, "ERRC": 0}
-        let dpSta = getCommon('dpSta');
+        let dpSta = this.getCommon.dpSta;
+        console.log(dpSta);
         if(dpSta == 1 || dpSta == 2) {
           this.ajax({
             name: 'url',
             data: {
-              DevID: 0,
               RW: 0,
+              DevID: 0,
               DevID: 0,
               In0_ResW: 0,
               In0_ResH: 0,
               In0_ResR: 0,
-              _: _
+              _: this._
             }
           }).then(res => {
             console.log(11111, res);
@@ -137,18 +150,19 @@
         }
       },
       hdmi() {
-        let hdmiSta = getCommon('hdmiSta');
+        let hdmiSta = this.getCommon.hdmiSta;
+        console.log(hdmiSta);
         if(hdmiSta == 1 || hdmiSta == 2) {
           this.ajax({
             name: 'url',
             data: {
-              DevID: 0,
               RW: 0,
+              DevID: 0,
               DevID: 0,
               In1_ResW: 0,
               In1_ResH: 0,
               In1_ResR: 0,
-              _: _
+              _: this._
             }
           }).then(res => {
             console.log(11111, res);

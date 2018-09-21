@@ -49,7 +49,7 @@
       // 用户名下拉菜单选择事件
       handleCommand(command) {
         if(command == 'loginout') {
-          localStorage.removeItem('ms_username')
+          localStorage.removeItem('_');
           this.$router.push('/login');
         } else if(command == 'chinese') {
           this.setLang('zh');

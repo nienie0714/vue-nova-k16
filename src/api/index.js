@@ -89,7 +89,7 @@ axios.interceptors.response.use(
 //检查接口请求状态
 function checkStatus(resolve, reject, response, config) {
     if (response && response.status === 200) {
-        if (response.data.ERRC === 0) {
+        if (response.data.ERRC == 0) {
             resolve(response.data);
         } else {
             if (!config.error) {
@@ -111,6 +111,7 @@ function checkStatus(resolve, reject, response, config) {
             }
             reject(response.data);
         }
+        // resolve(response.data);
     } else {
         Message(response.message || '请求失败');
         reject(response.data);
@@ -147,6 +148,7 @@ let xhr = config => {
         let headers = {
             session: store.getters.getCommon.session,
             'Content-Type': isForm ? 'application/x-www-form-urlencoded; charset=UTF-8' : 'application/json; charset=UTF-8'
+            // 'Content-Type': 'text/html'
         };
 
         switch (method) {

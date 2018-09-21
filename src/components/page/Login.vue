@@ -12,7 +12,7 @@
         <div class="login-btn">
           <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
         </div>
-        <p style="font-size:12px;line-height:30px;color:#999;">Tips : 用户名和密码随便填。</p>
+        <p style="font-size:12px;line-height:30px;color:#999;">Tips : 直接点击登录按钮即可登录。</p>
       </el-form>
     </div>
   </div>
@@ -20,6 +20,7 @@
 
 <script>
   import { mapActions } from 'vuex';
+  import axios from 'axios';
   export default {
     data: function() {
       return {
@@ -29,32 +30,44 @@
         },
         rules: {
           username: [
-            { required: true, message: '请输入用户名', trigger: 'blur' }
+            { required: false, message: '请输入用户名', trigger: 'blur' }
           ],
           password: [
-            { required: true, message: '请输入密码', trigger: 'blur' }
+            { required: false, message: '请输入密码', trigger: 'blur' }
           ]
         }
       }
+    },
+    created() {
+      // axios.get('http://172.16.5.135/page/panel/leds.cgi', {
+      //   params: {
+      //     RW: 1, DevID: 0, Account: 0, _: 0
+      //   }
+      // }).then(() => { });
+      // axios.get('http://172.16.6.100:7001/users', {
+      //   params: {
+      //     RW: 1, DevID: 0, Account: 0, _: 0
+      //   }
+      // }).then(() => { });
     },
     methods: {
       ...mapActions(['ajax']),
       postLogin() {
         let command = '';
-        for(let i = 0; i <= 25; i++) {
+        for(let i = 0; i <= 13; i++) {
           command += Math.floor(Math.random() * 10);
         }
-        // console.log(command);
-        // this.ajax({
-        //   name: 'url',
-        //   data: { RW: 1, DevID:0, Account:command, _: command }
-        // }).then(res => {
-        //   console.log(res);
-        //   localStorage.setItem('_', command);
-        //   this.$router.push({ path: "/" });
-        // });
-        localStorage.setItem('_', command);
-        this.$router.push({ path: "/" });
+        console.log(command);
+        this.ajax({
+          name: 'url',
+          data: { RW: 1, DevID: 0, Account: command, _: command }
+        }).then(res => {
+          console.log(res);
+          localStorage.setItem('_', command);
+          this.$router.push({ path: "/" });
+        });
+        // localStorage.setItem('_', command);
+        // this.$router.push({ path: "/" });
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {

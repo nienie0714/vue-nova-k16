@@ -28,8 +28,9 @@
       <div class="btngroup">
         <div class="btn" :class="{btnactive: btnactive==1}" @click="active=false, btnactive=1">功能</div>
         <div class="btn" :class="{btnactive: btnactive==2}" @click="active=true, btnactive=2">接口</div>
+        <div class="btn" @click="readPolling">TEST:点击发送常规请求</div>
+        <!-- <div class="btn">{{$store.state.common.dpSta}}</div> -->
       </div>
-      <!-- <el-button @click="subactive=!subactive">副框</el-button> -->
     </div>
   </div>
 </template>
@@ -37,45 +38,49 @@
 <script>
   //import vHead from '../common/header.vue'; // 常规引用组件
   import bus from '../common/bus';
-  import { mapGetters } from 'vuex';
+  import { mapState, mapActions, mapMutations } from 'vuex';
+  import { getLoc } from '../../utils';
+  import { Message } from 'element-ui';
+  import axios from 'axios';
+  // import store1 from '../../store'
 
   export default {
     data() {
       return {
         routers: [{
-          name: this.$t('english'),
+          name: this.$t('home.light'),
           path: 'light',
           className: 'light'
         }, {
-          name: '输入设置',
+          name: this.$t('home.input'),
           path: 'input',
           className: 'input'
         }, {
-          name: '屏参设置',
+          name: this.$t('home.screen'),
           path: 'screen',
           className: 'screen'
         }, {
-          name: '窗口设置',
+          name: this.$t('home.window'),
           path: 'window',
           className: 'window'
         }, {
-          name: '画面控制',
+          name: this.$t('home.picture'),
           path: 'picture',
           className: 'picture'
         }, {
-          name: '拼接带载',
+          name: this.$t('home.connect'),
           path: 'connect',
           className: 'connect'
         }, {
-          name: '场景设置',
+          name: this.$t('home.scene'),
           path: 'scene',
           className: 'scene'
         }, {
-          name: '高级设置',
+          name: this.$t('home.communication'),
           path: 'communication',
           className: 'communication'
         }, {
-          name: '通讯设置',
+          name: this.$t('home.setting'),
           path: 'setting',
           className: 'setting'
         }
@@ -89,10 +94,83 @@
     //   vHead// 常规引用组件
     // },
     created() {
+      // console.log(store1.state.common.hdmiSta);
+      setInterval(this.readPolling, 2000);
+      // axios.get('http://172.16.5.135/page/panel/leds.cgi', {
+      //   params: {
+      //     RW: 0,
+      //     DevID: 0,
+      //     DP_Sta: 0,
+      //     HDMI_Sta: 0,
+      //     SDI1_Sta: 0,
+      //     SDI2_Sta: 0,
+      //     DVI1_Sta: 0,
+      //     DVI2_Sta: 0,
+      //     DVI3_Sta: 0,
+      //     DVI4_Sta: 0,
+      //     DVI_Mosaic_Sta: 0,
+      //     BKG_Sta: 0,
+      //     FRZ_Sta: 0,
+      //     BLACK_Sta: 0,
+      //     Account: 0,
+      //     _: 0
+      //   }
+      // }).then(() => { });
+
+      // this.ajax({
+      //   name: 'user'
+      // }).then();
     },
     methods: {
+      ...mapActions(['ajax']),
+      ...mapMutations(['setCommon']),
       go(route) {
         this.$router.push({ name: route.path });
+      },
+      // 轮训常规接口
+      readPolling() {
+        console.log('----发送常规请求----');
+        let command = localStorage.getItem('_');
+        this.ajax({
+          name: 'url',
+          data: {
+            RW: 0,
+            DevID: 0,
+            DP_Sta: 0,
+            HDMI_Sta: 0,
+            SDI1_Sta: 0,
+            SDI2_Sta: 0,
+            DVI1_Sta: 0,
+            DVI2_Sta: 0,
+            DVI3_Sta: 0,
+            DVI4_Sta: 0,
+            DVI_Mosaic_Sta: 0,
+            BKG_Sta: 0,
+            FRZ_Sta: 0,
+            BLACK_Sta: 0,
+            Account: 0,
+            _: command
+          }
+        }).then(res => {
+          console.log(11111 + res); // { "DP_Sta":0, "HDMI_Sta":0, "SDI1_Sta":0, "SDI2_Sta":0, "DVI1_Sta":0, "DVI2_Sta":0, "DVI3_Sta":0, "DVI4_Sta":0, "DVI_Mosaic_Sta":0, "BKG_Sta":0, "FRZ_Sta":0, "BLACK_Sta":0, "Account":0000, "ERRC": 0}
+          let account = getLoc('_');
+          if(account == getCommon('account')) {  // store.state.lang   // res.Account  // store.state.common.account  getCommon('account')
+            let result = {};
+            for(let key in res) {
+              let tempKey = key.replace(/([A-Za-z0-9]*)_/, word => {
+                // console.log(word);
+                return word.toLowerCase();
+              }).replace(/_/g, '');
+              console.log(key, res[key], tempKey);
+              result[key.replace(/([\w]*_)/, RegExp.$1.toLowerCase().replace(/_/, ''))] = res[key];
+            }
+            this.setCommon(result);
+          } else {
+            Message('您的账号已被其他人登录，请重新登录');
+            localStorage.removeItem('_')
+            this.$router.push('/login');
+          }
+        });
       }
     }
   }
