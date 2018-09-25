@@ -39,16 +39,6 @@
       }
     },
     created() {
-      // axios.get('http://172.16.5.135/page/panel/leds.cgi', {
-      //   params: {
-      //     RW: 1, DevID: 0, Account: 0, _: 0
-      //   }
-      // }).then(() => { });
-      // axios.get('http://172.16.6.100:7001/users', {
-      //   params: {
-      //     RW: 1, DevID: 0, Account: 0, _: 0
-      //   }
-      // }).then(() => { });
     },
     methods: {
       ...mapActions(['ajax']),
@@ -57,17 +47,15 @@
         for(let i = 0; i <= 13; i++) {
           command += Math.floor(Math.random() * 10);
         }
-        // console.log(command);
-        // this.ajax({
-        //   name: 'url',
-        //   data: { RW: 1, DevID: 0, Account: command, _: command }
-        // }).then(res => {
-        //   console.log(res);
-        //   localStorage.setItem('_', command);
-        //   this.$router.push({ path: "/" });
-        // });
-        localStorage.setItem('_', command);
-        this.$router.push({ path: "/" });
+        this.ajax({
+          name: 'url',
+          data: { RW: 1, DevID: 0, Account: command, _: command }
+        }).then(res => {
+          localStorage.setItem('_', command);
+          this.$router.push({ path: "/" });
+        });
+        // localStorage.setItem('_', command);
+        // this.$router.push({ path: "/" });
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {

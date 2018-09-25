@@ -89,7 +89,6 @@ axios.interceptors.response.use(
 //检查接口请求状态
 function checkStatus(resolve, reject, response, config) {
     if (response && response.status === 200) {
-        console.log(787878, response.data);
         if (response.data.ERRC == '0') {
             resolve(response.data);
         } else {

@@ -8,21 +8,22 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production', //在非生产环境下，使用严格模式
     state: {
+        // 接收常规接口每次传进来的数据
         common: getSen('common') || {
-            dpSta: '',
-            hdmiSta: '',
-            sdi1Sta: '',
-            sdi2Sta: '',
-            dvi1Sta: '',
-            dvi2Sta: '',
-            dvi3Sta: '',
-            dvi4Sta: '',
-            dviMosaicSta: '',
-            bkgSta: '',
-            frzSta: '',
-            blackSta: '',
-            screenBri: ''
-        }, // 接收常规接口每次传进来的数据
+            DP_Sta: '',
+            HDMI_Sta: '',
+            SDI1_Sta: '',
+            SDI2_Sta: '',
+            DVI1_Sta: '',
+            DVI2_Sta: '',
+            DVI3_Sta: '',
+            DVI4_Sta: '',
+            DVI_Mosaic_Sta: '',
+            BKG_Sta: '',
+            FRZ_Sta: '',
+            BLACK_Sta: '',
+            Account: ''
+        },
         cacheData: getSen('cacheData') || {},
         lang: getLoc('lang') || 'zh'
     },
@@ -43,7 +44,6 @@ export default new Vuex.Store({
         setLang(state, data) {
             state.lang = data;
             setLoc('lang', data);
-            // setLoc('lang', 'zh');
         }
     },
     actions: {

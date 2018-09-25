@@ -13,7 +13,6 @@ import components from './components/common/index'; // 加载公共组件
 // mock.js实现假接口,实际开发注释掉此
 if (window.htp.mock) {
     require('./mock');
-    console.log(require('./mock'));
 }
 
 Vue.use(ElementUI, { size: 'small' });

@@ -138,7 +138,7 @@
             }
           }).then(res => {
             console.log(11111, res);
-            // let { In0_ResW: this.width, In0_ResH: this.height,  In0_ResR: this.hz} = {In0_ResW: 0,In0_ResH: 0,In0_ResR: 0, a: 1};
+            //? let { In0_ResW: this.width, In0_ResH: this.height,  In0_ResR: this.hz} = {In0_ResW: 0,In0_ResH: 0,In0_ResR: 0, a: 1};
             let { In0_ResW: width, In0_ResH: height, In0_ResR: hz } = res;
             console.log(22222, width, height, hz, 22222);
             this.width = width;

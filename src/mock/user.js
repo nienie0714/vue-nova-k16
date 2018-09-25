@@ -1,6 +1,6 @@
 import api from '../api/api';
 import Mock from 'mockjs';
-console.log(api.user.url);
+
 Mock.mock(api.user.url, 'get', {
     DP_Sta: '1',
     HDMI_Sta: '2',
