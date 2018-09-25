@@ -57,17 +57,17 @@
         for(let i = 0; i <= 13; i++) {
           command += Math.floor(Math.random() * 10);
         }
-        console.log(command);
-        this.ajax({
-          name: 'url',
-          data: { RW: 1, DevID: 0, Account: command, _: command }
-        }).then(res => {
-          console.log(res);
-          localStorage.setItem('_', command);
-          this.$router.push({ path: "/" });
-        });
-        // localStorage.setItem('_', command);
-        // this.$router.push({ path: "/" });
+        // console.log(command);
+        // this.ajax({
+        //   name: 'url',
+        //   data: { RW: 1, DevID: 0, Account: command, _: command }
+        // }).then(res => {
+        //   console.log(res);
+        //   localStorage.setItem('_', command);
+        //   this.$router.push({ path: "/" });
+        // });
+        localStorage.setItem('_', command);
+        this.$router.push({ path: "/" });
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {

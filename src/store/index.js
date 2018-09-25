@@ -9,8 +9,19 @@ export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production', //在非生产环境下，使用严格模式
     state: {
         common: getSen('common') || {
-            dpSta: 1,
-            hdmiSta: 2
+            dpSta: '',
+            hdmiSta: '',
+            sdi1Sta: '',
+            sdi2Sta: '',
+            dvi1Sta: '',
+            dvi2Sta: '',
+            dvi3Sta: '',
+            dvi4Sta: '',
+            dviMosaicSta: '',
+            bkgSta: '',
+            frzSta: '',
+            blackSta: '',
+            screenBri: ''
         }, // 接收常规接口每次传进来的数据
         cacheData: getSen('cacheData') || {},
         lang: getLoc('lang') || 'zh'

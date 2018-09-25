@@ -95,12 +95,14 @@
         list2: ["23.98", "24", "25", "29.97", "30", "60 (默认)"],
         dvimodel: ["单链模式", "双链模式"],
         slide: false,
-        _: ''
+        _: '',
+        dptimer: null,
+        hdmitimer: null
       }
     },
     created() {
       this._ = getLoc('_') || "0000";
-      this.dp();
+      this.dpInterval();
       console.log(this.getCommon);
     },
     computed: {
@@ -110,18 +112,18 @@
       ...mapActions(['ajax']),
       ...mapMutations(['setCommon']),
       dpInterval() {
-        // var int=self.setInterval("clock()",50)
-        // window.clearInterval(int)
-        setInterval(this.dp, 2000);
+        // this.dptimer = self.setInterval(this.dp,2000);
+        window.clearInterval(this.hdmitimer);
+        this.dptimer = setInterval(this.dp, 2000);
       },
       hdmiInterval() {
-        setInterval(this.hdmi, 2000);
+        window.clearInterval(this.dptimer);
+        this.hdmitimer = setInterval(this.hdmi, 2000);
       },
       dp() {
-        // /page/panel/leds.cgi?RW=0&DevID=0&In0_ResW=0&In0_ResH=0&In0_ResR=0&_=1450258914396
-        // { "In0_ResW":1280, "In0_ResH":100, "In0_ResR":60, "ERRC": 0}
+        // let res = { "In0_ResW": "1280", "In0_ResH": "100", "In0_ResR": "60", "ERRC": "0" };
         let dpSta = this.getCommon.dpSta;
-        console.log(dpSta);
+        console.log("dpSta" + dpSta);
         if(dpSta == 1 || dpSta == 2) {
           this.ajax({
             name: 'url',
@@ -136,16 +138,18 @@
             }
           }).then(res => {
             console.log(11111, res);
-            // let { In0_ResW: width, In0_ResH: height,  In0_ResR: hz} = {In0_ResW: 0,In0_ResH: 0,In0_ResR: 0, a: 1};
+            // let { In0_ResW: this.width, In0_ResH: this.height,  In0_ResR: this.hz} = {In0_ResW: 0,In0_ResH: 0,In0_ResR: 0, a: 1};
             let { In0_ResW: width, In0_ResH: height, In0_ResR: hz } = res;
             console.log(22222, width, height, hz, 22222);
             this.width = width;
             this.height = height;
             this.hz = hz;
             this.showdata = `${this.width}*${this.height}@ ${this.hz}Hz`;
-            console.log('-----------------------DP----------------------------');
+            console.log('-----------------------DP showData----------------------------' + this.showdata);
           });
         } else if(dpSta == 0 || dPSta == 3) {
+          this.showdata = "No Single";
+        } else {
           this.showdata = "No Single";
         }
       },
@@ -173,9 +177,11 @@
             this.height = height;
             this.hz = hz;
             this.showdata = `${this.width}*${this.height}@ ${this.hz}Hz`;
-            console.log('-------------------------HDMI--------------------------');
+            console.log('-------------------------HDMI--------------------------' + this.showdata);
           });
         } else if(hdmiSta == 0 || hdmiSta == 3) {
+          this.showdata = "No Single";
+        } else {
           this.showdata = "No Single";
         }
       }

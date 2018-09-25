@@ -1,5 +1,5 @@
 let api = {
-    url: { url: 'page/panel/leds.cgi', method: 'get' },
+    url: { url: 'page/panel/leds.cgi2', method: 'get' },
     user: { url: 'users', method: 'get' }
 };
 
