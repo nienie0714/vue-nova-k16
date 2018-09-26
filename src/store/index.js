@@ -48,7 +48,6 @@ export default new Vuex.Store({
             setLoc('lang', data);
         },
         setCount(state, data) {
-            // console.log(data);
             state.count = data;
         }
     },

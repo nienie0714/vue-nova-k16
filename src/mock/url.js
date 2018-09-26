@@ -6,16 +6,15 @@ Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
         return Mock.mock({ ERRC: '0' });
     } else {
         // 将参数截为对象数组
-        let params = new Object();
+        let params = {};
         let str = res.url.split('?')[1];
-        // console.log(str);
         let strs = str.split('&');
         for (let i = 0; i < strs.length; i++) {
             params[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1]);
         }
 
         // 拼接返回的数据格式
-        let ret = new Object();
+        let ret = {};
         for (let k in params) {
             ret[k] = '1';
         }
