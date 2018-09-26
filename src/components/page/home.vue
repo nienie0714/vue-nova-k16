@@ -28,8 +28,6 @@
       <div class="btngroup">
         <div class="btn" :class="{btnactive: btnactive==1}" @click="active=false, btnactive=1">功能</div>
         <div class="btn" :class="{btnactive: btnactive==2}" @click="active=true, btnactive=2">接口</div>
-        <div class="btn" @click="readPolling">TEST:点击发送常规请求</div>
-
       </div>
     </div>
   </div>
@@ -89,60 +87,17 @@
         hometimer: null
       };
     },
-
-    created() {
-      this.hometimer = setInterval(this.readPolling, 2000);
-    },
     computed: {
       ...mapGetters(['getCommon', 'getCacheData'])
     },
+
     methods: {
       ...mapActions(['ajax']),
       ...mapMutations(['setCommon']),
       go(route) {
         this.$router.push({ name: route.path });
       },
-      // 轮训常规接口
-      readPolling() {
-        console.log('----发送常规请求----');
-        let command = localStorage.getItem('_');
-        this.ajax({
-          name: 'url',
-          data: {
-            RW: 0,
-            DevID: 0,
-            DP_Sta: 0,
-            HDMI_Sta: 0,
-            SDI1_Sta: 0,
-            SDI2_Sta: 0,
-            DVI1_Sta: 0,
-            DVI2_Sta: 0,
-            DVI3_Sta: 0,
-            DVI4_Sta: 0,
-            DVI_Mosaic_Sta: 0,
-            BKG_Sta: 0,
-            FRZ_Sta: 0,
-            BLACK_Sta: 0,
-            Account: 0,
-            _: command
-          }
-        }).then(res => {
-          // console.log(11111, res); // { "DP_Sta":0, "HDMI_Sta":0, "SDI1_Sta":0, "SDI2_Sta":0, "DVI1_Sta":0, "DVI2_Sta":0, "DVI3_Sta":0, "DVI4_Sta":0, "DVI_Mosaic_Sta":0, "BKG_Sta":0, "FRZ_Sta":0, "BLACK_Sta":0, "Account":0000, "ERRC": 0}
-          let account = getLoc('_');
-          console.log('resolve', res);
-          console.log('account', account);
-          console.log('this.getCommon.Account', this.getCommon.Account);
-          if(account == this.getCommon.Account) {
-            this.setCommon({ ...res });
-            console.log('getCommon', this.getCommon);
-          } else {
-            Message('您的账号已被其他人登录，请重新登录');
-            window.clearInterval(this.hometimer);
-            localStorage.removeItem('_')
-            this.$router.push('/login');
-          }
-        });
-      }
+
     }
   }
 </script>
@@ -274,24 +229,6 @@
     display: flex;
     justify-content: center;
     font-size: 16px;
-  }
-
-  //按钮
-  .btn {
-    height: 40px;
-    width: 120px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    float: left;
-    border: solid 2px #828298;
-    color: #828298;
-    font-size: 16px;
-    &.btnactive {
-      font-size: 16px;
-      color: #080532;
-      background-color: #828298;
-    }
   }
 </style>
 

@@ -2,26 +2,30 @@ import api from '../api/api';
 import Mock from 'mockjs';
 
 Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
-    // 将参数截为对象数组
-    let params = new Object();
-    let str = res.url.split('?')[1];
-    let strs = str.split('&');
-    for (let i = 0; i < strs.length; i++) {
-        params[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1]);
-    }
+    if (res.url.indexOf('RW=1') != -1) {
+        return Mock.mock({ ERRC: '0' });
+    } else {
+        // 将参数截为对象数组
+        let params = new Object();
+        let str = res.url.split('?')[1];
+        // console.log(str);
+        let strs = str.split('&');
+        for (let i = 0; i < strs.length; i++) {
+            params[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1]);
+        }
 
-    // 拼接返回的数据格式
-    let ret = new Object();
-    for (let k in params) {
-        ret[k] = '2';
-    }
-    // 拼接成功标志
-    ret['ERRC'] = '0';
-    ret['Account'] = params['Account'];
-    console.log('ret[Account]', ret['Account']);
-    console.log('mock', ret);
+        // 拼接返回的数据格式
+        let ret = new Object();
+        for (let k in params) {
+            ret[k] = '1';
+        }
+        // 拼接成功标志
+        ret['ERRC'] = '0';
+        // ret['Account'] = params['Account'] == '0' ? localStorage.getItem('_') : params['Account'];
+        ret['Account'] = localStorage.getItem('_');
 
-    return Mock.mock(ret);
+        return Mock.mock(ret);
+    }
 });
 
 // return Mock.mock({

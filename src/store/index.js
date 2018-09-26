@@ -25,12 +25,14 @@ export default new Vuex.Store({
             Account: ''
         },
         cacheData: getSen('cacheData') || {},
-        lang: getLoc('lang') || 'zh'
+        lang: getLoc('lang') || 'zh',
+        count: 0
     },
     getters: {
         getCommon: state => serialize(state.common),
         getCacheData: state => serialize(state.cacheData),
-        getLang: state => state.lang
+        getLang: state => state.lang,
+        getCount: state => state.count
     },
     mutations: {
         setCommon(state, data) {
@@ -44,6 +46,10 @@ export default new Vuex.Store({
         setLang(state, data) {
             state.lang = data;
             setLoc('lang', data);
+        },
+        setCount(state, data) {
+            // console.log(data);
+            state.count = data;
         }
     },
     actions: {

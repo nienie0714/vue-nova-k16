@@ -62,7 +62,6 @@
           if(valid) {
             this.postLogin();
           } else {
-            console.log('error submit!!');
             return false;
           }
         });

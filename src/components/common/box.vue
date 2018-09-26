@@ -1,7 +1,7 @@
 <template>
-  <div class="card">
+  <div class="card" :class="{active: dpActive}" :style="">
     <!-- 卡片上半部分 -->
-    <div class="card-top">
+    <div class="card-top" :class="{active: dpActive}" style="">
       <!-- 卡片：标题+内容 -->
       <div class="card-icon" @click="dropcard = !dropcard" v-if="showdrop">
         <transition name="bounce">
@@ -13,7 +13,7 @@
         {{title}}
       </div>
       <div class="card-btm" v-if="showcontent">
-        {{content}}
+        {{defaultcontent}}
       </div>
       <!-- slider -->
       <div class="block" v-if="showslider">
@@ -23,8 +23,8 @@
       </div>
     </div>
     <!-- 卡片下拉框 -->
-    <div class="card-drop" :class="{actives: dropcard}">
-      <div v-for="(item, index) in list" :key="index" @click="getData(index)">{{item}}</div>
+    <div class="card-drop" :class="{active: dropcard, dpActive}">
+      <div v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{item}}</div>
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@
       return {
         dropcard: false,
         value2: 0,
-        content: ''
+        dpActive: false
       };
     },
     props: [
@@ -49,17 +49,23 @@
     ],
     created() {
       this.value2 = this.value;  // 将父组件传递的值赋值给自组件的data，即value2
-      this.content = this.defaultcontent;  // 将父组件传递的值赋值给自组件的data
     },
     methods: {
-      getData(index) {
-        this.content = this.list[index];
+      getData(index, item) {
+        this.$emit('getData', item);
         this.dropcard = false;
       }
     },
     watch: {  // 用于父组件监听值，watch是一个对象，里面包含的都是键值对，function就相当于一个键值对
       value2() {  //-> value2: function(){}    
         this.$emit('input', this.value2); // 自组建向父传递   第一个参数是  父@name  子name  / 父v-model子必须写input  第二个参数是要传递的值
+      },
+      dropcard(val) {
+        if(val) {
+          this.dpActive = true;
+        } else {
+          setTimeout(() => { this.dpActive = false }, 3000);
+        }
       }
     }
   }
@@ -74,11 +80,16 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    overflow: hidden;
+    &.active {
+      height: 123 + 180px;
+      // position: absolute;
+    }
     &-top {
       position: absolute;
       box-sizing: border-box;
       width: 100%;
-      height: 100%;
+      height: 123px;
       background-color: rgba(58, 62, 71, 1);
       font-size: 14px;
       color: rgba(255, 255, 255, 1);
@@ -102,18 +113,21 @@
       .card-btm {
         width: 100%;
       }
+      &.active {
+        z-index: 12;
+      }
     }
     &-drop {
       width: 240px;
-      height: 123px;
+      height: 100px;
       // padding: 15px 10px;
       box-sizing: border-box;
       background-color: rgba(255, 255, 255, 1);
       color: rgba(0, 0, 0, 1);
-      transition: all 0.3s;
+      transition: all 3s;
       position: absolute;
       left: 0;
-      top: 0;
+      bottom: 100%;
       overflow-y: auto;
       cursor: pointer;
       > div {
@@ -121,11 +135,18 @@
         width: 100%;
         padding: 4px;
         box-sizing: border-box;
-        transition: 0.3s;
+        transition: all 0.3s;
       }
       > div:hover {
         color: #ff6700;
         background: #ccc;
+      }
+      &.active {
+        left: 0;
+        bottom: 0px;
+      }
+      &.dpActive {
+        z-index: 11;
       }
     }
     &-drop::-webkit-scrollbar {
@@ -141,10 +162,6 @@
       -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
       border-radius: 0;
       background: rgba(0, 0, 0, 0.1);
-    }
-    .actives {
-      left: 0;
-      top: 125px;
     }
   }
   input {

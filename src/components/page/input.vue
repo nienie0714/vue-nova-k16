@@ -25,13 +25,13 @@
               <div class="tabtitle" @click="dp">关于DP的EDID设置</div>
               <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入dp分辨率'" :defaultcontent="showdata"></v-box>
               <!--:defaultcontent="'3840×2160@ 60Hz'" -->
-              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设分辨率'" :defaultcontent="'1920*1080'" :list="list1"></v-box>
-              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :defaultcontent="'60'" :list="list2"></v-box>
+              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设分辨率'" :defaultcontent="ratio" :list="list1" @getData="(item)=>{ratio=item}"></v-box>
+              <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :defaultcontent="fresh" :list="list2" @getData="(item)=>{fresh=item}"></v-box>
               <!-- <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :defaultcontent="'60'" :list="list2" v-model="value"></v-box>  {{value}}-->
             </div>
             <div class="tabcontent2" v-show="active == 1" @click="hdmi">
               <div class="tabtitle">关于HDMI的EDID设置</div>
-              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入hdmi分辨率'" :defaultcontent="showdata"></v-box>
+              <v-box :showdrop="0" :showtitle="1" :showcontent="1" :title="'当前输入hdmi分辨率'" :defaultcontent="'showdata'"></v-box>
               <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设分辨率'" :defaultcontent="'1920*1080'" :list="list1"></v-box>
               <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :defaultcontent="'60'" :list="list2"></v-box>
             </div>
@@ -49,6 +49,8 @@
               <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设分辨率'" :defaultcontent="'1920*1080'" :list="list1"></v-box>
               <v-box :showdrop="1" :showtitle="1" :showcontent="1" :showslider="0" :title="'预设刷新率（Hz）'" :defaultcontent="'60'" :list="list2"></v-box>
             </div>
+
+            <div class="btn" @click="apply">应用</div>
           </div>
           <div class="subcontainer">
             <div>222</div>
@@ -85,45 +87,49 @@
     name: 'aaa',
     data() {
       return {
-        tabsList: ["DP", "HDMI", "SDI", "DVI"],
+        tabsList: ['DP', 'HDMI', 'SDI', 'DVI'],
         active: 0,
-        list1: ["800*600", "1024*768", "1280*720", "1280*768", "1920*1080", "3840*2160 (默认)"],
+        list1: ['800*600', '1024*768', '1280*720', '1280*768', '1920*1080', '3840*2160 (默认)'],
         width: 'aaa',
         height: 'bbb',
         hz: 'ccc',
-        showdata: '',
-        list2: ["23.98", "24", "25", "29.97", "30", "60 (默认)"],
-        dvimodel: ["单链模式", "双链模式"],
+        showdata: 'No Single',
+        list2: ['23.98', '24', '25', '29.97', '30', '60 (默认)'],
+        dvimodel: ['单链模式', '双链模式'],
         slide: false,
         _: '',
         dptimer: null,
-        hdmitimer: null
+        hdmitimer: null,
+        ratio: '1920*1080',
+        fresh: '60'
       }
     },
     created() {
-      this._ = getLoc('_') || "0000";
-      this.dpInterval();
-      console.log(this.getCommon);
+      this._ = getLoc('_');
     },
     computed: {
-      ...mapGetters(['getCommon'])
+      ...mapGetters(['getCommon', 'getCount'])
+    },
+    watch: {
+      getCount(val) {
+        if(!val) {
+          console.log(this.active);
+          switch(this.active) {
+            case 0: this.dp(); break;
+            case 1: this.hdmi(); break;
+            // case 2: this.dp(); break;
+            // case 3: this.dp(); break;
+          }
+        }
+      }
     },
     methods: {
       ...mapActions(['ajax']),
       ...mapMutations(['setCommon']),
-      dpInterval() {
-        // this.dptimer = self.setInterval(this.dp,2000);
-        window.clearInterval(this.hdmitimer);
-        this.dptimer = setInterval(this.dp, 2000);
-      },
-      hdmiInterval() {
-        window.clearInterval(this.dptimer);
-        this.hdmitimer = setInterval(this.hdmi, 2000);
-      },
       dp() {
-        // let res = { "In0_ResW": "1280", "In0_ResH": "100", "In0_ResR": "60", "ERRC": "0" };
-        let dpSta = this.getCommon.dpSta;
-        console.log("dpSta" + dpSta);
+        console.log('dp...');
+        // let res = { 'In0_ResW': '1280', 'In0_ResH': '100', 'In0_ResR': '60', 'ERRC': '0' };
+        let dpSta = this.getCommon.DP_Sta;
         if(dpSta == 1 || dpSta == 2) {
           this.ajax({
             name: 'url',
@@ -137,31 +143,27 @@
               _: this._
             }
           }).then(res => {
-            console.log(11111, res);
             //? let { In0_ResW: this.width, In0_ResH: this.height,  In0_ResR: this.hz} = {In0_ResW: 0,In0_ResH: 0,In0_ResR: 0, a: 1};
             let { In0_ResW: width, In0_ResH: height, In0_ResR: hz } = res;
-            console.log(22222, width, height, hz, 22222);
             this.width = width;
             this.height = height;
             this.hz = hz;
             this.showdata = `${this.width}*${this.height}@ ${this.hz}Hz`;
-            console.log('-----------------------DP showData----------------------------' + this.showdata);
           });
         } else if(dpSta == 0 || dPSta == 3) {
-          this.showdata = "No Single";
+          this.showdata = 'No Single';
         } else {
-          this.showdata = "No Single";
+          this.showdata = 'No Single';
         }
       },
       hdmi() {
+        console.log('hdmi...');
         let hdmiSta = this.getCommon.hdmiSta;
-        console.log(hdmiSta);
         if(hdmiSta == 1 || hdmiSta == 2) {
           this.ajax({
             name: 'url',
             data: {
               RW: 0,
-              DevID: 0,
               DevID: 0,
               In1_ResW: 0,
               In1_ResH: 0,
@@ -169,21 +171,44 @@
               _: this._
             }
           }).then(res => {
-            console.log(11111, res);
             // let { In0_ResW: width, In0_ResH: height,  In0_ResR: hz} = {In0_ResW: 0,In0_ResH: 0,In0_ResR: 0, a: 1};
             let { In1_ResW: width, In1_ResH: height, In1_ResR: hz } = res;
-            console.log(22222, width, height, hz, 22222);
             this.width = width;
             this.height = height;
             this.hz = hz;
             this.showdata = `${this.width}*${this.height}@ ${this.hz}Hz`;
-            console.log('-------------------------HDMI--------------------------' + this.showdata);
           });
         } else if(hdmiSta == 0 || hdmiSta == 3) {
-          this.showdata = "No Single";
+          this.showdata = 'No Single';
         } else {
-          this.showdata = "No Single";
+          this.showdata = 'No Single';
         }
+      },
+      apply() {
+        let ratio = this.ratio.split(' ')[0];
+
+        let width = ratio.split('*')[0];
+        let height = ratio.split('*')[1];
+        let hz = this.fresh;
+        this.ajax({
+          name: 'url',
+          data: {
+            RW: 1,
+            DevID: 0,
+            In_EdidA: 0,
+            In0_EdidW: width,
+            In0_EdidH: height,
+            In0_EdidR: hz,
+            _: this._
+          }
+        }).then(res => {
+          //? let { In0_ResW: this.width, In0_ResH: this.height,  In0_ResR: this.hz} = {In0_ResW: 0,In0_ResH: 0,In0_ResR: 0, a: 1};
+          //let { In0_EdidW: width, In0_EdidH: height, In0_EdidR: hz } = res;
+          this.width = width;
+          this.height = height;
+          this.hz = hz;
+          this.showdata = `${this.width}*${this.height}@ ${this.hz}Hz`;
+        });
       }
     }
   }
