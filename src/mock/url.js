@@ -2,6 +2,7 @@ import api from '../api/api';
 import Mock from 'mockjs';
 
 Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
+    console.log(res.url);
     if (res.url.indexOf('RW=1') != -1) {
         return Mock.mock({ ERRC: '0' });
     } else {

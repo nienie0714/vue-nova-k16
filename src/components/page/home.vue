@@ -8,6 +8,9 @@
           <div class="flipper">
             <div class="front">
               <!-- 前面内容-home主页 -->
+              <!-- <div class="menu-box" :class="light.className">
+                <div>{{$t('home.light')}}</div>
+              </div> -->
               <div class="menu-box" v-for="(router, index) in routers" :key="index" :class="router.className" @click="go(router)">
                 <div>{{router.name}}</div>
               </div>
@@ -165,7 +168,7 @@
     width: 360px;
     height: 200px;
     margin: 0 40px 40px 0;
-    padding: 40px 0 0 30px;
+    padding: 40px 30px 20px 30px;
     color: #fff;
     font-size: 28px;
     display: flex;
@@ -222,13 +225,6 @@
     top: 50%;
     transform: translate(-50%, -50%);
     overflow: hidden;
-  }
-
-  .btngroup {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    font-size: 16px;
   }
 </style>
 

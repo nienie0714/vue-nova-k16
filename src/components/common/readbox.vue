@@ -1,19 +1,13 @@
 <template>
-  <div class="card">
+  <div class="card" :class="{active: dpActive}">
     <!-- 卡片上半部分 -->
-    <div class="card-top">
+    <div class="card-top" :class="{active: dpActive}">
       <!-- 卡片：标题+内容 -->
       <div class="card-title">
         {{title}}
       </div>
       <div class="card-btm">
-        <input type="text" v-model.number="value2">
-      </div>
-      <!-- slider -->
-      <div class="block">
-        <el-slider v-model="value2">
-          <!--  min=0 max=1920 -->
-        </el-slider>
+        {{defaultcontent}}
       </div>
     </div>
   </div>
@@ -22,21 +16,22 @@
   export default {
     data() {
       return {
-        value2: 0
+        dropcard: false,
+        open2: false,
+        dpActive: false,
       };
     },
     props: [
       'title',               // 标题
-      'showslider',          // 滑动 
-      'value'                // 这里必须写value,才能和父组件的v-model对应上  其他普通情况 写父@name的name
+      'defaultcontent',      // 内容
     ],
-    created() {
-      this.value2 = this.value;  // 将父组件传递的值赋值给自组件的data，即value2
+    methods: {
     },
-    watch: {  // 用于父组件监听值，watch是一个对象，里面包含的都是键值对，function就相当于一个键值对
-      value2() {  //-> value2: function(){}    
-        this.$emit('input', this.value2); // 自组建向父传递   第一个参数是  父@name  子name  / 父v-model子必须写input  第二个参数是要传递的值
-      }
+    created() {
+
+    },
+    watch: {
+
     }
   }
 </script>
@@ -49,18 +44,14 @@
     margin: 20px 2px 20px 0;
     display: flex;
     flex-direction: column;
-    position: relative;
-    overflow: hidden;
-    &.active {
-      height: 123 + 180px;
-      // position: absolute;
-    }
+    position: absolute;
+    border: 2px solid #ddd;
     &-top {
       position: absolute;
       box-sizing: border-box;
       width: 100%;
       height: 123px;
-      background-color: rgba(58, 62, 71, 1);
+      // background-color: rgba(58, 62, 71, 1);
       font-size: 14px;
       color: rgba(255, 255, 255, 1);
       margin-bottom: 2px;
@@ -75,6 +66,8 @@
         img {
           width: 20px;
           height: 20px;
+          transform: rotate(0);
+          transition: all 0.3s;
         }
         .up {
           transform: rotate(180deg);
@@ -84,20 +77,29 @@
         width: 100%;
       }
       &.active {
+        z-index: 11;
+      }
+    }
+    &-drap-wrap {
+      height: 180px;
+      position: absolute;
+      top: 125px;
+      overflow: hidden;
+      width: 240px;
+      z-index: -1;
+      &.dpActive {
         z-index: 12;
       }
     }
     &-drop {
       width: 240px;
-      height: 100px;
-      // padding: 15px 10px;
+      max-height: 180px;
+      min-height: 100px;
       box-sizing: border-box;
       background-color: rgba(255, 255, 255, 1);
       color: rgba(0, 0, 0, 1);
-      transition: all 3s;
-      position: absolute;
-      left: 0;
-      bottom: 100%;
+      transition: all 0.3s;
+      transform: translateY(-100%);
       overflow-y: auto;
       cursor: pointer;
       > div {
@@ -112,11 +114,7 @@
         background: #ccc;
       }
       &.active {
-        left: 0;
-        bottom: 0px;
-      }
-      &.dpActive {
-        z-index: 11;
+        transform: translateY(0);
       }
     }
     &-drop::-webkit-scrollbar {
