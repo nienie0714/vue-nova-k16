@@ -42,33 +42,29 @@
 </script>
 <style lang="less" scoped>
   .card {
-    float: left;
     box-sizing: border-box;
-    width: 240px;
-    height: 123px;
-    margin: 20px 2px 20px 0;
+    width: 100%;
+    height: 100%;
     display: flex;
-    flex-direction: column;
     position: relative;
-    overflow: hidden;
     &.active {
-      height: 123 + 180px;
+      height: 160 + 180px;
       // position: absolute;
     }
     &-top {
       position: absolute;
       box-sizing: border-box;
       width: 100%;
-      height: 123px;
-      background-color: rgba(58, 62, 71, 1);
-      font-size: 14px;
+      height: 100%;
+      background-color: #1f2a51; // 背景色
       color: rgba(255, 255, 255, 1);
       margin-bottom: 2px;
-      padding: 15px 10px;
+      padding: 30px 20px 20px 20px;
       z-index: 1;
       .card-title {
         width: 90%;
-        margin-bottom: 10px;
+        font-size: 20px;
+        margin-bottom: 15px;
       }
       .card-icon {
         float: right;
@@ -82,60 +78,19 @@
       }
       .card-btm {
         width: 100%;
+        margin-bottom: 15px;
+        font-size: 24px;
       }
       &.active {
         z-index: 12;
       }
     }
-    &-drop {
-      width: 240px;
-      height: 100px;
-      // padding: 15px 10px;
-      box-sizing: border-box;
-      background-color: rgba(255, 255, 255, 1);
-      color: rgba(0, 0, 0, 1);
-      transition: all 3s;
-      position: absolute;
-      left: 0;
-      bottom: 100%;
-      overflow-y: auto;
-      cursor: pointer;
-      > div {
-        font-size: 14px;
-        width: 100%;
-        padding: 4px;
-        box-sizing: border-box;
-        transition: all 0.3s;
-      }
-      > div:hover {
-        color: #ff6700;
-        background: #ccc;
-      }
-      &.active {
-        left: 0;
-        bottom: 0px;
-      }
-      &.dpActive {
-        z-index: 11;
-      }
-    }
-    &-drop::-webkit-scrollbar {
-      width: 4px; /*高宽分别对应横竖滚动条的尺寸*/
-      height: 4px;
-    }
-    &-drop::-webkit-scrollbar-thumb {
-      border-radius: 5px;
-      -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-      background: rgba(0, 0, 0, 0.2);
-    }
-    &-drop::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-      border-radius: 0;
-      background: rgba(0, 0, 0, 0.1);
-    }
   }
   input {
     border: none;
+    font-size: 24px;
+    background-color: #1f2a51;
+    color: white;
   }
 </style>
 

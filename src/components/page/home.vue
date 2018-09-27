@@ -28,9 +28,12 @@
         <div class="slide-box" :class="{subactive: subactive}">
         </div>
       </div> -->
-      <div class="btngroup">
+      <!-- <div class="btngroup">
         <div class="btn" :class="{btnactive: btnactive==1}" @click="active=false, btnactive=1">功能</div>
         <div class="btn" :class="{btnactive: btnactive==2}" @click="active=true, btnactive=2">接口</div>
+      </div> -->
+      <div class="btncenter">
+        <v-button :maintitle="'功能'" :subtitle="'输入源'" @getBtn="(data)=>{btnactive=data, btnactive==1?active=false:active=true;}"></v-button>
       </div>
     </div>
   </div>
@@ -99,8 +102,7 @@
       ...mapMutations(['setCommon']),
       go(route) {
         this.$router.push({ name: route.path });
-      },
-
+      }
     }
   }
 </script>

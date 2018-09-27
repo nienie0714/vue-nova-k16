@@ -37,29 +37,25 @@
 </script>
 <style lang="less" scoped>
   .card {
-    float: left;
     box-sizing: border-box;
-    width: 240px;
-    height: 123px;
-    margin: 20px 2px 20px 0;
+    width: 100%;
+    height: 100%;
     display: flex;
-    flex-direction: column;
-    position: absolute;
-    border: 2px solid #ddd;
+    position: relative;
+    border: 1px solid #ddd; // 只读只有边框
     &-top {
       position: absolute;
       box-sizing: border-box;
       width: 100%;
-      height: 123px;
-      // background-color: rgba(58, 62, 71, 1);
-      font-size: 14px;
+      height: 100%;
       color: rgba(255, 255, 255, 1);
       margin-bottom: 2px;
-      padding: 15px 10px;
+      padding: 30px 20px 20px 20px;
       z-index: 1;
       .card-title {
         width: 90%;
-        margin-bottom: 10px;
+        font-size: 20px;
+        margin-bottom: 15px;
       }
       .card-icon {
         float: right;
@@ -75,25 +71,27 @@
       }
       .card-btm {
         width: 100%;
+        font-size: 24px;
+        margin-bottom: 15px;
       }
       &.active {
         z-index: 11;
       }
     }
     &-drap-wrap {
-      height: 180px;
+      height: 250px;
       position: absolute;
-      top: 125px;
+      top: 100%;
       overflow: hidden;
-      width: 240px;
+      width: 100%;
       z-index: -1;
       &.dpActive {
         z-index: 12;
       }
     }
     &-drop {
-      width: 240px;
-      max-height: 180px;
+      width: 100%;
+      max-height: 250px;
       min-height: 100px;
       box-sizing: border-box;
       background-color: rgba(255, 255, 255, 1);

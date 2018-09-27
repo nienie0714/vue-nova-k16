@@ -35,14 +35,12 @@ li {
     padding: 10px 40px 10px 40px;
     height: calc(100% - 150px);
     position: relative;
-    // background: rgba(111, 106, 116, 0.8);
     overflow: hidden;
 }
 
 .content {
     width: 100%;
     height: 100%;
-    padding-top: 60px;
     transition: transform 0.5s ease;
     &.active {
         transform: translateY(-100%);
@@ -63,17 +61,30 @@ li {
 
 // 标题
 .jrtitle {
-    height: 22px;
-    line-height: 22px;
-    padding: 10px 20px;
-    .snav {
-        height: 100%;
-        color: rgba(255, 255, 255, 1);
-        img {
-            display: inline-block;
-            width: 25px;
-            height: 25px;
+    height: 50px;
+    line-height: 50px;
+    width: 100%;
+    padding-left: 40px;
+    margin-bottom: 20px;
+    img {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        vertical-align: middle;
+        &.homeicon {
+            margin-right: 38px;
         }
+        &.iicon {
+            margin-right: 10px;
+        }
+    }
+    .snav {
+        display: inline-block;
+        height: 100%;
+        box-sizing: border-box;
+        vertical-align: middle;
+        color: rgba(255, 255, 255, 1);
+        font-size: 28px;
     }
 }
 
@@ -104,16 +115,29 @@ li {
     }
 }
 .applybtn {
-    height: 40px;
-    width: 120px;
+    height: 50px;
+    width: 180px;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
-    float: right;
-    border: solid 2px #828298;
-    color: #828298;
-    font-size: 16px;
+    float: left;
+    border: solid 2px #febe00;
+    color: #febe00;
+    font-size: 20px;
+    &.btnactive {
+        font-size: 20px;
+        color: #febe00;
+        background-color: #828298;
+    }
+}
+
+.btncenter {
+    display: flex;
+    justify-content: center;
+    &.mosaicbtn {
+        margin-top: 20px;
+    }
 }
 
 .content-collapse {

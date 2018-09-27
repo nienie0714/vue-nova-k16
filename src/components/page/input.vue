@@ -3,12 +3,10 @@
     <v-header></v-header>
     <!-- 页面名称 -->
     <div class="jrtitle">
-      <div class="snav">
-        <img src="@/assets/icon/u343.png" alt="" @click="$router.go(-1);">
-        <img src="@/assets/icon/u123.svg" alt="">
-        <span>输入设置</span>
-        <el-button @click="showmosaic = !showmosaic">a</el-button>
-      </div>
+      <img class="homeicon" src="@/assets/icon/icon_home.png" alt="" @click="$router.go(-1);">
+      <img class="iicon" src="@/assets/icon/icon_input.png" alt="">
+      <span class="snav">输入设置</span>
+      <!-- <el-button @click="showmosaic = !showmosaic">a</el-button> -->
     </div>
     <div class="content-box">
       <!-- tab -->
@@ -19,22 +17,21 @@
       </div>
       <!-- content -->
       <div class="content" :class="{active: showmosaic}">
-        <div class="container">
-          <!-- dp -->
-          <div class="tabdp" v-show="active == 0" @click="dp">
-            <div class="tabtitle" @click="dp">关于DP的EDID设置</div>
-            <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(data)=>{btnactive=data}"></v-button>
-            <!-- <div class="btngroup">
-                <div>
-                  <div class="btn" :class="{btnactive: btnactive==1}" @click="btnactive=1">预设分辨率</div>
-                  <div class="btn" :class="{btnactive: btnactive==2}" @click="btnactive=2">自定义分辨率</div>
-                </div>
-                <div class="applybtn" @click="apply([4,5,6,7])">应用</div>
-              </div> -->
+        <!-- dp -->
+        <div class="tabdp" v-show="active == 0" @click="dp">
+          <div class="showdata">
             <ul class="cardul">
               <li>
                 <v-readbox :title="'当前输入dp分辨率'" :defaultcontent="showdata"></v-readbox>
               </li>
+            </ul>
+          </div>
+          <div class="setdata">
+            <div class="btnapply">
+              <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(data)=>{btnactive=data}"></v-button>
+              <div class="applybtn" @click="apply([1])">应用</div>
+            </div>
+            <ul class="cardul">
               <template v-if="btnactive==1">
                 <li>
                   <v-textbox :showdrop="1" :title="'预设分辨率'" :defaultcontent="ratio" :list="list1" @getData="(data)=>{ratio=data.item}"></v-textbox>
@@ -45,71 +42,116 @@
               </template>
               <template v-else>
                 <li>
-                  <v-sliderbox :title="'滑块'" v-model.number="rationumW"></v-sliderbox>
+                  <v-sliderbox :title="'水平分辨率(px)'" v-model.number="rationumW"></v-sliderbox>
                 </li>
                 <li>
-                  <v-sliderbox :title="'滑块'" v-model.number="rationumH"></v-sliderbox>
+                  <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="rationumH"></v-sliderbox>
+                </li>
+                <li>
+                  <v-sliderbox :title="'刷新率（Hz）'" v-model.number="rationumZ"></v-sliderbox>
                 </li>
               </template>
             </ul>
           </div>
-          <!-- <v-textbox :showswitch="1" :title="'预设刷新率（Hz）'" :defaultcontent="'switch'"></v-textbox> -->
         </div>
+        <!-- <v-textbox :showswitch="1" :title="'预设刷新率（Hz）'" :defaultcontent="'switch'"></v-textbox> -->
         <!-- hdmi -->
         <div class="tabcontent2" v-show="active == 1" @click="hdmi">
-          <div class="tabtitle">关于HDMI的EDID设置</div>
-          <!-- <div class="btngroup">
-              <div>
-                <div class="btn" :class="{btnactive: btnactive==1}" @click="btnactive=1">预设分辨率</div>
-                <div class="btn" :class="{btnactive: btnactive==2}" @click="btnactive=2">自定义分辨率</div>
-              </div>
-              <div class="applybtn" @click="apply([4,5,6,7])">应用</div>
-            </div> -->
-          <ul class="cardul">
-            <li>
-              <v-textbox :title="'当前输入hdmi分辨率'" :defaultcontent="showdata"></v-textbox>
-            </li>
-            <li>
-              <v-textbox :showdrop="1" :title="'预设分辨率'" :defaultcontent="ratio" :list="list1" @getData="(data)=>{ratio=data.item}"></v-textbox>
-            </li>
-            <li>
-              <v-textbox :showdrop="1" :title="'预设刷新率（Hz）'" :defaultcontent="fresh" :list="list2" @getData="(data)=>{fresh=data.item}"></v-textbox>
-            </li>
-          </ul>
+          <div class="showdata">
+            <ul class="cardul">
+              <li>
+                <v-readbox :title="'当前输入hdmi分辨率'" :defaultcontent="showdata"></v-readbox>
+              </li>
+            </ul>
+          </div>
+          <div class="setdata">
+            <div class="btnapply">
+              <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(data)=>{btnactive=data}"></v-button>
+              <div class="applybtn" @click="apply([2])">应用</div>
+            </div>
+            <ul class="cardul">
+              <template v-if="btnactive==1">
+                <li>
+                  <v-textbox :showdrop="1" :title="'预设分辨率'" :defaultcontent="ratio" :list="list1" @getData="(data)=>{ratio=data.item}"></v-textbox>
+                </li>
+                <li>
+                  <v-textbox :showdrop="1" :title="'预设刷新率（Hz）'" :defaultcontent="fresh" :list="list2" @getData="(data)=>{fresh=data.item}"></v-textbox>
+                </li>
+              </template>
+              <template v-else>
+                <li>
+                  <v-sliderbox :title="'水平分辨率(px)'" v-model.number="rationumW"></v-sliderbox>
+                </li>
+                <li>
+                  <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="rationumH"></v-sliderbox>
+                </li>
+                <li>
+                  <v-sliderbox :title="'刷新率（Hz）'" v-model.number="rationumZ"></v-sliderbox>
+                </li>
+              </template>
+            </ul>
+          </div>
         </div>
         <!-- sdi -->
         <div class="tabcontent3" v-show="active == 2">
-          <div class="tabtitle">关于SDI的EDID设置</div>
+          <div class="showdata">
+            <ul class="cardul">
+              <li>
+                <v-readbox :title="'当前sdi1分辨率'" :defaultcontent="showdata"></v-readbox>
+              </li>
+              <li>
+                <v-readbox :title="'当前sdi2分辨率'" :defaultcontent="showdata"></v-readbox>
+              </li>
+            </ul>
+          </div>
         </div>
         <!-- dvi -->
         <div class="tabcontent4" v-show="active == 3">
-          <v-button :maintitle="'单链模式'" :subtitle="'双链模式'" @getBtn="dviS(val)"></v-button>
-          <ul class="cardul">
-            <li>
-              <v-textbox ref="text-box" v-model="dviVisible" :showdrop="1" :title="'DVI输入模式'" :defaultcontent="link" :list="dvimodel" @getData="(data)=>{link=data.item;doublelink=data.index}"></v-textbox>
-            </li>
-            <!-- <li>
+          <div class="showdata showdatadvi">
+            <div class="btnapply">
+              <v-button :maintitle="'单链模式'" :subtitle="'双链模式'" @getBtn="(data)=>{doublelink=data; doublelink==1?showdouble=true:showdouble=false;}"></v-button>
+            </div>
+            <ul class="cardul">
+              <li>
                 <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-textbox>
-              </li> -->
-            <li>
-              <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-textbox>
-            </li>
-            <li>
-              <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-textbox>
-            </li>
-            <li>
-              <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-textbox>
-            </li>
-          </ul>
-          <ul class="cardul">
-            <li>
-              <v-textbox ref="text-box1" v-model="ratioVisible" :showdrop="1" :showslider="0" :title="'预设分辨率'" :defaultcontent="'1920*1080'" :list="list1"></v-textbox>
-            </li>
-            <li>
-              <v-textbox ref="text-box2" v-model="freshVisible" :showdrop="1" :showslider="0" :title="'预设刷新率（Hz）'" :defaultcontent="'60'" :list="list2"></v-textbox>
-              </v-textbox>
-            </li>
-          </ul>
+              </li>
+              <li v-if="showdouble">
+                <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-textbox>
+              </li>
+              <li>
+                <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-textbox>
+              </li>
+              <li v-if="showdouble">
+                <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-textbox>
+              </li>
+            </ul>
+          </div>
+          <div class="showdata showdatadvi">
+            <div class="btnapply">
+              <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(data)=>{btnactive=data}"></v-button>
+              <div class="applybtn" @click="apply([1])">应用</div>
+            </div>
+            <ul class="cardul">
+              <li>
+                <v-textbox ref="text-box1" v-model="ratioVisible" :showdrop="1" :showslider="0" :title="'预设分辨率'" :defaultcontent="'1920*1080'" :list="list1"></v-textbox>
+              </li>
+              <li>
+                <v-textbox ref="text-box2" v-model="freshVisible" :showdrop="1" :showslider="0" :title="'预设刷新率（Hz）'" :defaultcontent="'60'" :list="list2"></v-textbox>
+                </v-textbox>
+              </li>
+              <li class="noneli">
+                <v-textbox></v-textbox>
+                </v-textbox>
+              </li>
+              <li class="noneli">
+                <v-textbox></v-textbox>
+                </v-textbox>
+              </li>
+            </ul>
+          </div>
+          <div class="btncenter mosaicbtn">
+            <div class="applybtn">MOSAIC</div>
+          </div>
         </div>
 
       </div>
@@ -162,10 +204,12 @@
         showdata: 'No Single',                       // 默认显示，是否在线
         rationumW: 1920,                           // dp 默认水平分辨率
         rationumH: 1080,                           // dp 默认垂直分辨率
+        rationumZ: 60,                              // dp 默认刷新率
         dvimodel: ['单链模式', '双链模式'],            // HDMI 模式
         showmosaic: false,                           // DVI mosic开关          
         link: '双链模式',                             // DVI mosic默认值    
-        doublelink: 1,                            // DVI 单双链显示 2/4 dvi
+        doublelink: 1,                            // DVI 双链为1 单链为2
+        showdouble: true,                        // DVI 单双链显示 2/4 dvi
         btnactive: 1,                                // btn
         _: ''                                        // 账户
       }
@@ -258,8 +302,7 @@
           this.showdata = 'No Single';
         }
       },
-      apply(val = [0]) {
-        // 哪个页面的应用  
+      apply(val = [1]) {
         alert(1)
         let inx = {};
         let ratio = this.ratio.split(' ')[0];
@@ -339,6 +382,24 @@
     color: white;
   }
 
+  .showdata {
+    box-sizing: border-box;
+    height: 220px;
+    width: 100%;
+    padding: 30px 0 30px 0;
+    border-bottom: 1px dashed white;
+    &.showdatadvi {
+      height: 300px;
+    }
+  }
+
+  .setdata {
+    box-sizing: border-box;
+    height: 320px;
+    width: 100%;
+    padding: 30px 0 30px 0;
+  }
+
   .cardul {
     display: flex;
     width: 100%;
@@ -349,6 +410,15 @@
       height: 160px;
       padding-right: 4px;
       padding-bottom: 4px;
+      &.noneli {
+        visibility: hidden;
+      }
     }
+  }
+
+  .btnapply {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
   }
 </style>

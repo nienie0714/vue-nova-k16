@@ -49,7 +49,7 @@
         }
         this.ajax({
           name: 'url',
-          data: { RW: 1, DevID: 0, Account: command, _: command }
+          data: { RW: 1, DevID: 0, CMD: 0, Account: command, _: command }
         }).then(res => {
           localStorage.setItem('_', command);
           this.$router.push({ path: "/" });

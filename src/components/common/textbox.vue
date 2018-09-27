@@ -80,25 +80,22 @@
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    // margin: 20px 2px 20px 0;
     display: flex;
-    // flex-direction: column;
     position: relative;
     &-top {
       position: absolute;
       box-sizing: border-box;
       width: 100%;
       height: 100%;
-      border: 1px solid white;
-      // background-color: #1f2a51;
+      background-color: #1f2a51; // 背景色
       color: rgba(255, 255, 255, 1);
       margin-bottom: 2px;
-      padding: 15px 10px;
+      padding: 30px 20px 20px 20px;
       z-index: 1;
       .card-title {
         width: 90%;
         font-size: 20px;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
       }
       .card-icon {
         float: right;
@@ -115,6 +112,7 @@
       .card-btm {
         width: 100%;
         font-size: 24px;
+        margin-bottom: 15px;
       }
       &.active {
         z-index: 11;
@@ -143,15 +141,16 @@
       overflow-y: auto;
       cursor: pointer;
       > div {
-        font-size: 14px;
-        width: 100%;
-        padding: 4px;
+        font-size: 24px;
+        width: calc(100%-24px);
+        margin: 1px 12px;
+        padding: 15px 10px;
         box-sizing: border-box;
         transition: all 0.3s;
       }
       > div:hover {
-        color: #ff6700;
-        background: #ccc;
+        color: #febe00;
+        background: #1f2a51;
       }
       &.active {
         transform: translateY(0);

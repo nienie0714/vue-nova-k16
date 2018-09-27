@@ -35,7 +35,7 @@
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
-    font-size: 16px;
+    font-size: 20px;
   }
   //按钮
   .btn {
@@ -48,9 +48,9 @@
     float: left;
     border: solid 2px #828298;
     color: #828298;
-    font-size: 16px;
+    font-size: 20px;
     &.btnactive {
-      font-size: 16px;
+      font-size: 20px;
       color: #080532;
       background-color: #828298;
     }
