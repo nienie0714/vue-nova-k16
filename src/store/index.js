@@ -18,7 +18,7 @@ export default new Vuex.Store({
             DVI2_Sta: '',
             DVI3_Sta: '',
             DVI4_Sta: '',
-            DVI_Mosaic_Sta: '',
+            // DVI_Mosaic_Sta: '',
             BKG_Sta: '',
             FRZ_Sta: '',
             BLACK_Sta: '',

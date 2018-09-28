@@ -6,12 +6,11 @@
       <img class="homeicon" src="@/assets/icon/icon_home.png" alt="" @click="$router.go(-1);">
       <img class="iicon" src="@/assets/icon/icon_input.png" alt="">
       <span class="snav">输入设置</span>
-      <el-button @click="showmosaic = !showmosaic">a</el-button>
     </div>
     <div class="content-box">
       <!-- tab -->
       <div class="tabs">
-        <div class="tab" v-for="(item, index) in tabsList" :class="{active: active == index}" @click="active = index" :key="index">
+        <div class="tab" v-for="(item, index) in tabsList" :class="{active: active == index}" @click="readData(index, item)" :key="index">
           <b>{{item}}</b>
         </div>
       </div>
@@ -19,37 +18,37 @@
         <!-- content -->
         <div class="content">
           <!-- dp -->
-          <div class="tabdp" v-show="active == 0" @click="dp">
+          <div class="tabdp" v-show="active == 0">
             <div class="showdata">
               <ul class="cardul">
                 <li>
-                  <v-readbox :title="'当前输入dp分辨率'" :defaultcontent="dpshowdata"></v-readbox>
+                  <v-readbox :title="'当前输入dp分辨率'" :defaultcontent="data.dp.showdata"></v-readbox>
                 </li>
               </ul>
             </div>
             <div class="setdata">
               <div class="btnapply">
-                <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(data)=>{dpbtnactive=data}"></v-button>
-                <div class="applybtn" @click="apply([1])">应用</div>
+                <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(item)=>{data.dp.btnactive=item}"></v-button>
+                <div class="applybtn" @click="apply('dp', data.dp.btnactive)">应用</div>
               </div>
               <ul class="cardul">
-                <template v-if="dpbtnactive==1">
+                <template v-if="data.dp.btnactive==1">
                   <li>
-                    <v-textbox v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="ratio" :list="list1" @getData="(data)=>{ratio=data.item}"></v-textbox>
+                    <v-textbox v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="data.dp.ratios" :list="list1" @getData="(obj)=>{data.dp.ratios=obj.item}"></v-textbox>
                   </li>
                   <li>
-                    <v-textbox v-model="freshVisible" :showdrop="1" :title="'预设刷新率（Hz）'" :defaultcontent="fresh" :list="list2" @getData="(data)=>{fresh=data.item}"></v-textbox>
+                    <v-textbox v-model="freshVisible" :showdrop="1" :title="'预设刷新率（Hz）'" :defaultcontent="data.dp.fresh" :list="list2" @getData="(obj)=>{data.dp.fresh=obj.item}"></v-textbox>
                   </li>
                 </template>
                 <template v-else>
                   <li>
-                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="dprationumW" :min="10" :max="105"></v-sliderbox>
+                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="data.dp.ratio[1].W" :min="800" :max="4096"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="dprationumH"></v-sliderbox>
+                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data.dp.ratio[1].H" :min="600" :max="4096"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="dprationumZ"></v-sliderbox>
+                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="data.dp.ratio[1].Z" :min="23" :max="120"></v-sliderbox>
                   </li>
                 </template>
               </ul>
@@ -57,51 +56,51 @@
           </div>
           <!-- <v-textbox :showswitch="1" :title="'预设刷新率（Hz）'" :defaultcontent="'switch'"></v-textbox> -->
           <!-- hdmi -->
-          <div class="tabcontent2" v-show="active == 1" @click="hdmi">
+          <div class="tabcontent2" v-show="active == 1">
             <div class="showdata">
               <ul class="cardul">
                 <li>
-                  <v-readbox :title="'当前输入hdmi分辨率'" :defaultcontent="showdata"></v-readbox>
+                  <v-readbox :title="'当前输入hdmi分辨率'" :defaultcontent="data.hdmi.showdata"></v-readbox>
                 </li>
               </ul>
             </div>
             <div class="setdata">
               <div class="btnapply">
-                <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(data)=>{btnactive=data}"></v-button>
-                <div class="applybtn" @click="apply([2])">应用</div>
+                <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(obj)=>{data.hdmi.btnactive=obj}"></v-button>
+                <div class="applybtn" @click="apply('hdmi', data.hdmi.btnactive)">应用</div>
               </div>
               <ul class="cardul">
-                <template v-if="btnactive==1">
+                <template v-if="data.hdmi.btnactive==1">
                   <li>
-                    <v-textbox v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="ratio" :list="list1" @getData="(data)=>{ratio=data.item}"></v-textbox>
+                    <v-textbox v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="data.hdmi.ratios" :list="list1" @getData="(obj)=>{data.hdmi.ratios=obj.item}"></v-textbox>
                   </li>
                   <li>
-                    <v-textbox v-model="freshVisible" :showdrop="1" :title="'预设刷新率（Hz）'" :defaultcontent="fresh" :list="list2" @getData="(data)=>{fresh=data.item}"></v-textbox>
+                    <v-textbox v-model="freshVisible" :showdrop="1" :title="'预设刷新率（Hz）'" :defaultcontent="data.hdmi.fresh" :list="list2" @getData="(obj)=>{data.hdmi.fresh=obj.item}"></v-textbox>
                   </li>
                 </template>
                 <template v-else>
                   <li>
-                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="rationumW"></v-sliderbox>
+                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="data.hdmi.ratio[1].W" :min="800" :max="4097"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="rationumH"></v-sliderbox>
+                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data.hdmi.ratio[1].H" :min="600" :max="4097"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="rationumZ"></v-sliderbox>
+                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="data.hdmi.ratio[1].Z" :min="23" :max="127"></v-sliderbox>
                   </li>
                 </template>
               </ul>
             </div>
           </div>
           <!-- sdi -->
-          <div class="tabcontent3" v-show="active == 2" @click="sdi">
+          <div class="tabcontent3" v-show="active == 2">
             <div class="showdata">
               <ul class="cardul">
                 <li>
-                  <v-readbox :title="'当前sdi1分辨率'" :defaultcontent="showdata"></v-readbox>
+                  <v-readbox :title="'当前sdi1分辨率'" :defaultcontent="sdi1showdata"></v-readbox>
                 </li>
                 <li>
-                  <v-readbox :title="'当前sdi2分辨率'" :defaultcontent="showdata"></v-readbox>
+                  <v-readbox :title="'当前sdi2分辨率'" :defaultcontent="sdi2showdata"></v-readbox>
                 </li>
               </ul>
             </div>
@@ -110,41 +109,41 @@
           <div class="tabcontent4" v-show="active == 3" :class="{active: showmosaic}">
             <div class="showdata showdatadvi">
               <div class="btnapply">
-                <v-button :maintitle="'单链模式'" :subtitle="'双链模式'" @getBtn="(data)=>{doublelink=data; doublelink==1?showdouble=true:showdouble=false;}"></v-button>
+                <v-button :maintitle="'单链模式'" :subtitle="'双链模式'" @getBtn="(data)=>{link=data}"></v-button>
               </div>
               <ul class="cardul">
                 <li>
-                  <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-textbox>
+                  <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="data.dvi.showdata"></v-textbox>
                 </li>
-                <li v-if="showdouble">
-                  <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-textbox>
+                <li v-if="link==2">
+                  <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="data.dvi.showdata"></v-textbox>
                 </li>
                 <li>
-                  <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-textbox>
+                  <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="data.dvi.showdata"></v-textbox>
                 </li>
-                <li v-if="showdouble">
-                  <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="'3840×2160@ 60Hz'"></v-textbox>
+                <li v-if="link==2">
+                  <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="data.dvi.showdata"></v-textbox>
                 </li>
-                <li v-if="!showdouble" class="noneli">
+                <li v-if="link==1" class="noneli">
                   <v-textbox></v-textbox>
                 </li>
-                <li v-if="!showdouble" class="noneli">
+                <li v-if="link==1" class="noneli">
                   <v-textbox></v-textbox>
                 </li>
               </ul>
             </div>
             <div class="showdata showdatadvi">
               <div class="btnapply">
-                <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(data)=>{btnactive=data}"></v-button>
-                <div class="applybtn" @click="apply([1])">应用</div>
+                <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(obj)=>{data.dvi.btnactive=obj}"></v-button>
+                <div class="applybtn" @click="apply('dvi', data.dvi.btnactive)">应用</div>
               </div>
               <ul class="cardul">
-                <template v-if="btnactive==1">
+                <template v-if="data.dvi.btnactive==1">
                   <li>
-                    <v-textbox v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="ratio" :list="list1" @getData="(data)=>{ratio=data.item}"></v-textbox>
+                    <v-textbox v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="data.dvi.ratios" :list="list1" @getData="(obj)=>{data.dvi.ratios=obj.item}"></v-textbox>
                   </li>
                   <li>
-                    <v-textbox v-model="freshVisible" :showdrop="1" :title="'预设刷新率（Hz）'" :defaultcontent="fresh" :list="list2" @getData="(data)=>{fresh=data.item}"></v-textbox>
+                    <v-textbox v-model="freshVisible" :showdrop="1" :title="'预设刷新率（Hz）'" :defaultcontent="data.dvi.fresh" :list="list2" @getData="(obj)=>{data.dvi.fresh=obj.item}"></v-textbox>
                   </li>
                   <li class="noneli">
                     <v-textbox></v-textbox>
@@ -157,13 +156,13 @@
                 </template>
                 <template v-else>
                   <li>
-                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="rationumW"></v-sliderbox>
+                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="data.dvi.ratio[1].W"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="rationumH"></v-sliderbox>
+                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data.dvi.ratio[1].H"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="rationumZ"></v-sliderbox>
+                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="data.dvi.ratio[1].Z"></v-sliderbox>
                   </li>
                   <li class="noneli">
                     <v-textbox></v-textbox>
@@ -241,44 +240,66 @@
         // public       
         list1: ['800*600', '1024*768', '1280*720', '1280*768', '1280*800', '1280*1024', '1366*768', '1440*900', '1600*900', '1600*1200', '1600*1050', '1920*1080', '1920*1200', '1920*2160', '2048*640', '2048*1152', '2048*1536', '2304*1152', '2560*816', '2560*960', '2560*1600', '3840*1080', '3840*2160 (默认)', '4096*2160'],  // 分辨率  DP HDMI  DL-DVI
         list2: ['23.98', '24', '25', '29.97', '30', '47.96', '48', '50', '59.94', '60 (默认)', '75', '120'],  // 刷新率
-        ratio: '3840*2160',                          // 分辨率 默认值 width*height // 
-        fresh: '60',                                 // 刷新率 默认值
-        width: '0',                                  // 分辨率 width
-        height: '0',                                 // 分辨率 height
-        hz: '0',                                     // 分辨率 hz
-        rationum: 0,                                 // 分辨率 滑块
-        showdata: 'No Single',                       // 默认显示，是否在线
-        rationumW: 1920,                             // dp 默认水平分辨率
-        rationumH: 1080,                             // dp 默认垂直分辨率
-        rationumZ: 60,                               // dp 默认刷新率
 
-        // DP
-        dpwidth: '0',                                  // 分辨率 width
-        dpheight: '0',                                 // 分辨率 height
-        dphz: '0',                                     // 分辨率 hz
-        dprationumW: 3840,                             // dp 默认水平分辨率
-        dprationumH: 2160,                             // dp 默认垂直分辨率
-        dprationumZ: 60,                               // dp 默认刷新率
-        dpbtnactive: 1,                                // dp 预设 / 自定义
-        dpshowdata: 'No Single',                       // 当前输入dp分辨率
-
-        dvimodel: ['单链模式', '双链模式'],            // HDMI 模式
-        showmosaic: false,                           // DVI mosic开关          
-        link: '双链模式',                             // DVI mosic默认值    
-        doublelink: 1,                            // DVI 双链为1 单链为2
-        showdouble: true,                        // DVI 单双链显示 2/4 dvi
-        btnactive: 1,                                // btn
-        _: '',                                   // 账户
-        aa: {
+        data: {   // pro:js格式不一样应该不影响吧？
           dp: {
-            current: 1,
+            btnactive: 1,                                // dp 预设 / 自定义
+            showdata: 'No Single',                       // 当前输入dp分辨率
+            ratios: '3840*2160',                         // 分辨率 默认值 width*height // 
+            fresh: '60',                                 // 刷新率 默认值
             ratio: [{
-              width: 1
+              width: '3840',                             // 分辨率 width
+              height: '2160',                            // 分辨率 height
+              hz: '60',                                  // 分辨率 hz
             }, {
-              width: 2
+              W: 3840,                                   // dp 默认水平分辨率
+              H: 2160,                                   // dp 默认垂直分辨率
+              Z: 60,                                     // dp 默认刷新率
+            }]
+          },
+          hdmi: {
+            btnactive: 1,                                // hdmi 预设 / 自定义
+            showdata: 'No Single',                       // 当前输入hdmi分辨率
+            ratios: '3840*2160',                         // 分辨率 默认值 width*height // 
+            fresh: '60',                                 // 刷新率 默认值
+            ratio: [{
+              width: '3840',                             // 分辨率 width
+              height: '2160',                            // 分辨率 height
+              hz: '60',                                  // 分辨率 hz
+            }, {
+              W: 3840,                                   // hdmi 默认水平分辨率
+              H: 2160,                                   // hdmi 默认垂直分辨率
+              Z: 60,                                     // hdmi 默认刷新率
+            }]
+          },
+          dvi: {
+            btnactive: 1,                                // hdmi 预设 / 自定义
+            showdata: 'No Single',                       // 当前输入hdmi分辨率
+            ratios: '3840*2160',                         // 分辨率 默认值 width*height // 
+            fresh: '60',                                 // 刷新率 默认值
+            ratio: [{
+              width: '3840',                             // 分辨率 width
+              height: '2160',                            // 分辨率 height
+              hz: '60',                                  // 分辨率 hz
+            }, {
+              W: 3840,                                   // hdmi 默认水平分辨率
+              H: 2160,                                   // hdmi 默认垂直分辨率
+              Z: 60,                                     // hdmi 默认刷新率
             }]
           }
-        }
+        },
+
+        sdi1showdata: 'No Single',                   // sdi1展示内容    
+        sdi2showdata: 'No Single',                   // sdi2展示内容    
+
+        dvimodel: ['单链模式', '双链模式'],            // dvi模式
+        link: 1,                                      // 单链    2双链   
+
+        showmosaic: false,                           // DVI mosic默认值    
+        rationumH: 1080,                             // mosic 宽
+        rationumZ: 60,                               // mosic  高
+
+        _: '',                                       // 账户
       }
     },
     created() {
@@ -294,136 +315,91 @@
       }
     },
     watch: {
-      getCount(val) {
-        if(!val) {
-          console.log(this.active);
-          switch(this.active) {
-            case 0: this.dp(); break;
-            case 1: this.hdmi(); break;
-            // case 2: this.dp(); break;
-            // case 3: this.dp(); break;
-          }
-        }
-      }
+      // getCount(val) {
+      //   if(!val) {
+      //     console.log(this.active);
+      //     switch(this.active) {
+      //       case 0: this.dp(); break;
+      //       case 1: this.hdmi(); break;
+      //     }
+      //   }
+      // }
     },
     methods: {
       ...mapActions(['ajax']),
       ...mapMutations(['setCommon']),
-      dp() {
-        console.log('dp...');
+      readData(index, params) {
+        // 激活菜单tab
+        this.active = index;
+        let sparams = params.toLowerCase();
+
         // let res = { 'In0_ResW': '1280', 'In0_ResH': '100', 'In0_ResR': '60', 'ERRC': '0' };
-        let dpSta = this.getCommon.DP_Sta;
-        if(dpSta == 1 || dpSta == 2) {
+
+        let state = this.getCommon[params + '_Sta'];   // pro: DP_Sta  1 1 undefined undefined   SDI1 SDI2 DVI1 DVI2 DVI3 DVI4
+        console.log('----------', params, state, '-------');
+
+        let val = []
+        if(index == 0) {
+          val = [0];
+        } else if(index == 1) {
+          val = [1];
+        } else if(index == 2) {
+          val = [2, 3];
+        } else if(index == 3) {
+          val = [4, 5, 6, 7];
+        }
+        let inx = {};
+        val.forEach(item => {
+          inx[`In${item}_ResW`] = 0;
+          inx[`In${item}_ResH`] = 0;
+          inx[`In${item}_ResR`] = 0;
+        });
+        // 向服务端发送请求
+        let retdata = { RW: 0, DevID: 0, ...inx, _: this._ };
+        if(state == 1 || state == 2) {
           this.ajax({
             name: 'url',
-            data: {
-              RW: 0,
-              DevID: 0,
-              DevID: 0,
-              In0_ResW: 0,
-              In0_ResH: 0,
-              In0_ResR: 0,
-              _: this._
-            }
+            data: retdata
           }).then(res => {
-            //? let { In0_ResW: this.width, In0_ResH: this.height,  In0_ResR: this.hz} = {In0_ResW: 0,In0_ResH: 0,In0_ResR: 0, a: 1};
-            let { In0_ResW: dpwidth, In0_ResH: dpheight, In0_ResR: dphz } = res;
-            this.dpwidth = dpwidth;
-            this.dpheight = dpheight;
-            this.dphz = dphz;
-            this.showdata = `${this.dpwidth}*${this.dpheight}@ ${this.dphz}Hz`;
+            //pro: let { In0_ResW: this.width, In0_ResH: this.height,  In0_ResR: this.hz} = {In0_ResW: 0,In0_ResH: 0,In0_ResR: 0, a: 1};
+            // let { In0_ResW: dpwidth, In0_ResH: dpheight, In0_ResR: dphz } = res;
+            // this.dpwidth = dpwidth;
+            // this.dpheight = dpheight;
+            // this.dphz = dphz;
+            // this.showdata = `${this.dpwidth}*${this.dpheight}@ ${this.dphz}Hz`;
           });
-        } else if(dpSta == 0 || dPSta == 3) {
-          this.showdata = 'No Single';
+        } else if(state == 0 || state == 3) {
+          this.data.sparams.showdata = 'No Single';
         } else {
-          this.showdata = 'No Single';
+          this.data.sparamsshowdata = 'No Single';
         }
       },
-      hdmi() {
-        console.log('hdmi...');
-        let hdmiSta = this.getCommon.HDMI_Sta;
-        if(hdmiSta == 1 || hdmiSta == 2) {
-          this.ajax({
-            name: 'url',
-            data: {
-              RW: 0,
-              DevID: 0,
-              In1_ResW: 0,
-              In1_ResH: 0,
-              In1_ResR: 0,
-              _: this._
-            }
-          }).then(res => {
-            // let { In0_ResW: width, In0_ResH: height,  In0_ResR: hz} = {In0_ResW: 0,In0_ResH: 0,In0_ResR: 0, a: 1};
-            let { In1_ResW: width, In1_ResH: height, In1_ResR: hz } = res;
-            this.width = width;
-            this.height = height;
-            this.hz = hz;
-            this.showdata = `${this.width}*${this.height}@ ${this.hz}Hz`;
-          });
-        } else if(hdmiSta == 0 || hdmiSta == 3) {
-          this.showdata = 'No Single';
-        } else {
-          this.showdata = 'No Single';
-        }
-      },
-      sdi() {
-        console.log('sdi...');
-        let sdi1Sta = this.getCommon.SDI1_Sta;
-        let sdi2Sta = this.getCommon.SDI2_Sta;
-        if(sdi1Sta == 1 || sdi1Sta == 2 || sdi2Sta == 1 || sdi2Sta == 2) {
-          this.ajax({
-            name: 'url',
-            data: {
-              RW: 0,
-              DevID: 0,
-              In2_ResW: 0,
-              In2_ResH: 0,
-              In2_ResR: 0,
-              In3_ResW: 0,
-              In3_ResH: 0,
-              In3_ResR: 0,
-              _: this._
-            }
-          }).then(res => {
-            // let { In0_ResW: width, In0_ResH: height,  In0_ResR: hz} = {In0_ResW: 0,In0_ResH: 0,In0_ResR: 0, a: 1};
-            let { In2_ResW: width1, In2_ResH: height1, In2_ResR: hz1, In3_ResW: width2, In3_ResH: height2, In3_ResR: hz2 } = res;
-            this.width = width1;
-            this.height = height1;
-            this.hz = hz1;
-            this.showdata = `${this.width}*${this.height}@ ${this.hz}Hz`;
-          });
-        } else if(hdmiSta == 0 || hdmiSta == 3) {
-          this.showdata = 'No Single';
-        } else {
-          this.showdata = 'No Single';
-        }
-      },
-      apply(val = 'dp', index) {
-
-
-        aa[val][index - 1]
-
+      apply(val, index) {
         console.log('--------------------------------------------------');
         let inx = {};
-        let ratio = '';
         let width = '';
         let height = '';
         let hz = '';
-        if(val.includes(1)) {
-          if(this.dpbtnactive == 1) {
-            ratio = this.ratio.split(' ')[0];
-            width = ratio.split('*')[0];
-            height = ratio.split('*')[1];
-            hz = this.fresh;
-          } else if(this.dpbtnactive == 2) {
-            width = this.dprationumW;
-            height = this.dprationumH;
-            hz = this.dprationumZ;
-          }
+        if(index == 1) {
+          // this.data[val]['ratio'][index - 1].width = this.data[val].ratios.split('*')[0];
+          width = this.data[val]['ratio'][index - 1].width;
+          height = this.data[val]['ratio'][index - 1].height;
+          hz = this.data[val]['ratio'][index - 1].hz;
+        } else if(index == 2) {
+          width = this.data[val]['ratio'][index - 1].W;
+          height = this.data[val]['ratio'][index - 1].H;
+          hz = this.data[val]['ratio'][index - 1].Z;
         }
 
-        val.forEach(item => {
+        let tmp = [];
+        if(val == 'dp') {
+          tmp = [0];
+        } else if(val == 'hdmi') {
+          tmp = [1];
+        } else if(val == 'dvi') {
+          tmp = [4, 5, 6, 7];
+        }
+        tmp.forEach(item => {
           inx[`In${item}_EdidW`] = width;
           inx[`In${item}_EdidH`] = height;
           inx[`In${item}_EdidR`] = hz;
@@ -434,17 +410,18 @@
           data: {
             RW: 1,
             DevID: 0,
-            In_EdidA: 0,
+            CMD: 1,
             ...inx,
             _: this._
           }
         }).then(res => {
           //? let { In0_ResW: this.width, In0_ResH: this.height,  In0_ResR: this.hz} = {In0_ResW: 0,In0_ResH: 0,In0_ResR: 0, a: 1};
           //let { In0_EdidW: width, In0_EdidH: height, In0_EdidR: hz } = res;
-          this.dpwidth = width;
-          this.dpheight = height;
-          this.dphz = hz;
-          this.dpshowdata = `${this.dpwidth}*${this.dpheight}@ ${this.dphz}Hz`;
+          // this.dpwidth = width;
+          // this.dpheight = height;
+          // this.dphz = hz;
+          // this.dpshowdata = `${this.dpwidth}*${this.dpheight}@ ${this.dphz}Hz`;
+          // 直接调用读取接口显示数据会不会更方便
         });
       },
       closeCard() {

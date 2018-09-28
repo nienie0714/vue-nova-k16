@@ -73,7 +73,7 @@ function readPolling(count) {
                 DVI2_Sta: '0',
                 DVI3_Sta: '0',
                 DVI4_Sta: '0',
-                DVI_Mosaic_Sta: '0',
+                // DVI_Mosaic_Sta: '0',
                 BKG_Sta: '0',
                 FRZ_Sta: '0',
                 BLACK_Sta: '0',

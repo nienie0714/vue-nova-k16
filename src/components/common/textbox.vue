@@ -25,6 +25,7 @@
     <!-- 卡片下拉框 -->
     <div class="card-drap-wrap" :class="{dpActive}">
       <div class="card-drop" :class="{active: dropcard}">
+        <!-- <div v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{item}}</div> -->
         <div v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{item}}</div>
       </div>
     </div>

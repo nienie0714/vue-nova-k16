@@ -9,13 +9,13 @@
       <div class="card-btm">
         <div class="innum"><input type="text" v-model.number="value2"></div>
         <div class="inimggroup">
-          <div class="inimg" @click="increase">
-            <img v-if="max" src="@/assets/icon/icon_add_normal.png" alt="">
-            <img v-else src="@/assets/icon/icon_add_normal.png" alt="">
-          </div>
           <div class="inimg" @click="decrease">
             <img v-if="notmin" src="@/assets/icon/icon_low_normal.png" alt="">
             <img v-else src="@/assets/icon/icon_low_normal.png" alt="">
+          </div>
+          <div class="inimg" @click="increase">
+            <img v-if="max" src="@/assets/icon/icon_add_normal.png" alt="">
+            <img v-else src="@/assets/icon/icon_add_normal.png" alt="">
           </div>
         </div>
       </div>
