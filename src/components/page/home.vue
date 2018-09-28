@@ -11,6 +11,28 @@
               <!-- <div class="menu-box" :class="light.className">
                 <div>{{$t('home.light')}}</div>
               </div> -->
+              <div class="menu-box light">
+                <div>{{$t('home.light')}}</div>
+                <div class="card-btm">
+                  <div class="innum"><input type="text" v-model.number="value"></div>
+                  <div class="inimggroup">
+                    <div class="inimg" @click="increase">
+                      <img v-if="notmax" src="@/assets/icon/icon_add_normal.png" alt="">
+                      <img v-else src="@/assets/icon/icon_add_normal.png" alt="">
+                    </div>
+                    <div class="inimg" @click="decrease">
+                      <img v-if="notmin" src="@/assets/icon/icon_low_normal.png" alt="">
+                      <img v-else src="@/assets/icon/icon_low_normal.png" alt="">
+                    </div>
+                  </div>
+                </div>
+                <!-- slider -->
+                <div class="block">
+                  <el-slider v-model="value">
+                    <!--  min=0 max=1920 -->
+                  </el-slider>
+                </div>
+              </div>
               <div class="menu-box" v-for="(router, index) in routers" :key="index" :class="router.className" @click="go(router)">
                 <div>{{router.name}}</div>
               </div>
@@ -27,10 +49,6 @@
       <!-- <div class="mask">
         <div class="slide-box" :class="{subactive: subactive}">
         </div>
-      </div> -->
-      <!-- <div class="btngroup">
-        <div class="btn" :class="{btnactive: btnactive==1}" @click="active=false, btnactive=1">功能</div>
-        <div class="btn" :class="{btnactive: btnactive==2}" @click="active=true, btnactive=2">接口</div>
       </div> -->
       <div class="btncenter">
         <v-button :maintitle="'功能'" :subtitle="'输入源'" @getBtn="(data)=>{btnactive=data, btnactive==1?active=false:active=true;}"></v-button>
@@ -50,10 +68,6 @@
     data() {
       return {
         routers: [{
-          name: this.$t('home.light'),
-          path: 'light',
-          className: 'light'
-        }, {
           name: this.$t('home.input'),
           path: 'input',
           className: 'input'
@@ -90,7 +104,10 @@
         active: false,
         subactive: true,
         btnactive: 1,
-        hometimer: null
+        hometimer: null,
+        value: 50,
+        notmax: true,
+        notmin: true
       };
     },
     computed: {
@@ -102,6 +119,12 @@
       ...mapMutations(['setCommon']),
       go(route) {
         this.$router.push({ name: route.path });
+      },
+      increase() {
+        this.value++;
+      },
+      decrease() {
+        this.value--;
       }
     }
   }
@@ -174,12 +197,40 @@
     color: #fff;
     font-size: 28px;
     display: flex;
+    transform: translateY(5px);
+    transition: all 0.3s;
     // align-items: flex-end;
-    &:active {
+    &:hover {
       opacity: 0.8;
+      transform: translateX(0);
     }
     &.light {
+      display: flex;
+      flex-direction: column;
       background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_light.png') center center no-repeat / 360px 200px;
+      .card-btm {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        .innum {
+          flex: 1;
+        }
+        .inimggroup {
+          display: flex;
+          justify-content: flex-end;
+          .inimg {
+            width: 50px;
+            height: 32px;
+            border: 1px solid white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+      }
     }
     &.input {
       background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_input.png') center center no-repeat / 360px 200px;
@@ -205,6 +256,13 @@
     &.setting {
       background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_setting.png') center center no-repeat / 360px 200px;
     }
+  }
+  input {
+    border: none;
+    width: 50%;
+    font-size: 34px;
+    background-color: #1f2a51;
+    color: white;
   }
 
   // 浮窗

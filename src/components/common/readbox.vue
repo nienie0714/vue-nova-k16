@@ -121,7 +121,7 @@
     }
     &-drop::-webkit-scrollbar-thumb {
       border-radius: 5px;
-      -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      -webkit-box-shadow: inset 0 0 5px rgba(212, 166, 166, 0.2);
       background: rgba(0, 0, 0, 0.2);
     }
     &-drop::-webkit-scrollbar-track {

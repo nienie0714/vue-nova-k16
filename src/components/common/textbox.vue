@@ -1,5 +1,5 @@
 <template>
-  <div class="card" :class="{active: dpActive}">
+  <div class="card" :class="{active: dpActive, hidden: !dropcard}">
     <!-- 卡片上半部分 -->
     <div class="card-top" :class="{active: dpActive}">
       <!-- 下三角号 -->
@@ -173,6 +173,10 @@
   }
   input {
     border: none;
+  }
+
+  .hidden {
+    overflow: hidden;
   }
 </style>
 
