@@ -22,7 +22,14 @@ export default new Vuex.Store({
             BKG_Sta: '',
             FRZ_Sta: '',
             BLACK_Sta: '',
-            Account: ''
+            Account: '',
+            sourceActive: 0
+        },
+        mosic: getSen('mosic') || {
+            In9_MosL: '',
+            In9_MosM: '',
+            In9_MosW: '',
+            In9_MosH: ''
         },
         cacheData: getSen('cacheData') || {},
         lang: getLoc('lang') || 'zh',
@@ -30,6 +37,7 @@ export default new Vuex.Store({
     },
     getters: {
         getCommon: state => serialize(state.common),
+        getMosic: state => serialize(state.mosic),
         getCacheData: state => serialize(state.cacheData),
         getLang: state => state.lang,
         getCount: state => state.count
@@ -38,6 +46,10 @@ export default new Vuex.Store({
         setCommon(state, data) {
             state.common = { ...state.common, ...data };
             setSen('common', state.common);
+        },
+        setMosic(state, data) {
+            state.mosic = { ...state.mosic, ...data };
+            setSen('mosic', state.mosic);
         },
         setCacheData(state, data) {
             state.cacheData = { ...state.cacheData, ...data };

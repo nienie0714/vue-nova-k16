@@ -19,6 +19,14 @@ Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
         for (let k in params) {
             ret[k] = '1';
         }
+        ret['In4_ResW'] = 1001;
+        ret['In5_ResW'] = 1001;
+        ret['In6_ResW'] = 1001;
+        ret['In7_ResW'] = 4001;
+        ret['In4_ResH'] = 1002;
+        ret['In5_ResH'] = 1002;
+        ret['In6_ResH'] = 1002;
+        ret['In7_ResH'] = 2160;
         // 拼接成功标志
         ret['ERRC'] = '0';
         // ret['Account'] = params['Account'] == '0' ? localStorage.getItem('_') : params['Account'];

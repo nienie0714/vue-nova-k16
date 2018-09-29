@@ -16,19 +16,19 @@
                 <div class="card-btm">
                   <div class="innum"><input type="text" v-model.number="value"></div>
                   <div class="inimggroup">
-                    <div class="inimg" @click="increase">
-                      <img v-if="notmax" src="@/assets/icon/icon_add_normal.png" alt="">
-                      <img v-else src="@/assets/icon/icon_add_normal.png" alt="">
-                    </div>
                     <div class="inimg" @click="decrease">
                       <img v-if="notmin" src="@/assets/icon/icon_low_normal.png" alt="">
                       <img v-else src="@/assets/icon/icon_low_normal.png" alt="">
+                    </div>
+                    <div class="inimg" @click="increase">
+                      <img v-if="notmax" src="@/assets/icon/icon_add_normal.png" alt="">
+                      <img v-else src="@/assets/icon/icon_add_normal.png" alt="">
                     </div>
                   </div>
                 </div>
                 <!-- slider -->
                 <div class="block">
-                  <el-slider v-model="value">
+                  <el-slider v-model="value" :step="4" @change="handleLight">
                     <!--  min=0 max=1920 -->
                   </el-slider>
                 </div>
@@ -121,10 +121,24 @@
         this.$router.push({ name: route.path });
       },
       increase() {
-        this.value++;
+        this.value += 4;
+        this.handleLight();
       },
       decrease() {
-        this.value--;
+        this.value -= 4;
+        this.handleLight();
+      },
+      handleLight() {
+        this.ajax({
+          name: 'url',
+          data: {
+            RW: 1,
+            DevID: 0,
+            CMD: 4,
+            Screen_Bri: this.value,
+            _: localStorage.getItem('_')
+          }
+        });
       }
     }
   }
@@ -222,6 +236,8 @@
           display: flex;
           justify-content: flex-end;
           .inimg {
+            user-select: none;
+            cursor: pointer;
             width: 50px;
             height: 32px;
             border: 1px solid white;

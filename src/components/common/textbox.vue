@@ -1,12 +1,12 @@
 <template>
-  <div class="card" :class="{active: dpActive, hidden: !dropcard}">
+  <div class="card" :class="{active: dpActive, hidden: !dpActive}">
     <!-- 卡片上半部分 -->
     <div class="card-top" :class="{active: dpActive}">
       <!-- 下三角号 -->
       <div class="card-icon" @click.stop="dropcard = !dropcard" v-if="showdrop">
         <transition name="bounce">
-          <span v-if="dropcard"><img class="up" src="@/assets/icon/u389.png" alt=""></span>
-          <span v-else><img src="@/assets/icon/u389.png" alt=""></span>
+          <span v-if="dropcard"><img src="@/assets/icon/icon_packup.png" alt=""></span>
+          <span v-else><img src="@/assets/icon/icon_pulldown.png" alt=""></span>
         </transition>
       </div>
       <!-- 开关 -->
@@ -25,8 +25,10 @@
     <!-- 卡片下拉框 -->
     <div class="card-drap-wrap" :class="{dpActive}">
       <div class="card-drop" :class="{active: dropcard}">
-        <!-- <div v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{item}}</div> -->
-        <div v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{item}}</div>
+        <slot>
+          <!-- <div v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{item}}</div> -->
+          <div class="row" v-if="list.length" :class="{active: index === activeIndex}" v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{item.r || `${item.w}*${item.h}`}} {{item.default && ('(默认)')}}</div>
+        </slot>
       </div>
     </div>
   </div>
@@ -38,6 +40,7 @@
         dropcard: false,
         open2: false,
         dpActive: false,
+        timmer: null
       };
     },
     props: [
@@ -47,7 +50,8 @@
       'defaultcontent',      // 内容
       'list',                // 下拉菜单列表
       'open',                 // switch
-      'value'
+      'value',
+      'activeIndex'
     ],
     methods: {
       getData(index, item) {
@@ -69,7 +73,8 @@
         if(val) {
           this.dpActive = true;
         } else {
-          setTimeout(() => { this.dpActive = false }, 300);
+          // clearTimeout(this.timmer);
+          this.timmer = setTimeout(() => { this.dpActive = false }, 300);
         }
         this.$emit('input', val);
       }
@@ -99,12 +104,14 @@
         margin-bottom: 15px;
       }
       .card-icon {
+        cursor: pointer;
         float: right;
         img {
           width: 20px;
           height: 20px;
-          transform: rotate(0);
-          transition: all 0.3s;
+          transform: rotate(0) translateY(-10px);
+          transition: transform 0.3s;
+          padding: 10px;
         }
         .up {
           transform: rotate(180deg);
@@ -141,7 +148,7 @@
       transform: translateY(-100%);
       overflow-y: auto;
       cursor: pointer;
-      > div {
+      .row {
         font-size: 24px;
         width: calc(100%-24px);
         margin: 1px 12px;
@@ -149,7 +156,8 @@
         box-sizing: border-box;
         transition: all 0.3s;
       }
-      > div:hover {
+      .row:hover,
+      .active {
         color: #febe00;
         background: #1f2a51;
       }

@@ -18,8 +18,11 @@
     props: [
       'maintitle',               // 主标题
       'subtitle',                // 副标题 
-      'a'
+      'value'
     ],
+    created() {
+      this.btnactive = this.value || 1;
+    },
     methods: {
       getBtn(val) {
         this.btnactive = val;
@@ -49,6 +52,7 @@
     border: solid 2px #828298;
     color: #828298;
     font-size: 20px;
+    cursor: pointer;
     &.btnactive {
       font-size: 20px;
       color: #080532;

@@ -41,8 +41,8 @@
       title: '',  // 标题
       showslider: '', // 滑动 
       value: '', // 这里必须写value,才能和父组件的v-model对应上  其他普通情况 写父@name的name
-      min: { default: 2 },
-      max: { default: 102 }
+      min: { default: 1 },
+      max: { default: 100 }
     },
     created() {
       this.value2 = this.value;  // 将父组件传递的值赋值给自组件的data，即value2
