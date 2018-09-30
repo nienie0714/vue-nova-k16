@@ -15,7 +15,8 @@
         <!-- 全屏显示 -->
         <div class="btn-fullscreen" @click="handleFullScreen">
           <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
-            <img src="../../assets/icon/icon_fullscreen.png">
+            <img v-if="!fullscreen" src="../../assets/icon/icon_fullscreen.png">
+            <img v-else src="../../assets/icon/icon_cancelfullscreen.png">
           </el-tooltip>
         </div>
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">

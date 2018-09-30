@@ -19,7 +19,9 @@
         {{title}}
       </div>
       <div class="card-btm">
-        {{defaultcontent}}
+        <slot name="template">
+          {{defaultcontent}}
+        </slot>
       </div>
     </div>
     <!-- 卡片下拉框 -->
@@ -64,6 +66,7 @@
     },
     created() {
       this.open2 = this.open;
+      // this.activeIndex = this.list
     },
     watch: {
       value(val) {
@@ -94,7 +97,6 @@
       width: 100%;
       height: 100%;
       background-color: #1f2a51; // 背景色
-      color: rgba(255, 255, 255, 1);
       margin-bottom: 2px;
       padding: 30px 20px 20px 20px;
       z-index: 1;
@@ -102,13 +104,15 @@
         width: 90%;
         font-size: 20px;
         margin-bottom: 15px;
+        font-size: 20px;
+        color: #acacc7;
       }
       .card-icon {
         cursor: pointer;
         float: right;
         img {
-          width: 20px;
-          height: 20px;
+          width: 30px;
+          height: 30px;
           transform: rotate(0) translateY(-10px);
           transition: transform 0.3s;
           padding: 10px;
@@ -121,6 +125,7 @@
         width: 100%;
         font-size: 24px;
         margin-bottom: 15px;
+        color: #ffffff;
       }
       &.active {
         z-index: 11;

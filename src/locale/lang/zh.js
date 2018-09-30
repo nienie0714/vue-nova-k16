@@ -13,8 +13,8 @@ export default {
         picture: '画面控制',
         connect: '拼接带载',
         scene: '场景设置',
-        communication: '高级设置',
-        setting: '通讯设置'
+        setting: '高级设置',
+        communication: '通讯设置'
     },
     scenes: {
         loadScene: '载入场景'

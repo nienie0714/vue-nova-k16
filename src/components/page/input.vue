@@ -22,14 +22,16 @@
             <div class="showdata">
               <ul class="cardul">
                 <li>
-                  <v-readbox :title="'当前输入dp分辨率'" :defaultcontent="data[0].showdata"></v-readbox>
+                  <v-readbox :title="'当前输入分辨率'" :defaultcontent="data[0].showdata"></v-readbox>
                 </li>
               </ul>
             </div>
             <div class="setdata">
               <div class="btnapply">
                 <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(item)=>{data[0].btnactive=item}"></v-button>
-                <div class="applybtn" @click="apply(0)">应用</div>
+                <div class="applybtn" @click="apply(0)">
+                  <img src="~assets/icon/icon_apply.png" alt="">应用
+                </div>
               </div>
               <ul class="cardul">
                 <template v-if="data[0].btnactive==1">
@@ -42,13 +44,13 @@
                 </template>
                 <template v-else>
                   <li>
-                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="data[0].ratio[1].w" :min="800" :max="4096"></v-sliderbox>
+                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="data[0].ratio[1].w" :min="800" :max="3840" :step="4"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data[0].ratio[1].h" :min="600" :max="4096"></v-sliderbox>
+                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data[0].ratio[1].h" :min="600" :max="3840"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="data[0].ratio[1].r" :min="23" :max="120"></v-sliderbox>
+                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="data[0].ratio[1].r" :min="24" :max="120"></v-sliderbox>
                   </li>
                 </template>
               </ul>
@@ -67,7 +69,7 @@
             <div class="setdata">
               <div class="btnapply">
                 <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(obj)=>{data[1].btnactive=obj}"></v-button>
-                <div class="applybtn" @click="apply(1)">应用</div>
+                <div class="applybtn" @click="apply(1)"><img src="~assets/icon/icon_apply.png" alt="">应用</div>
               </div>
               <ul class="cardul">
                 <template v-if="data[1].btnactive==1">
@@ -80,13 +82,13 @@
                 </template>
                 <template v-else>
                   <li>
-                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="data[1].ratio[1].w" :min="800" :max="4097"></v-sliderbox>
+                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="data[1].ratio[1].w" :min="800" :max="3840" :step="4"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data[1].ratio[1].h" :min="600" :max="4097"></v-sliderbox>
+                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data[1].ratio[1].h" :min="600" :max="3840"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="data[1].ratio[1].z" :min="23" :max="127"></v-sliderbox>
+                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="data[1].ratio[1].r" :min="24" :max="120"></v-sliderbox>
                   </li>
                 </template>
               </ul>
@@ -113,29 +115,29 @@
               </div>
               <ul class="cardul">
                 <li>
-                  <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="data[3].showdata0"></v-textbox>
+                  <v-readbox :title="'当前DVI1输入分辨率'" :defaultcontent="data[3].showdata0"></v-readbox>
                 </li>
-                <li v-if="mosic.link==2">
-                  <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="data[3].showdata1"></v-textbox>
+                <li v-if="mosic.link==1">
+                  <v-readbox :title="'当前DVI2输入分辨率'" :defaultcontent="data[3].showdata1"></v-readbox>
                 </li>
                 <li>
-                  <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="data[3].showdata2"></v-textbox>
+                  <v-readbox :title="'当前DVI3输入分辨率'" :defaultcontent="data[3].showdata2"></v-readbox>
                 </li>
-                <li v-if="mosic.link==2">
-                  <v-textbox :showdrop="0" :title="'当前输入分辨率'" :defaultcontent="data[3].showdata3"></v-textbox>
+                <li v-if="mosic.link==1">
+                  <v-readbox :title="'当前DVI4输入分辨率'" :defaultcontent="data[3].showdata3"></v-readbox>
                 </li>
-                <li v-if="mosic.link==1" class="noneli">
-                  <v-textbox></v-textbox>
+                <li v-if="mosic.link==2" class="noneli">
+                  <v-readbox></v-readbox>
                 </li>
-                <li v-if="mosic.link==1" class="noneli">
-                  <v-textbox></v-textbox>
+                <li v-if="mosic.link==2" class="noneli">
+                  <v-readbox></v-readbox>
                 </li>
               </ul>
             </div>
             <div class="showdata showdatadvi">
               <div class="btnapply">
                 <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(obj)=>{data[3].btnactive=obj}"></v-button>
-                <div class="applybtn" @click="apply(3)">应用</div>
+                <div class="applybtn" @click="apply(3)"><img src="~assets/icon/icon_apply.png" alt="">应用</div>
               </div>
               <ul class="cardul">
                 <template v-if="data[3].btnactive==1">
@@ -156,13 +158,13 @@
                 </template>
                 <template v-else>
                   <li>
-                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="data[3].ratio[1].w"></v-sliderbox>
+                    <v-sliderbox :title="'水平分辨率(px)'" :min="800" :max="data[3].dvimin" v-model.number="data[3].ratio[1].w"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data[3].ratio[1].h"></v-sliderbox>
+                    <v-sliderbox :title="'垂直分辨率(px)'" :min="600" :max="data[3].dvimin" v-model.number="data[3].ratio[1].h"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="data[3].ratio[1].r"></v-sliderbox>
+                    <v-sliderbox :title="'刷新率（Hz）'" :min="24" :max="120" v-model.number="data[3].ratio[1].r"></v-sliderbox>
                   </li>
                   <li class="noneli">
                     <v-textbox></v-textbox>
@@ -171,8 +173,8 @@
                 </template>
               </ul>
             </div>
-            <div class="btncenter mosaicbtn">
-              <div class="applybtn" @click="mosic.showmosaic = true">MOSAIC</div>
+            <div class="btncenter mosicbtn">
+              <div class="applybtn mosicc" @click="mosic.showmosaic = true"><img src="~assets/icon/icon_apply.png" alt="">DVI MOSAIC</div>
             </div>
           </div>
 
@@ -180,15 +182,18 @@
         <div class="subcontainer" v-show="active == 3" :class="{active: mosic.showmosaic}">
           <div class="tabgroup">
             <div class="tabtitle">此处可将各DVI源按照所选模板进行统一拼接，拼接源可独立源使用</div>
-            <div class="applybtn">应用</div>
+            <div class="applybtn" @click="mosicapply"><img src="~assets/icon/icon_apply.png" alt="">应用</div>
           </div>
           <div class="mosic">
             <div class="mosicleft">
               <ul class="cardul">
                 <li>
-                  <v-textbox ref="text-box1" v-model="mosicVisible" :title="'拼接模板'" :defaultcontent="'1920*1080'" :showdrop="1">
+                  <v-textbox ref="text-box1" v-model="mosicVisible" :title="'拼接模板'" :showdrop="1">
+                    <div slot="template">
+                      <div class="mosic-img" :class="'mosic-img-' + mosic.templateIndex"></div>
+                    </div>
                     <div class="mosic-template">
-                      <div @click="mosic.templateIndex = index" v-for="(item, index) in mosic.templateList" class="mosic-img" :class="{['mosic-img-' + index]: true, selectActive: index === mosic.templateIndex}"></div>
+                      <div @click="saveTmplate(index)" v-for="(item, index) in mosic.templateList" class="mosic-img" :class="{['mosic-img-' + index]: true, selectActive: index === mosic.templateIndex}"></div>
                     </div>
                   </v-textbox>
                 </li>
@@ -241,7 +246,7 @@
             </div>
           </div>
           <div class="btncenter mosaicbtn">
-            <div class="applybtn" @click="mosic.showmosaic = false">返回</div>
+            <div class="applybtn" @click="mosic.showmosaic = false"><img class="down" src="~assets/icon/icon_more.png">返回</div>
           </div>
         </div>
       </div>
@@ -261,78 +266,101 @@
         active: 0,                                   // tab active
         // public       
         // list1: ['800*600', '1024*768', '1280*720', '1280*768', '1280*800', '1280*1024', '1366*768', '1440*900', '1600*900', '1600*1200', '1600*1050', '1920*1080', '1920*1200', '1920*2160', '2048*640', '2048*1152', '2048*1536', '2304*1152', '2560*816', '2560*960', '2560*1600', '3840*1080', '3840*2160 (默认)', '4096*2160'],  // 分辨率  DP HDMI  DL-DVI
-        list1: [{ w: 800, h: 600 }, { w: 3840, h: 2160, default: true }, { w: 4096, h: 2160 }],  // 分辨率  DP HDMI  DL-DVI
-        // list2: [{ r: 23.98 }, 24, 25, 29.97, 30, 47.96, 48, 50, 59.94, 60(默认), 75, 120],  // 刷新率
-        list2: [{ r: 23.98 }, { r: 60, default: true }],  // 刷新率
-        data: [   // pro:js格式不一样应该不影响吧？
+        list1: [],
+        list1_1: [{ w: 800, h: 600 }, { w: 1024, h: 768 }, { w: 1280, h: 720 }, { w: 1280, h: 768 }, { w: 1280, h: 800 }, { w: 1280, h: 1024 }, { w: 1366, h: 768 }, { w: 1440, h: 900 }, { w: 1600, h: 900 }, { w: 1600, h: 1200 },
+        { w: 1600, h: 1050 }, { w: 1920, h: 1080, default: true }],  // 单链
+        list1_2: [{ w: 800, h: 600 }, { w: 1024, h: 768 }, { w: 1280, h: 720 }, { w: 1280, h: 768 }, { w: 1280, h: 800 }, { w: 1280, h: 1024 }, { w: 1366, h: 768 }, { w: 1440, h: 900 }, { w: 1600, h: 900 }, { w: 1600, h: 1200 },
+        { w: 1600, h: 1050 }, { w: 1920, h: 1080 }, { w: 1920, h: 1200 }, { w: 1920, h: 2160 }, { w: 2048, h: 640 }, { w: 2048, h: 1152 }, { w: 2048, h: 1536 }, { w: 2304, h: 816 }, { w: 2560, h: 960 }, { w: 2560, h: 1600 }, { w: 3840, h: 1080 }, { w: 3840, h: 2160, default: true }, { w: 4096, h: 2160 }],  // 分辨率  DP HDMI  DL-DVI        
+        list2: [{ r: 23.98 }, { r: 24 }, { r: 25 }, { r: 29.97 }, { r: 30 }, { r: 47.96 }, { r: 48 }, { r: 50 }, { r: 59.94 }, { r: 60, default: true }, { r: 75 }, { r: 120 }],  // 刷新率
+        data: [
           {
             name: 'DP',
-            btnactive: 1,                                // dp 预设 / 自定义
-            showdata: 'No Single',                       // 当前输入dp分辨率                      // 分辨率 默认值 width*height //                                  // 刷新率 默认值
+            btnactive: 1,
+            showdata: 'No Single',
             ratio: [{
-              wh: 1,
-              r: 1
+              wh: 21,
+              r: 9
             }, {
-              w: 1,
-              h: 1,
-              r: 1                                      // dp 默认刷新率
+              w: 3840,
+              h: 2160,
+              r: 60
             }]
           },
           {
             name: 'HDMI',
-            btnactive: 1,                                // hdmi 预设 / 自定义
-            showdata: 'No Single',                       // 当前输入hdmi分辨率
+            btnactive: 1,
+            showdata: 'No Single',
             ratio: [{
-              wh: 1,
-              r: 1
+              wh: 21,
+              r: 9
             }, {
-              w: 801,
-              h: 601,
-              r: 23                                   // dp 默认刷新率
+              w: 1920,
+              h: 1080,
+              r: 60
             }]
           },
           {
             name: 'SDI',
-            showdata0: 'No Single',                   // sdi2展示内容    
-            showdata1: 'No Single',                   // sdi1展示内容    
+            showdata0: 'No Single',
+            showdata1: 'No Single',
           },
           {
             name: 'DVI',
-            btnactive: 1,                                // hdmi 预设 / 自定义
-            showdata0: 'No Single',                       // 当前输入hdmi分辨率
-            showdata1: 'No Single',                       // 当前输入hdmi分辨率
-            showdata2: 'No Single',                       // 当前输入hdmi分辨率
-            showdata3: 'No Single',                       // 当前输入hdmi分辨率
+            btnactive: 1,
+            showdata0: 'No Single',
+            showdata1: 'No Single',
+            showdata2: 'No Single',
+            showdata3: 'No Single',
             ratio: [{
-              wh: 1,
-              r: 1
+              wh: 21,
+              r: 9   // 选中index
             }, {
-              w: 1,
-              h: 1,
-              r: 1                                 // dp 默认刷新率
-            }]
+              w: 3840,
+              h: 1080,
+              r: 60
+            }],
+            dvimin: 3840,
           },
         ],
         mosic: {
-          link: 1,                                      // 单链    2双链   
-          showmosaic: false,                           // DVI mosic默认值    
-          w: 802,                             // mosic 宽
-          h: 602,
+          link: 1,
+          linklist: [],
+          showmosaic: false,
+          w: 800,
+          h: 600,
           wm: 4096,
-          hm: 4096,                          // mosic  高
+          hm: 4096,
           templateList: [{ row: 2, col: 1 }, { row: 1, col: 2 }, { row: 3, col: 1 }, { row: 1, col: 3 }, { row: 1, col: 4 }, { row: 4, col: 1 }, { row: 2, col: 2 }],
           templateIndex: 0,
         },
-        _: '',                                       // 账户
+        _: '',
       }
     },
     created() {
       this._ = getLoc('_');
       this.mosic.link = +this.getMosic.In9_MosL + 1;
+
+      if(this.mosic.link == 1) {
+        this.data[3].dvimin = 2048;
+        this.data[3].ratio[1].wh = 10;
+        this.data[3].ratio[2].w = 1920;
+      }
+      // this.mosic.linklist = this.mosic.link == 1 ? this.list11 : this.list1;
+      // this.data[3].ratio[2].w = this.mosic.link == 1 ? 2048 : 3840;
+      // this.mosic.link == 1 ? 1920 : 3840;
+      // this.mosic.link == 1 ?
+
       this.mosic.templateIndex = +this.getMosic.In9_MosM;
       this.mosic.w = +this.getMosic.In9_MosW;
       this.mosic.h = +this.getMosic.In9_MosH;
       this.active = this.getCommon.sourceActive;
+
+      if(this.active === 3 && this.mosic.link == 1) {
+        this.list1 = this.list1_1;
+      } else {
+        this.list1 = Object.assign({}, this.list1_2);
+      }
+      console.log(this.list1);
     },
     computed: {
       ...mapGetters(['getCommon', 'getCount', 'getMosic']),
@@ -341,8 +369,7 @@
       },
       cRationumZ() {
         return Math.round((this.mosic.h - 600) * (270 - 200) / (2160 - 600) + 200);
-      },
-
+      }
     },
     watch: {
       getCount(val) {
@@ -353,15 +380,23 @@
     },
     methods: {
       ...mapActions(['ajax']),
-      ...mapMutations(['setCommon']),
+      ...mapMutations(['setCommon', 'setMosic']),
       readData(index) {
         // 激活菜单tab
-        this.active = index;
+        this.active = index || 0;
+
+        if(this.active === 3 && this.mosic.link == 1) {
+          this.list1 = this.list1_1;
+        } else {
+          this.list1 = this.list1_2;
+        }
+
         this.setCommon({ sourceActive: index });
         let val = []
         if(index == 0) {
           val = [0];
         } else if(index == 1) {
+
           val = [1];
         } else if(index == 2) {
           val = [2, 3];
@@ -371,6 +406,7 @@
         let inx = {};
         val.forEach((item, i) => {
           let state = this.getCommon[this.data[index].name + (val.length > 1 ? (i + 1) : '') + '_Sta'];
+          console.log(state);
           if(state == 1 || state == 2) {
             inx[`In${item}_ResW`] = 0;
             inx[`In${item}_ResH`] = 0;
@@ -378,26 +414,27 @@
           }
         });
 
-        this.ajax({
-          name: 'url',
-          data: { RW: 0, DevID: 0, ...inx, _: this._ }
-        }).then(res => {
-          val.forEach((item, i) => {
-            let H = res[`In${item}_ResH`]
-            let W = res[`In${item}_ResW`]
-            let R = res[`In${item}_ResR`]
-            if(H) {
-              this.data[index]['showdata' + (val.length > 1 ? i : '')] = `${W}*${H}@ ${R}Hz`;
-              if(index === 3) {
-                console.log(H, W, R)
-                this.mosic.wm = W;
-                this.mosic.hm = H
+        if(Object.keys(inx).length != 0) {
+          this.ajax({
+            name: 'url',
+            data: { RW: 0, DevID: 0, ...inx, _: this._ }
+          }).then(res => {
+            val.forEach((item, i) => {
+              let H = res[`In${item}_ResH`]
+              let W = res[`In${item}_ResW`]
+              let R = res[`In${item}_ResR`] / 100;
+              if(H) {
+                this.data[index]['showdata' + (val.length > 1 ? i : '')] = `${W}*${H}@ ${R}Hz`;
+                if(index === 3) {
+                  this.mosic.wm = W;
+                  this.mosic.hm = H
+                }
+              } else {
+                this.data[index]['showdata' + (val.length > 1 ? i : '')] = 'No Single';
               }
-            } else {
-              this.data[index]['showdata' + (val.length > 1 ? i : '')] = 'No Single';
-            }
+            });
           });
-        });
+        }
       },
       apply(index) {
         let inx = {};
@@ -416,7 +453,7 @@
 
         inx[`In${tmp}_EdidW`] = w
         inx[`In${tmp}_EdidH`] = h;
-        inx[`In${tmp}_EdidR`] = r;
+        inx[`In${tmp}_EdidR`] = r * 100;
 
         this.ajax({
           name: 'url',
@@ -447,22 +484,43 @@
           });
         });
       },
-      closeCard() {
-        this.ratioVisible = false;
-        this.freshVisible = false;
-        this.mosicVisible = false;
+      saveTmplate(index) {
+        this.mosic.templateIndex = index;
+        this.setMosic({ In9_MosM: index });
       },
-      handleLink(val) {
-        //http://192.168.0.10/page/panel/leds.cgi?RW=1&DevID=0&CMD=2&In9_MosL=0&_=1450258914882
-
-        this.mosic.link = val
+      mosicapply() {
         this.ajax({
           name: 'url',
           data: {
             RW: 1,
             DevID: 0,
             CMD: 2,
-            In9_MosL: 0,
+            In9_MosM: this.mosic.templateIndex,
+            In9_MosW: this.mosic.w,
+            In9_MosH: this.mosic.h,
+            _: this._
+          }
+        });
+      },
+      closeCard() {
+        this.ratioVisible = false;
+        this.freshVisible = false;
+        this.mosicVisible = false;
+      },
+      handleLink(val) {
+        this.mosic.link = val;
+        this.data[3].dvimin = val == 1 ? 2048 : 3840;
+        this.list1 = JSON.parse(JSON.stringify(val == 1 ? this.list1_1 : this.list1_2));
+        // console.log(this.list1);
+        // this.data[3].ratio[2].w = val == 1 ? 1920 : 3840;
+
+        this.ajax({
+          name: 'url',
+          data: {
+            RW: 1,
+            DevID: 0,
+            CMD: 3,
+            In9_MosL: val - 1,
             _: this._
           }
         });
@@ -518,7 +576,7 @@
     box-sizing: border-box;
     width: 100%;
     padding: 30px 0 30px 0;
-    border-bottom: 1px dashed white;
+    background: url('~assets/icon/img_line.png') repeat-x bottom;
   }
 
   .setdata {
@@ -740,38 +798,38 @@
     display: flex;
     flex-wrap: wrap;
     padding-left: 30px !important;
-    .mosic-img {
-      float: left;
-      width: 50px;
-      height: 50px;
-      background: no-repeat;
-      background-size: 100% 100%;
-      margin: 10px;
-      box-sizing: border-box;
-      &.selectActive {
-        background-color: #02022b;
-      }
-      &-0 {
-        background-image: url('~assets/mosic/icon_template_ud.png');
-      }
-      &-1 {
-        background-image: url('~assets/mosic/icon_template_lr.png');
-      }
-      &-2 {
-        background-image: url('~assets/mosic/icon_template_umd.png');
-      }
-      &-3 {
-        background-image: url('~assets/mosic/icon_template_lmr.png');
-      }
-      &-4 {
-        background-image: url('~assets/mosic/icon_template_four_vertical.png');
-      }
-      &-5 {
-        background-image: url('~assets/mosic/icon_template_four_across.png');
-      }
-      &-6 {
-        background-image: url('~assets/mosic/icon_template_square.png');
-      }
+  }
+  .mosic-img {
+    float: left;
+    width: 50px;
+    height: 50px;
+    background: no-repeat;
+    background-size: 100% 100%;
+    margin: 10px;
+    box-sizing: border-box;
+    &.selectActive {
+      background-color: #02022b;
+    }
+    &-0 {
+      background-image: url('~assets/mosic/icon_template_ud.png');
+    }
+    &-1 {
+      background-image: url('~assets/mosic/icon_template_lr.png');
+    }
+    &-2 {
+      background-image: url('~assets/mosic/icon_template_umd.png');
+    }
+    &-3 {
+      background-image: url('~assets/mosic/icon_template_lmr.png');
+    }
+    &-4 {
+      background-image: url('~assets/mosic/icon_template_four_vertical.png');
+    }
+    &-5 {
+      background-image: url('~assets/mosic/icon_template_four_across.png');
+    }
+    &-6 {
+      background-image: url('~assets/mosic/icon_template_square.png');
     }
   }
 </style>

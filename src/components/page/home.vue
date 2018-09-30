@@ -14,7 +14,7 @@
               <div class="menu-box light">
                 <div>{{$t('home.light')}}</div>
                 <div class="card-btm">
-                  <div class="innum"><input type="text" v-model.number="value"></div>
+                  <div class="innum"><input type="number" v-model.number="value" onafterpaste="this.value=this.value.replace(/\D/g,'')" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onkeypress="this.value=this.value.replace(/[^0-9]/g,'')" @blur="handleLight"></div>
                   <div class="inimggroup">
                     <div class="inimg" @click="decrease">
                       <img v-if="notmin" src="@/assets/icon/icon_low_normal.png" alt="">
@@ -92,13 +92,13 @@
           path: 'scene',
           className: 'scene'
         }, {
-          name: this.$t('home.communication'),
-          path: 'communication',
-          className: 'communication'
-        }, {
           name: this.$t('home.setting'),
           path: 'setting',
           className: 'setting'
+        }, {
+          name: this.$t('home.communication'),
+          path: 'communication',
+          className: 'communication'
         }
         ],
         active: false,
@@ -113,7 +113,6 @@
     computed: {
       ...mapGetters(['getCommon', 'getCacheData'])
     },
-
     methods: {
       ...mapActions(['ajax']),
       ...mapMutations(['setCommon']),
@@ -121,11 +120,11 @@
         this.$router.push({ name: route.path });
       },
       increase() {
-        this.value += 4;
+        this.value++;
         this.handleLight();
       },
       decrease() {
-        this.value -= 4;
+        this.value--;
         this.handleLight();
       },
       handleLight() {
@@ -213,6 +212,7 @@
     display: flex;
     transform: translateY(5px);
     transition: all 0.3s;
+    cursor: pointer;
     // align-items: flex-end;
     &:hover {
       opacity: 0.8;

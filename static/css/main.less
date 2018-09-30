@@ -112,9 +112,13 @@ li {
         vertical-align: middle;
         &.homeicon {
             margin-right: 38px;
+            cursor: pointer;
+            user-select: none;
         }
         &.iicon {
             margin-right: 10px;
+            cursor: pointer;
+            user-select: none;
         }
     }
     .snav {
@@ -156,8 +160,8 @@ li {
 }
 .applybtn {
     cursor: pointer;
+    width: 120px;
     height: 50px;
-    width: 180px;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -166,10 +170,18 @@ li {
     border: solid 2px #febe00;
     color: #febe00;
     font-size: 20px;
+    padding-right: 8px;
     &.btnactive {
         font-size: 20px;
         color: #febe00;
         background-color: #828298;
+    }
+    .down {
+        transform: rotate(180deg);
+    }
+    &.mosicc {
+        margin-top: 20px;
+        width: 364px;
     }
 }
 
