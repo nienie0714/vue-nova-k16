@@ -20,8 +20,10 @@
 
 
 <style lang="less">
+  @import '../static/css/main.css';
+  @import './style/index.less';
+
   #app {
     background: url('./assets/img_BG.png') center center no-repeat / cover;
   }
-  @import '../static/css/main.less';
 </style>

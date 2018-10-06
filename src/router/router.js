@@ -9,6 +9,11 @@ const routes = [
         path: '/input',
         component: () => import('../components/page/input')
     },
+    {
+        name: 'window',
+        path: '/window',
+        component: () => import('../components/page/window')
+    },
     // {
     //     path: '/',
     //     component: resolve => require(['../components/page/home.vue'], resolve),

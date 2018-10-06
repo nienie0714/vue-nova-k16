@@ -4,8 +4,8 @@
     <!-- 页面名称 -->
     <div class="jrtitle">
       <img class="homeicon" src="@/assets/icon/icon_home.png" alt="" @click="$router.go(-1);">
-      <img class="iicon" src="@/assets/icon/icon_input.png" alt="">
-      <span class="snav">输入设置</span>
+      <img class="iicon" src="@/assets/icon/icon_window.png" alt="">
+      <span class="snav">窗口设置</span>
     </div>
     <div class="content-box">
       <!-- tab -->
@@ -17,45 +17,6 @@
       <div class="container">
         <!-- content -->
         <div class="content">
-          <!-- dp -->
-          <div class="tabdp" v-show="active == 0">
-            <div class="showdata">
-              <ul class="cardul">
-                <li>
-                  <v-readbox :title="'当前输入分辨率'" :defaultcontent="data[0].showdata"></v-readbox>
-                </li>
-              </ul>
-            </div>
-            <div class="setdata">
-              <div class="btnapply">
-                <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(item)=>{data[0].btnactive=item}"></v-button>
-                <div class="applybtn" @click="apply(0)">
-                  <img src="~assets/icon/icon_apply.png" alt="">应用
-                </div>
-              </div>
-              <ul class="cardul">
-                <template v-if="data[0].btnactive==1">
-                  <li>
-                    <v-textbox :activeIndex="data[0].ratio[0].wh" v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="list1[data[0].ratio[0].wh].w + '*' + list1[data[0].ratio[0].wh].h" :list="list1" @getData="obj => {data[0].ratio[0].wh = obj.index}"></v-textbox>
-                  </li>
-                  <li>
-                    <v-textbox :activeIndex="data[0].ratio[0].r" v-model="freshVisible" :showdrop="1" :title="'预设刷新率（Hz）'" :defaultcontent="list2[data[0].ratio[0].r].r" :list="list2" @getData="obj => {data[0].ratio[0].r = obj.index}"></v-textbox>
-                  </li>
-                </template>
-                <template v-else>
-                  <li>
-                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="data[0].ratio[1].w" :min="800" :max="3840" :step="4"></v-sliderbox>
-                  </li>
-                  <li>
-                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data[0].ratio[1].h" :min="600" :max="3840"></v-sliderbox>
-                  </li>
-                  <li>
-                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="data[0].ratio[1].r" :min="24" :max="120"></v-sliderbox>
-                  </li>
-                </template>
-              </ul>
-            </div>
-          </div>
           <!-- <v-textbox :showswitch="1" :title="'预设刷新率（Hz）'" :defaultcontent="'switch'"></v-textbox> -->
           <!-- hdmi -->
           <div class="tabcontent2" v-show="active == 1">
@@ -272,19 +233,6 @@
         { w: 1600, h: 1050 }, { w: 1920, h: 1080 }, { w: 1920, h: 1200 }, { w: 1920, h: 2160 }, { w: 2048, h: 640 }, { w: 2048, h: 1152 }, { w: 2048, h: 1536 }, { w: 2304, h: 816 }, { w: 2560, h: 960 }, { w: 2560, h: 1600 }, { w: 3840, h: 1080 }, { w: 3840, h: 2160, default: true }, { w: 4096, h: 2160 }],  // 分辨率  DP HDMI  双链        
         list2: [{ r: 23.98 }, { r: 24 }, { r: 25 }, { r: 29.97 }, { r: 30 }, { r: 47.96 }, { r: 48 }, { r: 50 }, { r: 59.94 }, { r: 60, default: true }, { r: 75 }, { r: 120 }],  // 刷新率
         data: [
-          {
-            name: 'DP',
-            btnactive: 1,
-            showdata: 'No Single',
-            ratio: [{
-              wh: 21,
-              r: 9
-            }, {
-              w: 3840,
-              h: 2160,
-              r: 60
-            }]
-          },
           {
             name: 'HDMI',
             btnactive: 1,

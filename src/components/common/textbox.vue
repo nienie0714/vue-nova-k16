@@ -28,8 +28,8 @@
     <div class="card-drap-wrap" :class="{dpActive}">
       <div class="card-drop" :class="{active: dropcard}">
         <slot>
-          <!-- <div v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{item}}</div> -->
-          <div class="row" v-if="list.length" :class="{active: index === activeIndex}" v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{item.r || `${item.w}*${item.h}`}} {{item.default && ('(默认)')}}</div>
+          <!-- <div v-if="!list.length" v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{item}}</div> -->
+          <div class="row" :class="{active: index == activeIndex}" v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{item.r || `${item.w}*${item.h}`}} {{item.default && ('(默认)')}}</div>
         </slot>
       </div>
     </div>
@@ -66,7 +66,6 @@
     },
     created() {
       this.open2 = this.open;
-      // this.activeIndex = this.list
     },
     watch: {
       value(val) {
@@ -76,11 +75,14 @@
         if(val) {
           this.dpActive = true;
         } else {
-          // clearTimeout(this.timmer);
           this.timmer = setTimeout(() => { this.dpActive = false }, 300);
         }
         this.$emit('input', val);
       }
+      // list(val) {
+      //   this.$nextTick(function() {
+      //   });
+      // }
     }
   }
 </script>

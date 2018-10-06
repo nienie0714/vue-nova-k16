@@ -46,6 +46,7 @@
     },
     created() {
       this.value2 = this.value;  // 将父组件传递的值赋值给自组件的data，即value2
+      this.value3 = this.value;
     },
     watch: {  // 用于父组件监听值，watch是一个对象，里面包含的都是键值对，function就相当于一个键值对
       value3(val) {  //-> value2: function(){}    
