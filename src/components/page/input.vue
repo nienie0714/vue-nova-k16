@@ -35,7 +35,7 @@
               </div>
               <ul class="cardul">
                 <template v-if="data[0].btnactive==1">
-                  <li>
+                  <li v-if="list1[data[0].ratio[0].wh]">
                     <v-textbox :activeIndex="data[0].ratio[0].wh" v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="list1[data[0].ratio[0].wh].w + '*' + list1[data[0].ratio[0].wh].h" :list="list1" @getData="obj => {data[0].ratio[0].wh = obj.index}"></v-textbox>
                   </li>
                   <li>
@@ -73,7 +73,7 @@
               </div>
               <ul class="cardul">
                 <template v-if="data[1].btnactive==1">
-                  <li>
+                  <li v-if="list1[data[1].ratio[0].wh]">
                     <v-textbox :activeIndex="data[1].ratio[0].wh" v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="list1[data[1].ratio[0].wh].w + '*' + list1[data[1].ratio[0].wh].h" :list="list1" @getData="(obj)=>{data[1].ratio[0].wh = obj.index}"></v-textbox>
                   </li>
                   <li>
@@ -141,7 +141,7 @@
               </div>
               <ul class="cardul">
                 <template v-if="data[3].btnactive==1">
-                  <li>
+                  <li v-if="list1[data[3].ratio[0].wh]">
                     <v-textbox :activeIndex="data[3].ratio[0].wh" v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="list1[data[3].ratio[0].wh].w + '*' + list1[data[3].ratio[0].wh].h" :list="list1" @getData="(obj)=>{data[3].ratio[0].wh=obj.index}"></v-textbox>
                   </li>
                   <li>
@@ -211,24 +211,7 @@
               </div>
 
               <div class="bb" :style="{width: cRationumH + 'px', height: cRationumZ + 'px', transform: `translateX(${-Math.round((cRationumH - 400) / 2)}px) translateY(${-Math.round((cRationumZ - 200) / 2)}px)`}">
-                <!-- <div class="row">
-                  <div v-for="(row,index) in 3">
-                    {{row}}
-                    <div class="H" v-if="!index">
-                      <div class="HCenter"></div>
-                      <div class="Hdata">H</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div v-for="(col,index) in 3">
-                    {{col}}
-                    <div class="H" v-if="!index">
-                      <div class="HCenter"></div>
-                      <div class="Hdata">H</div>
-                    </div>
-                  </div>
-                </div> -->
+
                 <div class="row1" v-for="(r,rowIndex) in mosic.templateList[mosic.templateIndex].row">
                   <div class="col1" v-for="(c,colIndex) in mosic.templateList[mosic.templateIndex].col" :class="{active: !rowIndex && !colIndex}">
                     <div class="H" v-if="!rowIndex && !colIndex">
@@ -268,7 +251,7 @@
         list1: [],
         list1_1: [{ w: 800, h: 600 }, { w: 1024, h: 768 }, { w: 1280, h: 720 }, { w: 1280, h: 768 }, { w: 1280, h: 800 }, { w: 1280, h: 1024 }, { w: 1366, h: 768 }, { w: 1440, h: 900 }, { w: 1600, h: 900 }, { w: 1600, h: 1200 },
         { w: 1600, h: 1050 }, { w: 1920, h: 1080, default: true }, { w: 1920, h: 1200 }, { w: 2048, h: 640 }],  // 单链
-        list1_2: [{ w: 800, h: 600 }, { w: 1024, h: 768 }, { w: 1280, h: 720 }, { w: 1280, h: 768 }, { w: 1280, h: 800 }, { w: 1280, h: 1024 }, { w: 1366, h: 768 }, { w: 1440, h: 900 }, { w: 1600, h: 900 }, { w: 1600, h: 1200 },
+        list1_2: [{ w: 800, h: 602 }, { w: 1024, h: 768 }, { w: 1280, h: 720 }, { w: 1280, h: 768 }, { w: 1280, h: 800 }, { w: 1280, h: 1024 }, { w: 1366, h: 768 }, { w: 1440, h: 900 }, { w: 1600, h: 900 }, { w: 1600, h: 1200 },
         { w: 1600, h: 1050 }, { w: 1920, h: 1080 }, { w: 1920, h: 1200 }, { w: 1920, h: 2160 }, { w: 2048, h: 640 }, { w: 2048, h: 1152 }, { w: 2048, h: 1536 }, { w: 2304, h: 816 }, { w: 2560, h: 960 }, { w: 2560, h: 1600 }, { w: 3840, h: 1080 }, { w: 3840, h: 2160, default: true }, { w: 4096, h: 2160 }],  // 分辨率  DP HDMI  双链        
         list2: [{ r: 23.98 }, { r: 24 }, { r: 25 }, { r: 29.97 }, { r: 30 }, { r: 47.96 }, { r: 48 }, { r: 50 }, { r: 59.94 }, { r: 60, default: true }, { r: 75 }, { r: 120 }],  // 刷新率
         data: [
@@ -346,11 +329,11 @@
       }
 
       if(this.active == 3 && this.mosic.link == 1) {   // dvi的单链模式
-        this.list1 = Object.assign({}, this.list1_1);
+        this.list1 = Object.assign([], this.list1_1);
       } else {
-        this.list1 = Object.assign({}, this.list1_2);
+        this.list1 = Object.assign([], this.list1_2);
       }
-      this.list1 = Object.assign({}, this.list1_2);  // DP/HDMI数据来源默认为双链
+      this.list1 = Object.assign([], this.list1_2);  // DP/HDMI数据来源默认为双链
 
       this.mosic.templateIndex = +this.getMosic.In9_MosM;
       this.mosic.w = +this.getMosic.In9_MosW;
@@ -381,14 +364,11 @@
         this.active = index || 0;
 
         if(this.active == 3 && this.mosic.link == 1) {   // dvi的单链模式
-          this.list1 = Object.assign({}, this.list1_1);
+          this.list1 = Object.assign([], this.list1_1);
         } else {
-          this.list1 = Object.assign({}, this.list1_2);
+          this.list1 = Object.assign([], this.list1_2);
         }
 
-        this.list1 = Object.assign({}, this.list1_2);  // DP/HDMI数据来源默认为双链
-
-        console.log(1111, this.list1);
         this.setCommon({ sourceActive: index });
 
         let val = []
