@@ -23,7 +23,8 @@ export default new Vuex.Store({
             FRZ_Sta: '',
             BLACK_Sta: '',
             Account: '',
-            sourceActive: 0
+            sourceActive: 0,
+            windowActive: 0
         },
         mosic: getSen('mosic') || {
             In9_MosL: '',

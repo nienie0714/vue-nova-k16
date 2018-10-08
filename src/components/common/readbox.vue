@@ -42,13 +42,13 @@
     height: 100%;
     display: flex;
     position: relative;
-    border: 1px solid #848999; // 只读只有边框
+    border: 1px solid #525972; // 只读只有边框
     &-top {
       position: absolute;
       box-sizing: border-box;
       width: 100%;
       height: 100%;
-      color: #acacc7;
+      color: #adb4cf;
       margin-bottom: 2px;
       padding: 30px 20px 20px 20px;
       z-index: 1;

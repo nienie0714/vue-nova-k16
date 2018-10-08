@@ -156,7 +156,8 @@
           .decrease {
             width: 50px;
             height: 32px;
-            border: 1px solid white;
+            border: 1px solid #525972;
+            border-right: none;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -173,7 +174,7 @@
           .increase {
             width: 50px;
             height: 32px;
-            border: 1px solid white;
+            border: 1px solid #525972;
             display: flex;
             justify-content: center;
             align-items: center;

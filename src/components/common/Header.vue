@@ -21,7 +21,9 @@
         </div>
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
+            <el-tooltip effect="dark" :content="`语言`" placement="bottom">
             <img src="../../assets/icon/icon_lang.png">
+            </el-tooltip>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>

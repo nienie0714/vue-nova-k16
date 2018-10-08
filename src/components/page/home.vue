@@ -14,7 +14,7 @@
               <div class="menu-box light">
                 <div>{{$t('home.light')}}</div>
                 <div class="card-btm">
-                  <div class="innum"><input type="number" v-model.number="value" onafterpaste="this.value=this.value.replace(/\D/g,'')" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onkeypress="this.value=this.value.replace(/[^0-9]/g,'')" @blur="handleLight"></div>
+                  <div class="innum"><input v-model.number="value" onafterpaste="this.value=this.value.replace(/\D/g,'')" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onkeypress="this.value=this.value.replace(/[^0-9]/g,'')" @blur="handleLight"></div>
                   <div class="inimggroup">
                     <div class="inimg" @click="decrease">
                       <img v-if="notmin" src="@/assets/icon/icon_low_normal.png" alt="">
@@ -212,6 +212,7 @@
     display: flex;
     transform: translateY(5px);
     transition: all 0.3s;
+    position: relative;
     cursor: pointer;
     // align-items: flex-end;
     &:hover {

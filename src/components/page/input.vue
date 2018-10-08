@@ -56,7 +56,6 @@
               </ul>
             </div>
           </div>
-          <!-- <v-textbox :showswitch="1" :title="'预设刷新率（Hz）'" :defaultcontent="'switch'"></v-textbox> -->
           <!-- hdmi -->
           <div class="tabcontent2" v-show="active == 1">
             <div class="showdata">
@@ -174,7 +173,7 @@
               </ul>
             </div>
             <div class="btncenter mosicbtn">
-              <div class="applybtn mosicc" @click="mosic.showmosaic = true"><img src="~assets/icon/icon_apply.png" alt="">DVI MOSAIC</div>
+              <div class="applybtn mosicc" @click="mosic.showmosaic = true"><img src="~assets/icon/icon_more.png" alt="">DVI MOSAIC</div>
             </div>
           </div>
 
@@ -251,7 +250,7 @@
         list1: [],
         list1_1: [{ w: 800, h: 600 }, { w: 1024, h: 768 }, { w: 1280, h: 720 }, { w: 1280, h: 768 }, { w: 1280, h: 800 }, { w: 1280, h: 1024 }, { w: 1366, h: 768 }, { w: 1440, h: 900 }, { w: 1600, h: 900 }, { w: 1600, h: 1200 },
         { w: 1600, h: 1050 }, { w: 1920, h: 1080, default: true }, { w: 1920, h: 1200 }, { w: 2048, h: 640 }],  // 单链
-        list1_2: [{ w: 800, h: 602 }, { w: 1024, h: 768 }, { w: 1280, h: 720 }, { w: 1280, h: 768 }, { w: 1280, h: 800 }, { w: 1280, h: 1024 }, { w: 1366, h: 768 }, { w: 1440, h: 900 }, { w: 1600, h: 900 }, { w: 1600, h: 1200 },
+        list1_2: [{ w: 800, h: 600 }, { w: 1024, h: 768 }, { w: 1280, h: 720 }, { w: 1280, h: 768 }, { w: 1280, h: 800 }, { w: 1280, h: 1024 }, { w: 1366, h: 768 }, { w: 1440, h: 900 }, { w: 1600, h: 900 }, { w: 1600, h: 1200 },
         { w: 1600, h: 1050 }, { w: 1920, h: 1080 }, { w: 1920, h: 1200 }, { w: 1920, h: 2160 }, { w: 2048, h: 640 }, { w: 2048, h: 1152 }, { w: 2048, h: 1536 }, { w: 2304, h: 816 }, { w: 2560, h: 960 }, { w: 2560, h: 1600 }, { w: 3840, h: 1080 }, { w: 3840, h: 2160, default: true }, { w: 4096, h: 2160 }],  // 分辨率  DP HDMI  双链        
         list2: [{ r: 23.98 }, { r: 24 }, { r: 25 }, { r: 29.97 }, { r: 30 }, { r: 47.96 }, { r: 48 }, { r: 50 }, { r: 59.94 }, { r: 60, default: true }, { r: 75 }, { r: 120 }],  // 刷新率
         data: [
@@ -719,7 +718,7 @@
     margin: 10px;
     box-sizing: border-box;
     &.selectActive {
-      background-color: #02022b;
+      background-color: #febe00;
     }
     &-0 {
       background-image: url('~assets/mosic/icon_template_ud.png');

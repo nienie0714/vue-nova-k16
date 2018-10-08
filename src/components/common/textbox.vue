@@ -5,13 +5,13 @@
       <!-- 下三角号 -->
       <div class="card-icon" @click.stop="dropcard = !dropcard" v-if="showdrop">
         <transition name="bounce">
-          <span v-if="dropcard"><img src="@/assets/icon/icon_packup.png" alt=""></span>
-          <span v-else><img src="@/assets/icon/icon_pulldown.png" alt=""></span>
+          <span v-if="dropcard"><img src="@/assets/icon/icon_p.png" alt=""></span>
+          <span v-else><img src="@/assets/icon/icon_p.png" alt=""></span>
         </transition>
       </div>
       <!-- 开关 -->
       <div class="card-icon" v-if="showswitch">
-        <el-switch active-value="1" inactive-value="0" v-model="open2" active-color="#13ce66" inactive-color="#ff4949">
+        <el-switch :active-value="1" :inactive-value="0" v-model="open2" @change="switchOpen" active-color="#febe00" inactive-color="#02022e">
         </el-switch>
       </div>
       <!-- 卡片：标题+内容 -->
@@ -29,7 +29,7 @@
       <div class="card-drop" :class="{active: dropcard}">
         <slot>
           <!-- <div v-if="!list.length" v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{item}}</div> -->
-          <div class="row" :class="{active: index == activeIndex}" v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{item.r || `${item.w}*${item.h}`}} {{item.default && ('(默认)')}}</div>
+          <div class="row" :class="{active: index == activeIndex}" v-for="(item, index) in list" :key="index" @click="getData(index, item)">{{ item.r || `${item.w}*${item.h}`}} {{item.default && ('(默认)')}}</div>
         </slot>
       </div>
     </div>
@@ -40,7 +40,7 @@
     data() {
       return {
         dropcard: false,
-        open2: false,
+        open2: 0,
         dpActive: false,
         timmer: null
       };
@@ -62,12 +62,19 @@
       },
       close() {
         this.dropcard = false;
+      },
+      switchOpen(val) {
+        this.$emit('switchOpen', val);
       }
     },
     created() {
       this.open2 = this.open;
     },
     watch: {
+      // open2(val) {
+      //   console.log(val);
+      //   this.defaultContent = this.open2 == true ? '开启' : '关闭';
+      // },
       value(val) {
         this.dropcard = val;
       },
@@ -156,14 +163,24 @@
       overflow-y: auto;
       cursor: pointer;
       .row {
-        font-size: 24px;
+        height: 40px;
+        font-size: 20px;
         width: calc(100%-24px);
         margin: 1px 12px;
-        padding: 15px 10px;
+        padding: 8px 1px;
         box-sizing: border-box;
         transition: all 0.3s;
+        &:first-child {
+          margin-top: 8px;
+        }
+        &:last-child {
+          margin-bottom: 8px;
+        }
       }
-      .row:hover,
+      .row:hover {
+        color: #000;
+        background: #848999;
+      }
       .active {
         color: #febe00;
         background: #1f2a51;
