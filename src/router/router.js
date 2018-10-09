@@ -1,31 +1,25 @@
 const routes = [
     {
-        name: 'home',
         path: '/',
-        component: () => import('../components/page/home')
+        component: resolve => require(['../components/page/home.vue'], resolve),
+        children: [
+            {
+                name: 'revelation',
+                path: '/',
+                component: resolve => require(['../components/page/revelation.vue'], resolve)
+            },
+            {
+                name: 'input',
+                path: '/input',
+                component: resolve => require(['../components/page/input.vue'], resolve)
+            },
+            {
+                name: 'window',
+                path: '/window',
+                component: resolve => require(['../components/page/window.vue'], resolve)
+            }
+        ]
     },
-    {
-        name: 'input',
-        path: '/input',
-        component: () => import('../components/page/input')
-    },
-    {
-        name: 'window',
-        path: '/window',
-        component: () => import('../components/page/window')
-    },
-    // {
-    //     path: '/',
-    //     component: resolve => require(['../components/page/home.vue'], resolve),
-    //     meta: { title: '自述文件' },
-    //     children: [
-    //         {
-    //             path: '/index',
-    //             component: resolve => require(['../components/page/index.vue'], resolve),
-    //             meta: { title: '用户管理', keepAlive: false }
-    //         }
-    //     ]
-    // },
     {
         name: 'login',
         path: '/login',

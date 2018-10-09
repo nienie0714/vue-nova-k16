@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper" @click="closeCard">
-    <v-header></v-header>
+    <!-- <v-header></v-header> -->
     <!-- 页面名称 -->
     <div class="jrtitle">
       <img class="homeicon" src="@/assets/icon/icon_home.png" alt="" @click="$router.go(-1);">
@@ -81,10 +81,10 @@
               </div>
               <ul class="cardul">
                 <li>
-                  <v-textbox :activeIndex="0" v-model="ratioVisible" :showdrop="1" :title="'Capture源选择'" :defaultcontent="'DP'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
+                  <v-textbox :activeIndex="0" v-model="freshVisible" :showdrop="1" :title="'Capture源选择'" :defaultcontent="'DP'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
                 </li>
                 <li>
-                  <v-textbox :activeIndex="0" v-model="ratioVisible" :showdrop="1" :title="'保存位置选择'" :defaultcontent="'BKG1'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
+                  <v-textbox :activeIndex="0" v-model="mosic" :showdrop="1" :title="'保存位置选择'" :defaultcontent="'BKG1'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
                 </li>
                 <li class="noneli">
                   <v-readbox></v-readbox>

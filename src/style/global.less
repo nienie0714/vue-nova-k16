@@ -1,8 +1,12 @@
+.contentwrapper {
+    box-sizing: border-box;
+    height: calc(100% - 80px);
+}
 .content-box {
     box-sizing: border-box;
     width: 100%;
     padding: 10px 40px 10px 40px;
-    height: calc(100% - 150px);
+    height: calc(100% - 80px);
     position: relative;
     overflow: hidden;
 }
@@ -67,6 +71,10 @@
     line-height: 50px;
     padding-left: 40px;
     margin-bottom: 20px;
+    &.home {
+        margin-bottom: 0;
+        position: fixed;
+    }
     display: flex;
     img {
         width: 50px;
@@ -80,6 +88,8 @@
         &.iicon {
             margin-right: 10px;
             user-select: none;
+        }
+        &.floatingicon {
         }
     }
     .snav {

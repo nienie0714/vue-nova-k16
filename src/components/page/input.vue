@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper" @click="closeCard">
-    <v-header></v-header>
+    <!-- <v-header></v-header> -->
     <!-- 页面名称 -->
     <div class="jrtitle">
       <img class="homeicon" src="@/assets/icon/icon_home.png" alt="" @click="$router.go(-1);">
@@ -205,11 +205,11 @@
               </ul>
             </div>
             <div class="mosicright">
-              <div class="aa">
+              <div class="aa" v-if="mosic.templateList[mosic.templateIndex]">
                 拼接总宽高（px） {{`${mosic.w * mosic.templateList[mosic.templateIndex].col} x ${mosic.h * mosic.templateList[mosic.templateIndex].row}`}}
               </div>
 
-              <div class="bb" :style="{width: cRationumH + 'px', height: cRationumZ + 'px', transform: `translateX(${-Math.round((cRationumH - 400) / 2)}px) translateY(${-Math.round((cRationumZ - 200) / 2)}px)`}">
+              <div class="bb" v-if="mosic.templateList[mosic.templateIndex]" :style="{width: cRationumH + 'px', height: cRationumZ + 'px', transform: `translateX(${-Math.round((cRationumH - 400) / 2)}px) translateY(${-Math.round((cRationumZ - 200) / 2)}px)`}">
 
                 <div class="row1" v-for="(r,rowIndex) in mosic.templateList[mosic.templateIndex].row">
                   <div class="col1" v-for="(c,colIndex) in mosic.templateList[mosic.templateIndex].col" :class="{active: !rowIndex && !colIndex}">
@@ -311,7 +311,10 @@
           h: 600,
           wm: 4096,
           hm: 4096,
-          templateList: [{ row: 2, col: 1 }, { row: 1, col: 2 }, { row: 3, col: 1 }, { row: 1, col: 3 }, { row: 1, col: 4 }, { row: 4, col: 1 }, { row: 2, col: 2 }],
+          templateList: [],
+          templateList1: [{ row: 1, col: 2 }, { row: 2, col: 1 }, { row: 1, col: 3 }, { row: 3, col: 1 }, { row: 1, col: 4 }, { row: 4, col: 1 }, { row: 2, col: 2 }],
+          // templateList2: [{ row: 2, col: 2 }, { row: 1, col: 2 }, { row: 3, col: 1 }, { row: 1, col: 3 }, { row: 1, col: 4 }, { row: 4, col: 1 }, { row: 2, col: 2 }],
+          templateList2: [{ row: 1, col: 2 }, { row: 2, col: 1 }],
           templateIndex: 0,
         },
         _: '',
@@ -329,10 +332,12 @@
 
       if(this.active == 3 && this.mosic.link == 1) {   // dvi的单链模式
         this.list1 = Object.assign([], this.list1_1);
+        this.mosic.templateList = Object.assign([], this.mosic.templateList1);
       } else {
         this.list1 = Object.assign([], this.list1_2);
+        this.mosic.templateList = Object.assign([], this.mosic.templateList2);
       }
-      this.list1 = Object.assign([], this.list1_2);  // DP/HDMI数据来源默认为双链
+      // this.list1 = Object.assign([], this.list1_2);  // DP/HDMI数据来源默认为双链
 
       this.mosic.templateIndex = +this.getMosic.In9_MosM;
       this.mosic.w = +this.getMosic.In9_MosW;
@@ -383,11 +388,14 @@
         let inx = {};
         val.forEach((item, i) => {
           let state = this.getCommon[this.data[index].name + (val.length > 1 ? (i + 1) : '') + '_Sta'];
-          console.log(state);  // 测试HDMI有信号但是页面上方显示无信号
           if(state == 1 || state == 2) {
             inx[`In${item}_ResW`] = 0;
             inx[`In${item}_ResH`] = 0;
             inx[`In${item}_ResR`] = 0;
+          } else if(state == 0) {
+            this.data[index]['showdata' + (val.length > 1 ? i : '')] = 'No Single, 窗口未占用';
+          } else if(state == 3) {
+            this.data[index]['showdata' + (val.length > 1 ? i : '')] = 'No Single, 被窗口占用';
           }
         });
 
@@ -471,7 +479,7 @@
           data: {
             RW: 1,
             DevID: 0,
-            CMD: 2,
+            CMD: 3,
             In9_MosM: this.mosic.templateIndex,
             In9_MosW: this.mosic.w,
             In9_MosH: this.mosic.h,
@@ -490,13 +498,14 @@
         this.data[3].dvimax = val == 1 ? 2048 : 3840;
         this.data[3].ratio[0].wh = val == 1 ? 11 : 21;
         this.data[3].ratio[1].w = val == 1 ? 1920 : 3840;   // 预设分辨率默认值
+        this.mosic.templateList = val == 1 ? Object.assign([], this.mosic.templateList1) : Object.assign([], this.mosic.templateList2);
 
         this.ajax({
           name: 'url',
           data: {
             RW: 1,
             DevID: 0,
-            CMD: 3,
+            CMD: 2,
             In9_MosL: val - 1,
             _: this._
           }
@@ -721,16 +730,16 @@
       background-color: #febe00;
     }
     &-0 {
-      background-image: url('~assets/mosic/icon_template_ud.png');
-    }
-    &-1 {
       background-image: url('~assets/mosic/icon_template_lr.png');
     }
+    &-1 {
+      background-image: url('~assets/mosic/icon_template_ud.png');
+    }
     &-2 {
-      background-image: url('~assets/mosic/icon_template_umd.png');
+      background-image: url('~assets/mosic/icon_template_lmr.png');
     }
     &-3 {
-      background-image: url('~assets/mosic/icon_template_lmr.png');
+      background-image: url('~assets/mosic/icon_template_umd.png');
     }
     &-4 {
       background-image: url('~assets/mosic/icon_template_four_vertical.png');

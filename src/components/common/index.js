@@ -4,6 +4,7 @@ import textbox from './textbox';
 import readbox from './readbox';
 import sliderbox from './sliderbox';
 import button from './button';
+import floating from './floating';
 
 export default {
     header,
@@ -11,5 +12,6 @@ export default {
     textbox,
     readbox,
     sliderbox,
-    button
+    button,
+    floating
 };

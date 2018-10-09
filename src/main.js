@@ -57,7 +57,7 @@ new Vue({
 
 // 轮训常规接口
 function readPolling(count) {
-    console.log('----发送常规请求----', count % 2);
+    console.log('----发送常规请求----');
     let command = localStorage.getItem('_');
     store
         .dispatch('ajax', {
@@ -87,7 +87,7 @@ function readPolling(count) {
             if (account == res.Account) {
                 store.commit('setCommon', { ...res });
             } else {
-                Message('您的账号已被其他人登录，请重新登录');
+                ElementUI.Message('您的账号已被其他人登录，请重新登录');
                 localStorage.removeItem('_');
                 router.push('/login');
             }
