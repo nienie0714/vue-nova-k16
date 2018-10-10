@@ -61,7 +61,7 @@
             <div class="showdata">
               <ul class="cardul">
                 <li>
-                  <v-readbox :title="'当前输入hdmi分辨率'" :defaultcontent="data[1].showdata"></v-readbox>
+                  <v-readbox :title="'当前输入分辨率'" :defaultcontent="data[1].showdata"></v-readbox>
                 </li>
               </ul>
             </div>
@@ -98,10 +98,10 @@
             <div class="showdata">
               <ul class="cardul">
                 <li>
-                  <v-readbox :title="'当前sdi1分辨率'" :defaultcontent="data[2].showdata0"></v-readbox>
+                  <v-readbox :title="'SDI1分辨率'" :defaultcontent="data[2].showdata0"></v-readbox>
                 </li>
                 <li>
-                  <v-readbox :title="'当前sdi2分辨率'" :defaultcontent="data[2].showdata1"></v-readbox>
+                  <v-readbox :title="'SDI2分辨率'" :defaultcontent="data[2].showdata1"></v-readbox>
                 </li>
               </ul>
             </div>
@@ -114,16 +114,16 @@
               </div>
               <ul class="cardul">
                 <li>
-                  <v-readbox :title="'当前DVI1输入分辨率'" :defaultcontent="data[3].showdata0"></v-readbox>
+                  <v-readbox :title="'DVI1输入分辨率'" :defaultcontent="data[3].showdata0"></v-readbox>
                 </li>
                 <li v-if="mosic.link==1">
-                  <v-readbox :title="'当前DVI2输入分辨率'" :defaultcontent="data[3].showdata1"></v-readbox>
+                  <v-readbox :title="'DVI2输入分辨率'" :defaultcontent="data[3].showdata1"></v-readbox>
                 </li>
                 <li>
-                  <v-readbox :title="'当前DVI3输入分辨率'" :defaultcontent="data[3].showdata2"></v-readbox>
+                  <v-readbox :title="'DVI3输入分辨率'" :defaultcontent="data[3].showdata2"></v-readbox>
                 </li>
                 <li v-if="mosic.link==1">
-                  <v-readbox :title="'当前DVI4输入分辨率'" :defaultcontent="data[3].showdata3"></v-readbox>
+                  <v-readbox :title="'DVI4输入分辨率'" :defaultcontent="data[3].showdata3"></v-readbox>
                 </li>
                 <li v-if="mosic.link==2" class="noneli">
                   <v-readbox></v-readbox>
@@ -242,6 +242,7 @@
     name: 'aaa',
     data() {
       return {
+        a: 24,
         ratioVisible: false,
         freshVisible: false,
         mosicVisible: false,
@@ -359,6 +360,9 @@
           this.readData(this.getCommon['sourceActive']);
         }
       }
+      // 'mosic.w'(val) {
+      //   this.mosic.w = val > this.mosic.wm ? this.mosic.wm : val;
+      // }
     },
     methods: {
       ...mapActions(['ajax']),
@@ -393,9 +397,9 @@
             inx[`In${item}_ResH`] = 0;
             inx[`In${item}_ResR`] = 0;
           } else if(state == 0) {
-            this.data[index]['showdata' + (val.length > 1 ? i : '')] = 'No Single, 窗口未占用';
+            this.data[index]['showdata' + (val.length > 1 ? i : '')] = 'No Single';
           } else if(state == 3) {
-            this.data[index]['showdata' + (val.length > 1 ? i : '')] = 'No Single, 被窗口占用';
+            this.data[index]['showdata' + (val.length > 1 ? i : '')] = 'No Single';
           }
         });
 
@@ -411,8 +415,10 @@
               if(H) {
                 this.data[index]['showdata' + (val.length > 1 ? i : '')] = `${W}*${H}@ ${R}Hz`;
                 if(index === 3) {
-                  this.mosic.wm = W;
-                  this.mosic.hm = H
+                  this.mosic.wm = +W;
+                  this.mosic.w = Math.min(this.mosic.w, this.mosic.wm);
+                  this.mosic.hm = +H;
+                  this.mosic.h = Math.min(this.mosic.h, this.mosic.hm);
                 }
               } else {
                 this.data[index]['showdata' + (val.length > 1 ? i : '')] = 'No Single';

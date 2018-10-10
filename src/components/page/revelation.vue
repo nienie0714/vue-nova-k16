@@ -45,10 +45,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="mask">
-        <div class="slide-box" :class="{subactive: subactive}">
-        </div>
-      </div> -->
       <div class="btncenter">
         <v-button :maintitle="'功能'" :subtitle="'输入源'" @getBtn="(data)=>{btnactive=data, btnactive==1?active=false:active=true;}"></v-button>
       </div>

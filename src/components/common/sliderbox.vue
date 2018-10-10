@@ -19,7 +19,7 @@
       </div>
       <!-- slider -->
       <div class="block">
-        <el-slider v-model="value2" :max="max" :min="min" :step="step" @change="handleChange">
+        <el-slider v-model="value2" :max="max" :min="min" :step="step" @change="handleChange" :disabled="disabled">
           <!--  min=0 max=1920 -->
         </el-slider>
       </div>
@@ -33,7 +33,8 @@
         value2: 0,
         notmax: true,
         notmin: true,
-        value3: 0
+        value3: 0,
+        disabled: false
       };
     },
     props: {
@@ -47,16 +48,33 @@
     created() {
       this.value2 = this.value;  // 将父组件传递的值赋值给自组件的data，即value2
       this.value3 = this.value;
+      this.disabled = this.max == this.min;
     },
     watch: {  // 用于父组件监听值，watch是一个对象，里面包含的都是键值对，function就相当于一个键值对
+      max(val) {
+        if(this.max == this.min) {
+          this.value2 = this.min;
+          this.value3 = this.min;
+          this.disabled = true;
+        } else {
+          this.disabled = false;
+        }
+      },
+      value(val) {
+        this.value2 = this.value;
+        this.value3 = this.value;
+      },
       value3(val) {  //-> value2: function(){}    
         if(val) {
           this.value3 = Math.min(parseInt(val), this.max);
+          this.disabled = this.min == this.max;
           this.value2 = this.value3;
           // 自组建向父传递   第一个参数是  父@name  子name  / 父v-model子必须写input  第二个参数是要传递的值
         }
       },
       value2(val) {
+        this.value2 = Math.min(parseInt(val), this.max);
+        this.disabled = this.min == this.max;
         this.$emit('input', val);
       }
     },
@@ -75,9 +93,6 @@
         this.value2 -= this.step;
         this.value3 = this.value2;
       },
-      getNumber() {
-        console.log(this.value2);
-      },
       handleBlur() {
         let result = this.value3;
 
@@ -94,8 +109,6 @@
         } else {
           this.value3 = this.min;
         }
-
-        console.log(this.value3);
       },
       handleChange() {
         this.value3 = this.value2;

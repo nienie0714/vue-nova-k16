@@ -2,6 +2,11 @@
   <div class="floatingbtn">
     <img class="floatingicon" src="@/assets/icon/icon_dashboard.png" alt="">
   </div>
+  <!-- :class="{subactive: false}" -->
+  <!-- <div class="mask">
+    <div class="slide-box">
+    </div>
+  </div> -->
 </template>
 <script>
   export default {

@@ -32,6 +32,20 @@ export default new Vuex.Store({
             In9_MosW: '',
             In9_MosH: ''
         },
+        mock: getSen('mock') || {
+            DP_Sta: '1',
+            HDMI_Sta: '1',
+            SDI1_Sta: '1',
+            SDI2_Sta: '1',
+            DVI1_Sta: '1',
+            DVI2_Sta: '1',
+            DVI3_Sta: '1',
+            DVI4_Sta: '1',
+            // DVI_Mosaic_Sta: '1',
+            BKG_Sta: '1',
+            FRZ_Sta: '1',
+            BLACK_Sta: '1'
+        },
         cacheData: getSen('cacheData') || {},
         lang: getLoc('lang') || 'zh',
         count: 0
@@ -39,6 +53,7 @@ export default new Vuex.Store({
     getters: {
         getCommon: state => serialize(state.common),
         getMosic: state => serialize(state.mosic),
+        getMock: state => serialize(state.mock),
         getCacheData: state => serialize(state.cacheData),
         getLang: state => state.lang,
         getCount: state => state.count
@@ -51,6 +66,10 @@ export default new Vuex.Store({
         setMosic(state, data) {
             state.mosic = { ...state.mosic, ...data };
             setSen('mosic', state.mosic);
+        },
+        setMock(state, data) {
+            state.mock = { ...state.mock, ...data };
+            setSen('mock', state.mock);
         },
         setCacheData(state, data) {
             state.cacheData = { ...state.cacheData, ...data };
