@@ -11,7 +11,7 @@
       </div>
       <!-- 开关 -->
       <div class="card-icon" v-if="showswitch">
-        <el-switch :active-value="1" :inactive-value="0" v-model="open2" @change="switchOpen" active-color="#febe00" inactive-color="#02022e">
+        <el-switch :active-value="1" :inactive-value="0" v-model="open2" @change="switchOpen" active-color="#febe00" inactive-color="#848999">
         </el-switch>
       </div>
       <!-- 卡片：标题+内容 -->

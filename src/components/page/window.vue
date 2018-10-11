@@ -33,6 +33,9 @@
               <li>
                 <v-textbox :activeIndex="0" v-model="mosicVisible" :showdrop="1" :title="'优先级'" :defaultcontent="'1'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
               </li>
+              <li class="noneli">
+                <v-textbox></v-textbox>
+              </li>
             </ul>
             <ul class="cardul">
               <li>
@@ -46,6 +49,9 @@
               </li>
               <li>
                 <v-sliderbox :title="'窗口垂直宽度'" :min="600" :max="3840" v-model.number="data[0].a"></v-sliderbox>
+              </li>
+              <li class="noneli">
+                <v-textbox></v-textbox>
               </li>
             </ul>
             <div class="btncenter mosicbtn">
@@ -66,12 +72,9 @@
                 <li>
                   <v-textbox :activeIndex="0" v-model="ratioVisible" :showdrop="1" :title="'BKG类型'" :defaultcontent="'图片BKG'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
                 </li>
-                <li class="noneli">
+                <!-- <li v-for="item in 3" class="noneli">
                   <v-readbox></v-readbox>
-                </li>
-                <li class="noneli">
-                  <v-readbox></v-readbox>
-                </li>
+                </li> -->
               </ul>
             </div>
             <div class="showdata showdatadvi">
@@ -86,12 +89,9 @@
                 <li>
                   <v-textbox :activeIndex="0" v-model="mosic" :showdrop="1" :title="'保存位置选择'" :defaultcontent="'BKG1'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
                 </li>
-                <li class="noneli">
+                <!-- <li v-for="item in 3" class="noneli">
                   <v-readbox></v-readbox>
-                </li>
-                <li class="noneli">
-                  <v-readbox></v-readbox>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -117,6 +117,9 @@
               </li>
               <li>
                 <v-sliderbox :title="'垂直宽度(px)'" :min="600" :max="3840" v-model.number="data[0].a"></v-sliderbox>
+              </li>
+              <li class="noneli">
+                <v-textbox></v-textbox>
               </li>
             </ul>
           </div>

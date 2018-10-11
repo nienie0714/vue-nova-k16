@@ -15,19 +15,15 @@
                 <div class="card-btm">
                   <div class="innum"><input v-model.number="value" onafterpaste="this.value=this.value.replace(/\D/g,'')" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onkeypress="this.value=this.value.replace(/[^0-9]/g,'')" @blur="handleLight"></div>
                   <div class="inimggroup">
-                    <div class="inimg" @click="decrease">
-                      <img v-if="notmin" src="@/assets/icon/icon_low_normal.png" alt="">
-                      <img v-else src="@/assets/icon/icon_low_normal.png" alt="">
+                    <div class="decrease" @click="decrease" :class="{disabled: value <= 0}">
                     </div>
-                    <div class="inimg" @click="increase">
-                      <img v-if="notmax" src="@/assets/icon/icon_add_normal.png" alt="">
-                      <img v-else src="@/assets/icon/icon_add_normal.png" alt="">
+                    <div class="increase" @click="increase" :class="{disabled: value >= 100}">
                     </div>
                   </div>
                 </div>
                 <!-- slider -->
                 <div class="block">
-                  <el-slider v-model="value" :step="4" @change="handleLight">
+                  <el-slider v-model="value" @change="handleLight">
                     <!--  min=0 max=1920 -->
                   </el-slider>
                 </div>
@@ -100,9 +96,7 @@
         subactive: true,
         btnactive: 1,
         hometimer: null,
-        value: 50,
-        notmax: true,
-        notmin: true
+        value: 50
       };
     },
     computed: {
@@ -230,16 +224,40 @@
         }
         .inimggroup {
           display: flex;
-          justify-content: flex-end;
-          .inimg {
-            user-select: none;
-            cursor: pointer;
+          .decrease {
             width: 50px;
             height: 32px;
-            border: 1px solid white;
+            border: 1px solid #525972;
+            border-right: none;
             display: flex;
             justify-content: center;
             align-items: center;
+            user-select: none;
+            cursor: pointer;
+            background-position: center center;
+            background-image: url('~assets/icon/icon_low_normal.png');
+            background-repeat: no-repeat;
+            &.disabled {
+              background-image: url('~assets/icon/icon_low_forbidden.png');
+              cursor: not-allowed;
+            }
+          }
+          .increase {
+            width: 50px;
+            height: 32px;
+            border: 1px solid #525972;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            cursor: pointer;
+            background-position: center center;
+            background-image: url('~assets/icon/icon_add_normal.png');
+            background-repeat: no-repeat;
+            &.disabled {
+              background-image: url('~assets/icon/icon_add_forbidden.png');
+              cursor: not-allowed;
+            }
           }
         }
       }

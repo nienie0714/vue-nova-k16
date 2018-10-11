@@ -24,6 +24,9 @@
                 <li>
                   <v-readbox :title="'当前输入分辨率'" :defaultcontent="data[0].showdata"></v-readbox>
                 </li>
+                <li v-for="item in 4" class="noneli">
+                  <v-readbox></v-readbox>
+                </li>
               </ul>
             </div>
             <div class="setdata">
@@ -39,7 +42,10 @@
                     <v-textbox :activeIndex="data[0].ratio[0].wh" v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="list1[data[0].ratio[0].wh].w + '*' + list1[data[0].ratio[0].wh].h" :list="list1" @getData="obj => {data[0].ratio[0].wh = obj.index}"></v-textbox>
                   </li>
                   <li>
-                    <v-textbox :activeIndex="data[0].ratio[0].r" v-model="freshVisible" :showdrop="1" :title="'预设刷新率（Hz）'" :defaultcontent="list2[data[0].ratio[0].r].r" :list="list2" @getData="obj => {data[0].ratio[0].r = obj.index}"></v-textbox>
+                    <v-textbox :activeIndex="data[0].ratio[0].r" v-model="freshVisible" :showdrop="1" :title="'预设刷新率(Hz)'" :defaultcontent="list2[data[0].ratio[0].r].r" :list="list2" @getData="obj => {data[0].ratio[0].r = obj.index}"></v-textbox>
+                  </li>
+                  <li v-for="item in 3" class="noneli">
+                    <v-readbox></v-readbox>
                   </li>
                 </template>
                 <template v-else>
@@ -50,7 +56,10 @@
                     <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data[0].ratio[1].h" :min="600" :max="3840"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="data[0].ratio[1].r" :min="24" :max="120"></v-sliderbox>
+                    <v-sliderbox :title="'刷新率(Hz)'" v-model.number="data[0].ratio[1].r" :min="24" :max="120"></v-sliderbox>
+                  </li>
+                  <li v-for="item in 2" class="noneli">
+                    <v-readbox></v-readbox>
                   </li>
                 </template>
               </ul>
@@ -62,6 +71,9 @@
               <ul class="cardul">
                 <li>
                   <v-readbox :title="'当前输入分辨率'" :defaultcontent="data[1].showdata"></v-readbox>
+                </li>
+                <li v-for="item in 4" class="noneli">
+                  <v-readbox></v-readbox>
                 </li>
               </ul>
             </div>
@@ -76,7 +88,10 @@
                     <v-textbox :activeIndex="data[1].ratio[0].wh" v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="list1[data[1].ratio[0].wh].w + '*' + list1[data[1].ratio[0].wh].h" :list="list1" @getData="(obj)=>{data[1].ratio[0].wh = obj.index}"></v-textbox>
                   </li>
                   <li>
-                    <v-textbox :activeIndex="data[1].ratio[0].r" v-model="freshVisible" :showdrop="1" :title="'预设刷新率（Hz）'" :defaultcontent="list2[data[1].ratio[0].r].r" :list="list2" @getData="(obj)=>{data[1].ratio[0].r=obj.index}"></v-textbox>
+                    <v-textbox :activeIndex="data[1].ratio[0].r" v-model="freshVisible" :showdrop="1" :title="'预设刷新率(Hz)'" :defaultcontent="list2[data[1].ratio[0].r].r" :list="list2" @getData="(obj)=>{data[1].ratio[0].r=obj.index}"></v-textbox>
+                  </li>
+                  <li v-for="item in 3" class="noneli">
+                    <v-readbox></v-readbox>
                   </li>
                 </template>
                 <template v-else>
@@ -87,7 +102,10 @@
                     <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data[1].ratio[1].h" :min="600" :max="3840"></v-sliderbox>
                   </li>
                   <li>
-                    <v-sliderbox :title="'刷新率（Hz）'" v-model.number="data[1].ratio[1].r" :min="24" :max="120"></v-sliderbox>
+                    <v-sliderbox :title="'刷新率(Hz)'" v-model.number="data[1].ratio[1].r" :min="24" :max="120"></v-sliderbox>
+                  </li>
+                  <li v-for="item in 2" class="noneli">
+                    <v-readbox></v-readbox>
                   </li>
                 </template>
               </ul>
@@ -102,6 +120,9 @@
                 </li>
                 <li>
                   <v-readbox :title="'SDI2分辨率'" :defaultcontent="data[2].showdata1"></v-readbox>
+                </li>
+                <li v-for="item in 3" class="noneli">
+                  <v-readbox></v-readbox>
                 </li>
               </ul>
             </div>
@@ -125,10 +146,10 @@
                 <li v-if="mosic.link==1">
                   <v-readbox :title="'DVI4输入分辨率'" :defaultcontent="data[3].showdata3"></v-readbox>
                 </li>
-                <li v-if="mosic.link==2" class="noneli">
+                <li v-if="mosic.link==1" class="noneli">
                   <v-readbox></v-readbox>
                 </li>
-                <li v-if="mosic.link==2" class="noneli">
+                <li v-for="item in 3" v-if="mosic.link==2" class="noneli">
                   <v-readbox></v-readbox>
                 </li>
               </ul>
@@ -144,20 +165,15 @@
                     <v-textbox :activeIndex="data[3].ratio[0].wh" v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="list1[data[3].ratio[0].wh].w + '*' + list1[data[3].ratio[0].wh].h" :list="list1" @getData="(obj)=>{data[3].ratio[0].wh=obj.index}"></v-textbox>
                   </li>
                   <li>
-                    <v-textbox :activeIndex="data[3].ratio[0].r" v-model="freshVisible" :showdrop="1" :title="'预设刷新率（Hz）'" :defaultcontent="list2[data[3].ratio[0].r].r" :list="list2" @getData="(obj)=>{data[3].ratio[0].r=obj.index}"></v-textbox>
+                    <v-textbox :activeIndex="data[3].ratio[0].r" v-model="freshVisible" :showdrop="1" :title="'预设刷新率(Hz)'" :defaultcontent="list2[data[3].ratio[0].r].r" :list="list2" @getData="(obj)=>{data[3].ratio[0].r=obj.index}"></v-textbox>
                   </li>
-                  <li class="noneli">
+                  <li v-for="item in 3" class="noneli">
                     <v-textbox></v-textbox>
-                    </v-textbox>
-                  </li>
-                  <li class="noneli">
-                    <v-textbox></v-textbox>
-                    </v-textbox>
                   </li>
                 </template>
                 <template v-else>
                   <li>
-                    <v-sliderbox :title="'水平分辨率(px)'" :min="800" :max="data[3].dvimax" v-model.number="data[3].ratio[1].w"></v-sliderbox>
+                    <v-sliderbox :title="'水平分辨率(px)'" :min="800" :max="data[3].dvimax" :step="mosic.link" v-model.number="data[3].ratio[1].w"></v-sliderbox>
                   </li>
                   <li>
                     <v-sliderbox :title="'垂直分辨率(px)'" :min="600" :max="data[3].dvimax" v-model.number="data[3].ratio[1].h"></v-sliderbox>
@@ -165,9 +181,8 @@
                   <li>
                     <v-sliderbox :title="'刷新率（Hz）'" :min="24" :max="120" v-model.number="data[3].ratio[1].r"></v-sliderbox>
                   </li>
-                  <li class="noneli">
+                  <li v-for="item in 2" class="noneli">
                     <v-textbox></v-textbox>
-                    </v-textbox>
                   </li>
                 </template>
               </ul>
@@ -188,19 +203,19 @@
               <ul class="cardul">
                 <li>
                   <v-textbox ref="text-box1" v-model="mosicVisible" :title="'拼接模板'" :showdrop="1">
-                    <div slot="template">
-                      <div class="mosic-img" :class="'mosic-img-' + mosic.templateIndex"></div>
-                    </div>
                     <div class="mosic-template">
                       <div @click="saveTmplate(index)" v-for="(item, index) in mosic.templateList" class="mosic-img" :class="{['mosic-img-' + index]: true, selectActive: index === mosic.templateIndex}"></div>
+                    </div>
+                    <div slot="template">
+                      <div class="mosic-img" :class="'mosic-img-' + mosic.templateIndex"></div>
                     </div>
                   </v-textbox>
                 </li>
                 <li>
-                  <v-sliderbox :title="'模板宽 (H)'" :min="800" :max="mosic.wm" :defaultcontent="mosic.w" v-model.number="mosic.w"></v-sliderbox>
+                  <v-sliderbox :title="'模板宽 (H)'" :min="64" :max="mosic.wm" :defaultcontent="mosic.w" v-model.number="mosic.w"></v-sliderbox>
                 </li>
                 <li>
-                  <v-sliderbox :title="'模板高（V）'" :min="600" :max="mosic.hm" :defaultcontent="mosic.h" v-model.number="mosic.h"></v-sliderbox>
+                  <v-sliderbox :title="'模板高（V）'" :min="64" :max="mosic.hm" :defaultcontent="mosic.h" v-model.number="mosic.h"></v-sliderbox>
                 </li>
               </ul>
             </div>
@@ -334,9 +349,11 @@
       if(this.active == 3 && this.mosic.link == 1) {   // dvi的单链模式
         this.list1 = Object.assign([], this.list1_1);
         this.mosic.templateList = Object.assign([], this.mosic.templateList1);
+        this.handleLink(1);
       } else {
         this.list1 = Object.assign([], this.list1_2);
         this.mosic.templateList = Object.assign([], this.mosic.templateList2);
+        this.handleLink(2);
       }
       // this.list1 = Object.assign([], this.list1_2);  // DP/HDMI数据来源默认为双链
 
@@ -408,22 +425,28 @@
             name: 'url',
             data: { RW: 0, DevID: 0, ...inx, _: this._ }
           }).then(res => {
+            let maxH = [];
+            let maxW = [];
             val.forEach((item, i) => {
-              let H = res[`In${item}_ResH`]
-              let W = res[`In${item}_ResW`]
-              let R = res[`In${item}_ResR`] / 100;
+              let H = +res[`In${item}_ResH`]
+              let W = +res[`In${item}_ResW`]
+              let R = +res[`In${item}_ResR`] / 100;
               if(H) {
                 this.data[index]['showdata' + (val.length > 1 ? i : '')] = `${W}*${H}@ ${R}Hz`;
-                if(index === 3) {
-                  this.mosic.wm = +W;
-                  this.mosic.w = Math.min(this.mosic.w, this.mosic.wm);
-                  this.mosic.hm = +H;
-                  this.mosic.h = Math.min(this.mosic.h, this.mosic.hm);
+                if(index == 3) {
+                  maxH.push(H);
+                  maxW.push(W);
                 }
               } else {
                 this.data[index]['showdata' + (val.length > 1 ? i : '')] = 'No Single';
               }
             });
+            if(maxW.length) {
+              this.mosic.wm = Math.max(...maxW);
+              this.mosic.w = Math.min(this.mosic.w, this.mosic.wm);
+              this.mosic.hm = Math.max(...maxH);
+              this.mosic.h = Math.min(this.mosic.h, this.mosic.hm);
+            }
           });
         }
       },
