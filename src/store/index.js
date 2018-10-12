@@ -32,6 +32,9 @@ export default new Vuex.Store({
             In9_MosW: '',
             In9_MosH: ''
         },
+        window: getSen('window') || {
+            windowActive: 0
+        },
         mock: getSen('mock') || {
             DP_Sta: '1',
             HDMI_Sta: '1',
@@ -53,6 +56,7 @@ export default new Vuex.Store({
     getters: {
         getCommon: state => serialize(state.common),
         getMosic: state => serialize(state.mosic),
+        getWindow: state => serialize(state.window),
         getMock: state => serialize(state.mock),
         getCacheData: state => serialize(state.cacheData),
         getLang: state => state.lang,
@@ -66,6 +70,10 @@ export default new Vuex.Store({
         setMosic(state, data) {
             state.mosic = { ...state.mosic, ...data };
             setSen('mosic', state.mosic);
+        },
+        setWindow(state, data) {
+            state.window = { ...state.window, ...data };
+            setSen('window', state.window);
         },
         setMock(state, data) {
             state.mock = { ...state.mock, ...data };

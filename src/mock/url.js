@@ -3,7 +3,7 @@ import Mock from 'mockjs';
 import store from '../store';
 
 Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
-    // console.log(res.url);
+    console.log(res.url);
 
     // 将参数截为对象数组
     let params = {};
