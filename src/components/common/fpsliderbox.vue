@@ -66,7 +66,6 @@
       }
     },
     created() {
-      console.log(this.val);
       this.value = this.val;
     },
     watch: {

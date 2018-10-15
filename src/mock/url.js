@@ -31,10 +31,12 @@ Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
                 ret[item] = params[item.replace('Res', 'Edid')];
             }
         }
+        // console.log('SetMock', ret);
         store.commit('setMock', ret);
         return Mock.mock({ ERRC: '0' });
     } else {
         // store.getters.getMock
+
         for (let item in params) {
             if (item.indexOf('Res') != -1) {
                 ret[item] = mockData[item.replace('Res', 'Edid')];
@@ -44,12 +46,15 @@ Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
         }
         ret[`In0_ResW`] = 1920;
         ret[`In0_ResH`] = 1080;
+
         store.commit('setMock', ret);
         // 拼接成功标志
         ret['ERRC'] = '0';
         // ret['Account'] = params['Account'] == '0' ? localStorage.getItem('_') : params['Account'];
         ret['Account'] = localStorage.getItem('_');
 
+        // console.log('Param', params);
+        // console.log('MockData', ret);
         return Mock.mock(ret);
     }
 });
