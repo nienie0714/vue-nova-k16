@@ -59,6 +59,10 @@
       disabled: {
         default: false,
         type: Boolean
+      },
+      num: {
+        default: 1,
+        type: Number
       }
     },
     created() {

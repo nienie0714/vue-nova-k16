@@ -1,6 +1,6 @@
 <template>
   <div class="floatingbtn">
-    <img class="floatingicon" src="@/assets/icon/icon_dashboard.png" alt="">
+    <img class="floatingicon" src="@/assets/icon/icon_dashboard.png" alt="" draggable="false">
   </div>
   <!-- :class="{subactive: false}" -->
   <!-- <div class="mask">
@@ -34,6 +34,10 @@
     right: 0;
     height: 50px;
     line-height: 50px;
+    .floatingicon {
+      cursor: pointer;
+      user-select: none;
+    }
   }
 </style>
 

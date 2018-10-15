@@ -5,7 +5,7 @@
       <i class="el-icon-menu"></i>
     </div> -->
     <div class="logo">
-      <img src="../../assets/icon_logo.png">
+      <img src="../../assets/icon_logo.png" draggable="false">
       <div class="proname">
         NovaPro UHD Jr
       </div>
@@ -15,14 +15,14 @@
         <!-- 全屏显示 -->
         <div class="btn-fullscreen" @click="handleFullScreen">
           <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
-            <img v-if="!fullscreen" src="../../assets/icon/icon_fullscreen.png">
-            <img v-else src="../../assets/icon/icon_cancelfullscreen.png">
+            <img v-if="!fullscreen" src="../../assets/icon/icon_fullscreen.png" draggable="false">
+            <img v-else src="../../assets/icon/icon_cancelfullscreen.png" draggable="false">
           </el-tooltip>
         </div>
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
             <el-tooltip effect="dark" :content="`语言`" placement="bottom">
-            <img src="../../assets/icon/icon_lang.png">
+            <img src="../../assets/icon/icon_lang.png" draggable="false">
             </el-tooltip>
           </span>
           <el-dropdown-menu slot="dropdown">

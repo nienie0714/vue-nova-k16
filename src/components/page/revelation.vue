@@ -102,6 +102,11 @@
     computed: {
       ...mapGetters(['getCommon', 'getCacheData'])
     },
+    watch: {
+      value(val) {
+        this.handleLight();
+      }
+    },
     methods: {
       ...mapActions(['ajax']),
       ...mapMutations(['setCommon']),

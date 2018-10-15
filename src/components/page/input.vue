@@ -3,8 +3,8 @@
     <!-- <v-header></v-header> -->
     <!-- 页面名称 -->
     <div class="jrtitle">
-      <img class="homeicon" src="@/assets/icon/icon_home.png" alt="" @click="$router.go(-1);">
-      <img class="iicon" src="@/assets/icon/icon_input.png" alt="">
+      <img class="homeicon" src="@/assets/icon/icon_home.png" alt="" @click="$router.go(-1);" draggable="false">
+      <img class="iicon" src="@/assets/icon/icon_input.png" alt="" draggable="false">
       <span class="snav">输入设置</span>
     </div>
     <div class="content-box">

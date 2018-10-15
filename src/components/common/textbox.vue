@@ -53,18 +53,19 @@
       'list',                // 下拉菜单列表
       'open',                 // switch
       'value',
-      'activeIndex'
+      'activeIndex',
+      'num'
     ],
     methods: {
       getData(index, item) {
-        this.$emit('getData', { index, item });
+        this.$emit('getData', { index, item }, this.num);
         this.dropcard = false;
       },
       close() {
         this.dropcard = false;
       },
       switchOpen(val) {
-        this.$emit('switchOpen', val);
+        this.$emit('switchOpen', val, this.num);
       }
     },
     created() {
