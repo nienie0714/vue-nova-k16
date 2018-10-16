@@ -4,7 +4,7 @@
     <!-- 页面名称 -->
     <div class="jrtitle">
       <img class="homeicon" src="@/assets/icon/icon_home.png" alt="" @click="$router.go(-1);" draggable="false">
-      <img class="iicon" src="@/assets/icon/icon_input.png" alt="" draggable="false">
+      <img class="iicon" src="@/assets/icon/input_window.png" alt="" draggable="false">
       <span class="snav">窗口设置</span>
     </div>
     <div class="content-box">
@@ -57,147 +57,147 @@
             </ul>
             <div class="btncenter mosicbtn">
               <div class="applybtn mosicc" @click="getCutInfo"><img src="~assets/icon/icon_more.png" alt="">输入截取</div>
-              </div>
             </div>
+          </div>
 
-            <!-- 副窗口 -->
-            <div class="tabcontent4" v-show="active == 1" :class="{active: data[1].showcutout}">
-              <!-- <span style="color:#fff;">{{data[1]}}</span> -->
+          <!-- 副窗口 -->
+          <div class="tabcontent4" v-show="active == 1" :class="{active: data[1].showcutout}">
+            <!-- <span style="color:#fff;">{{data[1]}}</span> -->
+            <ul class="cardul">
+              <li v-if="switchlist[data[1].sta]">
+                <v-textbox :showswitch="1" :title="'副窗口状态'" :defaultcontent="switchlist[data[1].sta].r" :open="data[1].sta" @switchOpen="switchMainWindow"></v-textbox>
+              </li>
+              <li v-if="srclist[data[1].src]">
+                <v-textbox :activeIndex="data[1].src" v-model="ratioVisible" :showdrop="1" :title="'1当前输入源'" :defaultcontent="srclist[data[1].src].r" :list="srclist" @getData="selectSrc"></v-textbox>
+              </li>
+              <li>
+                <v-textbox :activeIndex="0" v-model="freshVisible" :showdrop="1" :title="'1缩放模式'" :defaultcontent="'自定义缩放'" :list="scalaModel" @getData="obj => {}"></v-textbox>
+              </li>
+              <li v-if="prilist[data[1].pri]">
+                <v-textbox :activeIndex="data[1].pri" v-model="mosicVisible" :showdrop="1" :title="'1优先级'" :defaultcontent="prilist[data[1].pri].r" :list="prilist" @getData="selectPri"></v-textbox>
+              </li>
+
+              <li class="noneli">
+                <v-textbox></v-textbox>
+              </li>
+            </ul>
+            <ul class="cardul">
+              <li>
+                <v-fpsliderbox :title="'窗口水平起始'" :min="0" :max="20000" :val="data[1].x" @callback="xCallback"></v-fpsliderbox>
+              </li>
+              <li>
+                <v-fpsliderbox :title="'窗口垂直起始'" :min="0" :max="20000" :val="data[1].y" @callback="yCallback"></v-fpsliderbox>
+              </li>
+              <li>
+                <v-fpsliderbox :title="'窗口水平宽度'" :min="64" :max="20000" :val="data[1].w" @callback="wCallback"></v-fpsliderbox>
+              </li>
+              <li>
+                <v-fpsliderbox :title="'窗口垂直宽度'" :min="64" :max="20000" :val="data[1].h" @callback="hCallback"></v-fpsliderbox>
+              </li>
+              <li class="noneli">
+                <v-textbox></v-textbox>
+              </li>
+            </ul>
+            <div class="btncenter mosicbtn">
+              <div class="applybtn mosicc" @click="getCutInfo1"><img src="~assets/icon/icon_more.png" alt="">输入截取</div>
+            </div>
+          </div>
+          <!-- BKG -->
+          <div class="tabcontent3" v-show="active == 2">
+            <div class="showdata">
               <ul class="cardul">
-                <li v-if="switchlist[data[1].sta]">
-                  <v-textbox :showswitch="1" :title="'副窗口状态'" :defaultcontent="switchlist[data[1].sta].r" :open="data[1].sta" @switchOpen="switchMainWindow"></v-textbox>
-                </li>
-                <li v-if="srclist[data[1].src]">
-                  <v-textbox :activeIndex="data[1].src" v-model="ratioVisible" :showdrop="1" :title="'1当前输入源'" :defaultcontent="srclist[data[1].src].r" :list="srclist" @getData="selectSrc"></v-textbox>
+                <li>
+                  <v-textbox :showswitch="1" :title="'BKG状态'" @switchOpen="switchBkg"></v-textbox>
                 </li>
                 <li>
-                  <v-textbox :activeIndex="0" v-model="freshVisible" :showdrop="1" :title="'1缩放模式'" :defaultcontent="'自定义缩放'" :list="scalaModel" @getData="obj => {}"></v-textbox>
-                </li>
-                <li v-if="prilist[data[1].pri]">
-                  <v-textbox :activeIndex="data[1].pri" v-model="mosicVisible" :showdrop="1" :title="'1优先级'" :defaultcontent="prilist[data[1].pri].r" :list="prilist" @getData="selectPri"></v-textbox>
-                </li>
-
-                <li class="noneli">
-                  <v-textbox></v-textbox>
+                  <v-textbox :activeIndex="0" v-model="ratioVisible" :showdrop="1" :title="'BKG类型'" :defaultcontent="'图片BKG'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
                 </li>
               </ul>
-              <ul class="cardul">
-                <li>
-                  <v-fpsliderbox :title="'窗口水平起始'" :min="0" :max="20000" :val="data[1].x" @callback="xCallback"></v-fpsliderbox>
-                </li>
-                <li>
-                  <v-fpsliderbox :title="'窗口垂直起始'" :min="0" :max="20000" :val="data[1].y" @callback="yCallback"></v-fpsliderbox>
-                </li>
-                <li>
-                  <v-fpsliderbox :title="'窗口水平宽度'" :min="64" :max="20000" :val="data[1].w" @callback="wCallback"></v-fpsliderbox>
-                </li>
-                <li>
-                  <v-fpsliderbox :title="'窗口垂直宽度'" :min="64" :max="20000" :val="data[1].h" @callback="hCallback"></v-fpsliderbox>
-                </li>
-                <li class="noneli">
-                  <v-textbox></v-textbox>
-                </li>
-              </ul>
-              <div class="btncenter mosicbtn">
-                <div class="applybtn mosicc" @click="getCutInfo1"><img src="~assets/icon/icon_more.png" alt="">输入截取</div>
-                </div>
+            </div>
+            <div class="showdata showdatadvi">
+              <div class="tabgroup">
+                <div class="tabtitle">Capture</div>
+                <div class="applybtn"><img src="~assets/icon/icon_capture.png" alt="">抓拍</div>
               </div>
-              <!-- BKG -->
-              <div class="tabcontent3" v-show="active == 2">
-                <div class="showdata">
-                  <ul class="cardul">
-                    <li>
-                      <v-textbox :showswitch="1" :title="'BKG状态'" @switchOpen="switchBkg"></v-textbox>
-                    </li>
-                    <li>
-                      <v-textbox :activeIndex="0" v-model="ratioVisible" :showdrop="1" :title="'BKG类型'" :defaultcontent="'图片BKG'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
-                    </li>
-                  </ul>
-                </div>
-                <div class="showdata showdatadvi">
-                  <div class="tabgroup">
-                    <div class="tabtitle">Capture</div>
-                    <div class="applybtn"><img src="~assets/icon/icon_apply.png" alt="">截取</div>
-                    </div>
-                    <ul class="cardul">
-                      <li>
-                        <v-textbox :activeIndex="0" v-model="freshVisible" :showdrop="1" :title="'Capture源选择'" :defaultcontent="'DP'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
-                      </li>
-                      <li>
-                        <v-textbox :activeIndex="0" v-model="ratioVisible" :showdrop="1" :title="'保存位置选择'" :defaultcontent="'BKG1'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
-                      </li>
-                      <!-- <li v-for="item in 3" class="noneli">
+              <ul class="cardul">
+                <li>
+                  <v-textbox :activeIndex="0" v-model="freshVisible" :showdrop="1" :title="'Capture源选择'" :defaultcontent="'DP'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
+                </li>
+                <li>
+                  <v-textbox :activeIndex="0" v-model="ratioVisible" :showdrop="1" :title="'保存位置选择'" :defaultcontent="'BKG1'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
+                </li>
+                <!-- <li v-for="item in 3" class="noneli">
                   <v-readbox></v-readbox>
                 </li> -->
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <!-- 主窗口 副界面 -->
-              <div class="subcontainer" v-show="active == 0" :class="{active: data[0].showcutout}">
-                <div class="tabgroup">
-                  <div class="tabtitle">输入截取</div>
-                </div>
-                <div class="mosic">
-                  <ul class="cardul">
-                    <li>
-                      <v-textbox :showswitch="1" :title="'截取状态'" :defaultcontent="switchlist[data[0].cutsta].r" :open="data[0].cutsta" @switchOpen="switchMainCut"></v-textbox>
-                    </li>
-                    <li>
-                      <v-fpsliderbox :title="'水平起始'" :val="data[0].cut_x" :min="0" :max="data[0].cut_x_max" @callback="cutXCallback"></v-fpsliderbox>
-                    </li>
-                    <li>
-                      <v-fpsliderbox :title="'垂直起始'" :val="data[0].cut_y" :min="0" :max="data[0].cut_y_max" @callback="cutYCallback"></v-fpsliderbox>
-                    </li>
-                    <li>
-                      <v-fpsliderbox :title="'水平宽度(px)'" :val="data[0].cut_w" :min="64" :max="data[0].cut_w_max" @callback="cutWCallback"></v-fpsliderbox>
-                    </li>
-                    <li>
-                      <v-fpsliderbox :title="'垂直宽度(px)'" :val="data[0].cut_h" :min="64" :max="data[0].cut_h_max" @callback="cutHCallback"></v-fpsliderbox>
-                    </li>
-                    <li class="noneli">
-                      <v-textbox></v-textbox>
-                    </li>
-                  </ul>
-                </div>
-                <div class="btncenter mosaicbtn">
-                  <div class="applybtn" @click="data[0].showcutout = false"><img class="down" src="~assets/icon/icon_more.png">返回</div>
-                  </div>
-                </div>
-                <!-- 副窗口 副界面 -->
-                <div class="subcontainer" v-show="active == 1" :class="{active: data[1].showcutout}">
-                  <div class="tabgroup">
-                    <div class="tabtitle">输入截取</div>
-                  </div>
-                  <div class="mosic">
-                    <ul class="cardul">
-                      <li>
-                        <v-textbox :showswitch="1" :title="'截取状态'" :defaultcontent="switchlist[data[1].cutsta].r" :open="data[1].cutsta" @switchOpen="switchMainCut"></v-textbox>
-                      </li>
-                      <li>
-                        <v-fpsliderbox :title="'水平起始'" :val="data[1].cut_x" :min="0" :max="data[1].cut_x_max" @callback="cutX1Callback"></v-fpsliderbox>
-                      </li>
-                      <li>
-                        <v-fpsliderbox :title="'垂直起始'" :val="data[1].cut_y" :min="0" :max="data[1].cut_y_max" @callback="cutY1Callback"></v-fpsliderbox>
-                      </li>
-                      <li>
-                        <v-fpsliderbox :title="'水平宽度(px)'" :val="data[1].cut_w" :min="64" :max="data[1].cut_w_max" @callback="cutW1Callback"></v-fpsliderbox>
-                      </li>
-                      <li>
-                        <v-fpsliderbox :title="'垂直宽度(px)'" :val="data[1].cut_h" :min="64" :max="data[1].cut_h_max" @callback="cutH1Callback"></v-fpsliderbox>
-                      </li>
-                      <li class="noneli">
-                        <v-textbox></v-textbox>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="btncenter mosaicbtn">
-                    <div class="applybtn" @click="data[1].showcutout = false"><img class="down" src="~assets/icon/icon_more.png">返回</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </ul>
             </div>
+          </div>
+        </div>
+        <!-- 主窗口 副界面 -->
+        <div class="subcontainer" v-show="active == 0" :class="{active: data[0].showcutout}">
+          <div class="tabgroup">
+            <div class="tabtitle">输入截取</div>
+          </div>
+          <div class="mosic">
+            <ul class="cardul">
+              <li>
+                <v-textbox :showswitch="1" :title="'截取状态'" :defaultcontent="switchlist[data[0].cutsta].r" :open="data[0].cutsta" @switchOpen="switchMainCut"></v-textbox>
+              </li>
+              <li>
+                <v-fpsliderbox :title="'水平起始'" :val="data[0].cut_x" :min="0" :max="data[0].cut_x_max" @callback="cutXCallback"></v-fpsliderbox>
+              </li>
+              <li>
+                <v-fpsliderbox :title="'垂直起始'" :val="data[0].cut_y" :min="0" :max="data[0].cut_y_max" @callback="cutYCallback"></v-fpsliderbox>
+              </li>
+              <li>
+                <v-fpsliderbox :title="'水平宽度(px)'" :val="data[0].cut_w" :min="64" :max="data[0].cut_w_max" @callback="cutWCallback"></v-fpsliderbox>
+              </li>
+              <li>
+                <v-fpsliderbox :title="'垂直宽度(px)'" :val="data[0].cut_h" :min="64" :max="data[0].cut_h_max" @callback="cutHCallback"></v-fpsliderbox>
+              </li>
+              <li class="noneli">
+                <v-textbox></v-textbox>
+              </li>
+            </ul>
+          </div>
+          <div class="btncenter mosaicbtn">
+            <div class="applybtn" @click="data[0].showcutout = false"><img class="down" src="~assets/icon/icon_more.png">返回</div>
+          </div>
+        </div>
+        <!-- 副窗口 副界面 -->
+        <div class="subcontainer" v-show="active == 1" :class="{active: data[1].showcutout}">
+          <div class="tabgroup">
+            <div class="tabtitle">输入截取</div>
+          </div>
+          <div class="mosic">
+            <ul class="cardul">
+              <li>
+                <v-textbox :showswitch="1" :title="'截取状态'" :defaultcontent="switchlist[data[1].cutsta].r" :open="data[1].cutsta" @switchOpen="switchMainCut"></v-textbox>
+              </li>
+              <li>
+                <v-fpsliderbox :title="'水平起始'" :val="data[1].cut_x" :min="0" :max="data[1].cut_x_max" @callback="cutX1Callback"></v-fpsliderbox>
+              </li>
+              <li>
+                <v-fpsliderbox :title="'垂直起始'" :val="data[1].cut_y" :min="0" :max="data[1].cut_y_max" @callback="cutY1Callback"></v-fpsliderbox>
+              </li>
+              <li>
+                <v-fpsliderbox :title="'水平宽度(px)'" :val="data[1].cut_w" :min="64" :max="data[1].cut_w_max" @callback="cutW1Callback"></v-fpsliderbox>
+              </li>
+              <li>
+                <v-fpsliderbox :title="'垂直宽度(px)'" :val="data[1].cut_h" :min="64" :max="data[1].cut_h_max" @callback="cutH1Callback"></v-fpsliderbox>
+              </li>
+              <li class="noneli">
+                <v-textbox></v-textbox>
+              </li>
+            </ul>
+          </div>
+          <div class="btncenter mosaicbtn">
+            <div class="applybtn" @click="data[1].showcutout = false"><img class="down" src="~assets/icon/icon_more.png">返回</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
   import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
@@ -422,27 +422,27 @@
       // },
       mainCallback(newobj) {
         let num = this.active + 1;
-        let obj = {};
-        obj[`L${num}_W`] = this.data[num - 1].w;
-        obj[`L${num}_H`] = this.data[num - 1].h;
-        obj[`L${num}_X`] = this.data[num - 1].x;
-        obj[`L${num}_Y`] = this.data[num - 1].y;
-        // console.log(obj);
-        // console.log(555, this.data[0].x);
-        // console.log(333, this.data[0].h);
+        console.log(this.data[num - 1].csta);
+        if(this.data[num - 1].csta == 1) {
+          let obj = {};
+          obj[`L${num}_W`] = this.data[num - 1].w;
+          obj[`L${num}_H`] = this.data[num - 1].h;
+          obj[`L${num}_X`] = this.data[num - 1].x;
+          obj[`L${num}_Y`] = this.data[num - 1].y;
 
-        this.ajax({
-          name: 'url',
-          data: Object.assign({
-            RW: 1,
-            DevID: 0,
-            CMD: 8,
-            ...obj,
-            _: this._
-          }, newobj)
-        }).then(res => {
+          this.ajax({
+            name: 'url',
+            data: Object.assign({
+              RW: 1,
+              DevID: 0,
+              CMD: 8,
+              ...obj,
+              _: this._
+            }, newobj)
+          }).then(res => {
 
-        });
+          });
+        }
       },
       xCallback(val) {
         let num = this.active + 1;
@@ -477,6 +477,26 @@
         this.mainCallback(obj);
       },
       // --------------   主截取   -----------
+      // 切换截取状态
+      switchMainCut(val) {
+        let num = this.active + 1;
+        this.data[num - 1].cutsta = val;
+        let csta = {};
+        csta[`L${num}_CSta`] = val;
+
+        this.ajax({
+          name: 'url',
+          data: {
+            RW: 1,
+            DevID: 0,
+            CMD: 9,
+            ...csta,
+            _: this._          }
+        }).then(res => {
+          let msg = num == 1 ? '主窗口截取' : '副窗口截取'
+          Message(msg + this.switchlist[this.data[num - 1].cutsta].r);
+        });
+      },
       cutXCallback(val) {
         if(val + this.data[0].cut_w > this.data[0].cut_w_max) {
 
@@ -554,27 +574,47 @@
           this.data[0].cut_w_max = res[`In${i}_ResW`];
           this.data[0].cut_y_max = res[`In${i}_ResH`] - 64;
           this.data[0].cut_h_max = res[`In${i}_ResH`];
+
+          this.data[0].cutsta = res[L1_CSta];
+          this.data[0].cut_w = res[L1_CW];
+          this.data[0].cut_h = res[L1_CH];
+          this.data[0].cut_x = res[L1_CX];
+          this.data[0].cut_y = res[L1_CY];
         });
         this.data[0].showcutout = true;
       },
 
       getCutInfo1() {
-        this.data[1].showcutout = true;
-      },
-      // 切换截取状态
-      switchMainCut(val) {
-        this.data[0].cutsta = this.data[0].cutsta == 1 ? 0 : 1;
+        let i = this.data[1].src;
+        let currentSrc = {};
+        currentSrc[`In${i}_ResW`] = 0;
+        currentSrc[`In${i}_ResH`] = 0;
         this.ajax({
           name: 'url',
           data: {
             RW: 0,
             DevID: 0,
-            CMD: 9,
-            L1_CSta: this.data[0].cutsta,
-            _: this._          }
+            L2_CSta: 0,
+            L2_CW: 0,
+            L2_CH: 0,
+            L2_CX: 0,
+            L2_CY: 0,
+            ...currentSrc,
+            _: this._
+          }
         }).then(res => {
-          Message('主窗口截取' + this.switchlist[this.data[0].cutsta].r);
+          this.data[1].cut_x_max = res[`In${i}_ResW`] - 64;
+          this.data[1].cut_w_max = res[`In${i}_ResW`];
+          this.data[1].cut_y_max = res[`In${i}_ResH`] - 64;
+          this.data[1].cut_h_max = res[`In${i}_ResH`];
+
+          this.data[1].cutsta = res[L2_CSta];
+          this.data[1].cut_w = res[L2_CW];
+          this.data[1].cut_h = res[L2_CH];
+          this.data[1].cut_x = res[L2_CX];
+          this.data[1].cut_y = res[L2_CY];
         });
+        this.data[1].showcutout = true;
       },
       switchBkg(val) {
         console.log(val);
