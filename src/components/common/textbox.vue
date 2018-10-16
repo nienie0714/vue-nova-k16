@@ -71,10 +71,9 @@
       this.open2 = this.open;
     },
     watch: {
-      // open2(val) {
-      //   console.log(val);
-      //   this.defaultContent = this.open2 == true ? '开启' : '关闭';
-      // },
+      open(val) {
+        this.open2 = this.open;
+      },
       value(val) {
         this.dropcard = val;
       },

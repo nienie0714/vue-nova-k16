@@ -20,7 +20,7 @@
           <!-- 主窗口 -->
           <div class="tabcontent4" v-show="active == 0" :class="{active: data[0].showcutout}">
             <ul class="cardul">
-              <!-- <span style="color:#fff;">{{data[0]}}</span> -->
+              <!-- <span style="color:#fff;">{{data[0].sta}}</span> -->
               <li v-if="switchlist[data[0].sta]">
                 <v-textbox :showswitch="1" :title="'主窗口状态'" :defaultcontent="switchlist[data[0].sta].r" :open="data[0].sta" @switchOpen="switchMainWindow"></v-textbox>
                 <!-- <v-readbox :title="'当前输入hdmi分辨率'" :defaultcontent="'aaa'"></v-readbox>  :defaultcontent="'开启'"-->
@@ -104,31 +104,72 @@
           </div>
           <!-- BKG -->
           <div class="tabcontent3" v-show="active == 2">
-            <div class="showdata">
+            <div class="showdatano" :class="{showdatahr: data[2].type}">
               <ul class="cardul">
                 <li>
-                  <v-textbox :showswitch="1" :title="'BKG状态'" @switchOpen="switchBkg"></v-textbox>
+                  <v-textbox :showswitch="1" :title="'BKG状态'" :defaultcontent="switchlist[data[2].sta].r" :open="data[2].sta" @switchOpen="switchBkg"></v-textbox>
                 </li>
                 <li>
-                  <v-textbox :activeIndex="0" v-model="ratioVisible" :showdrop="1" :title="'BKG类型'" :defaultcontent="'图片BKG'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
+                  <v-textbox :activeIndex="data[2].type" v-model="mosicVisible" :showdrop="1" :title="'BKG类型'" :defaultcontent="typelist[data[2].type].r" :list="typelist" @getData="selectType"></v-textbox>
+                </li>
+                <li v-for="item in 3" class="noneli">
+                  <v-readbox></v-readbox>
+                </li>
+              </ul>
+
+              <ul class="cardul" v-if="!data[2].type">
+                <li>
+                  <v-fpsliderbox :title="'R(红分量)'" :min="0" :max="255" :val="data[2].r" @callback="rCallback"></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'B(蓝分量)'" :min="0" :max="255" :val="data[2].g" @callback="gCallback"></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'G(绿分量)'" :min="0" :max="255" :val="data[2].b" @callback="bCallback"></v-fpsliderbox>
+                </li>
+                <li v-for="item in 2" class="noneli">
+                  <v-textbox></v-textbox>
                 </li>
               </ul>
             </div>
-            <div class="showdata showdatadvi">
+            <div class="showdatano showdatahr" v-if="data[2].type">
+              <div class="tabgroup">
+                <div class="tabtitle">BKG</div>
+                <div class="applybtn"><img src="~assets/icon/icon_apply.png" alt="" @click="bkgApply">应用</div>
+              </div>
+              <ul class="cardul">
+                <li @click="()=>{this.data[2].active=0}">
+                  <v-imgbox :title="'BKG1'" :hasimg="data[2].b0img" :isapply="data[2].apply == 0" :active="data[2].active == 0"></v-imgbox>
+                </li>
+                <li @click="()=>{this.data[2].active=1}">
+                  <v-imgbox :title="'BKG2'" :hasimg="data[2].b1img" :isapply="data[2].apply == 1" :active="data[2].active == 1"></v-imgbox>
+                </li>
+                <li @click="()=>{this.data[2].active=2}">
+                  <v-imgbox :title="'BKG3'" :hasimg="data[2].b2img" :isapply="data[2].apply == 2" :active="data[2].active == 2"></v-imgbox>
+                </li>
+                <li @click="()=>{this.data[2].active=3}">
+                  <v-imgbox :title="'BKG4'" :hasimg="data[2].b3img" :isapply="data[2].apply == 3" :active="data[2].active == 3"></v-imgbox>
+                </li>
+                <li class="noneli">
+                  <v-readbox></v-readbox>
+                </li>
+              </ul>
+            </div>
+            <div class="showdatano showdatahr" v-if="data[2].type">
               <div class="tabgroup">
                 <div class="tabtitle">Capture</div>
-                <div class="applybtn"><img src="~assets/icon/icon_capture.png" alt="">抓拍</div>
+                <div class="applybtn"><img src="~assets/icon/icon_capture.png" alt="" @click="capture">抓拍</div>
               </div>
               <ul class="cardul">
                 <li>
-                  <v-textbox :activeIndex="0" v-model="freshVisible" :showdrop="1" :title="'Capture源选择'" :defaultcontent="'DP'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
+                  <v-textbox :activeIndex="data[2].cutsrc" v-model="freshVisible" :showdrop="1" :title="'Capture源选择'" :defaultcontent="srclist[data[2].cutsrc].r" :list="srclist" @getData="obj => {this.data[2].cutsrc = obj.index;}"></v-textbox>
                 </li>
                 <li>
-                  <v-textbox :activeIndex="0" v-model="ratioVisible" :showdrop="1" :title="'保存位置选择'" :defaultcontent="'BKG1'" :list="[1,2,3]" @getData="obj => {}"></v-textbox>
+                  <v-textbox :activeIndex="data[2].cutapply" v-model="ratioVisible" :showdrop="1" :title="'保存位置选择'" :defaultcontent="imglist[data[2].cutapply].r" :list="imglist" @getData="obj => {this.data[2].cutapply = obj.index;}"></v-textbox>
                 </li>
-                <!-- <li v-for="item in 3" class="noneli">
+                <li v-for="item in 3" class="noneli">
                   <v-readbox></v-readbox>
-                </li> -->
+                </li>
               </ul>
             </div>
           </div>
@@ -217,6 +258,8 @@
         switchlist: [{ r: '关闭' }, { r: '开启' }],
         prilist: [{ r: 1 }, { r: 2 }],
         scalaModel: [{ r: '自定义缩放', default: true }],
+        typelist: [{ r: '纯色BKG' }, { r: '图片BKG' }],
+        imglist: [{ r: 'BKG1' }, { r: 'BKG2' }, { r: 'BKG3' }, { r: 'BKG4' }],
         data: [
           {
             name: '主窗口',
@@ -259,7 +302,20 @@
             cut_h: 2160
           },
           {
-            name: 'BKG'
+            name: 'BKG',
+            sta: 0,
+            type: 0,
+            r: 0,
+            g: 0,
+            b: 0,
+            b0img: 0,
+            b1img: 0,
+            b2img: 0,
+            b3img: 0,
+            apply: 0,
+            active: 0,
+            cutapply: 0,
+            cutsrc: 0
           }
         ]
       }
@@ -270,17 +326,21 @@
       this.readData(this.active);
     },
     computed: {
-      ...mapGetters(['getWindow']),
+      ...mapGetters(['getCommon', 'getWindow']),
     },
     watch: {
-      data(val, oldVal) {
-        console.log(val[1], oldVal[1]);
+      // data(val, oldVal) {
+      //   console.log(val[1], oldVal[1]);
+      // }
+      active(val) {
+        this.readData(this.active);
       }
     },
     methods: {
       ...mapActions(['ajax']),
       ...mapMutations(['setWindow']),
       readData(index) {
+        console.log('-----------' + index + '请求--------');
         // 激活菜单tab
         this.active = index || 0;
         this.setWindow({ windowActive: index });
@@ -306,9 +366,7 @@
               ...inx,
               _: this._            }
           }).then(res => {
-            console.log('pri:', res[`L${i}_Pri`]);
             let temp = Object.assign({}, this.data[index], {
-              // sta: +res[`L${i}_W`],
               sta: +res[`L${i}_Sta`],
               src: +res[`L${i}_Src`],
               pri: +res[`L${i}_Pri`] - 1,
@@ -318,6 +376,41 @@
               h: +res[`L${i}_H`],
             });
             this.$set(this.data, index, temp);
+          });
+        }
+        if(index == 2) {
+
+          this.ajax({
+            name: 'url',
+            data: {
+              RW: 0,
+              DevID: 0,
+              BKG_Sta: 0,
+              BKG_Mod: 0,
+              BKG_IMG: 0,
+              BKG_G0Sta: 0,
+              BKG_G1Sta: 0,
+              BKG_G2Sta: 0,
+              BKG_G3Sta: 0,
+              BKG_PCBR: 0,
+              BKG_PCBG: 0,
+              BKG_PCBB: 0,
+              _: this._            }
+          }).then(res => {
+            console.log('----BKG-----状态信息同步', res);
+            let temp = Object.assign({}, this.data[2], {
+              sta: +res[BKG_Sta],
+              type: +res[BKG_Mod],
+              b1img: +res[BKG_G0Sta],
+              b2img: +res[BKG_G1Sta],
+              b3img: +res[BKG_G2Sta],
+              b4img: +res[BKG_G3Sta],
+              apply: +res[BKG_IMG],
+              r: +res[BKG_PCBR],
+              g: +res[BKG_PCBG],
+              b: +res[BKG_PCBB]
+            });
+            this.$set(this.data, 2, temp);
           });
         }
       },
@@ -389,41 +482,9 @@
         });
       },
       // 自定义窗口滑杆数值改变后的回调
-      // mainCallback(newobj) {
-      //   let obj = {};
-      //   obj[`L1_W`] = this.data[0].w;
-      //   obj[`L1_H`] = this.data[0].h;
-      //   obj[`L1_X`] = this.data[0].x;
-      //   obj[`L1_Y`] = this.data[0].y;
-      //   this.ajax({
-      //     name: 'url',
-      //     data: Object.assign({
-      //       RW: 1,
-      //       DevID: 0,
-      //       CMD: 8,
-      //       ...obj,
-      //       _: this._
-      //     }, newobj)
-      //   }).then(res => {
-
-      //   });
-      // },
-      // xCallback(val) {
-      //   this.mainCallback({ L1_X: val });
-      // },
-      // yCallback(val) {
-      //   this.mainCallback({ L1_Y: val });
-      // },
-      // wCallback(val) {
-      //   this.mainCallback({ L1_W: val });
-      // },
-      // hCallback(val) {
-      //   this.mainCallback({ L1_H: val });
-      // },
       mainCallback(newobj) {
         let num = this.active + 1;
-        console.log(this.data[num - 1].csta);
-        if(this.data[num - 1].csta == 1) {
+        if(this.data[num - 1].sta == 1) {
           let obj = {};
           obj[`L${num}_W`] = this.data[num - 1].w;
           obj[`L${num}_H`] = this.data[num - 1].h;
@@ -477,7 +538,7 @@
         this.mainCallback(obj);
       },
       // --------------   主截取   -----------
-      // 切换截取状态
+      // 切换截取状态   主  +   副
       switchMainCut(val) {
         let num = this.active + 1;
         this.data[num - 1].cutsta = val;
@@ -497,12 +558,37 @@
           Message(msg + this.switchlist[this.data[num - 1].cutsta].r);
         });
       },
+      // 主窗口截取滑杆
+      mainCutCallback(newobj) {
+
+        if(this.data[0].cutsta == 1) {
+          let obj = {};
+          obj[L1_CW] = this.data[0].cut_w;
+          obj[L1_CH] = this.data[0].cut_h;
+          obj[L1_CX] = this.data[0].cut_x;
+          obj[L1_CY] = this.data[0].cut_y;
+
+          this.ajax({
+            name: 'url',
+            data: Object.assign({
+              RW: 1,
+              DevID: 0,
+              CMD: 10,
+              ...obj,
+              _: this._
+            }, newobj)
+          }).then(res => {
+
+          });
+        }
+      },
       cutXCallback(val) {
         if(val + this.data[0].cut_w > this.data[0].cut_w_max) {
 
           this.data[0].cut_w = this.data[0].cut_w_max - val;
         }
         this.data[0].cut_x = val;
+        this.mainCutCallback({ L1_CX: val });
       },
       cutYCallback(val) {
         if(val + this.data[0].cut_h > this.data[0].cut_h_max) {
@@ -510,12 +596,14 @@
           this.data[0].cut_h = this.data[0].cut_y_max - val;
         }
         this.data[0].cut_y = val;
+        this.mainCutCallback({ L1_CY: val });
       },
       cutWCallback(val) {
         if(val + this.data[0].cut_x > this.data[0].cut_w_max) {
           this.data[0].cut_x = this.data[0].cut_w_max - val;
         }
         this.data[0].cut_w = val;
+        this.mainCutCallback({ L1_CW: val });
       },
       cutHCallback(val) {
         if(val + this.data[0].cut_y > this.data[0].cut_h_max) {
@@ -523,6 +611,31 @@
           this.data[0].cut_y = this.data[0].cut_y_max - val;
         }
         this.data[0].cut_h = val;
+        this.mainCutCallback({ L1_CH: val });
+      },
+      // 副窗口截取滑杆
+      subCutCallback(newobj) {
+
+        if(this.data[1].cutsta == 1) {
+          let obj = {};
+          obj[L2_CW] = this.data[1].cut_w;
+          obj[L2_CH] = this.data[1].cut_h;
+          obj[L2_CX] = this.data[1].cut_x;
+          obj[L2_CY] = this.data[1].cut_y;
+
+          this.ajax({
+            name: 'url',
+            data: Object.assign({
+              RW: 1,
+              DevID: 0,
+              CMD: 10,
+              ...obj,
+              _: this._
+            }, newobj)
+          }).then(res => {
+
+          });
+        }
       },
       cutX1Callback(val) {
         if(val + this.data[1].cut_w > this.data[1].cut_w_max) {
@@ -530,6 +643,7 @@
           this.data[1].cut_w = this.data[1].cut_w_max - val;
         }
         this.data[1].cut_x = val;
+        this.subCutCallback({ L2_CX: val });
       },
       cutY1Callback(val) {
         if(val + this.data[1].cut_h > this.data[1].cut_h_max) {
@@ -537,12 +651,14 @@
           this.data[1].cut_h = this.data[1].cut_y_max - val;
         }
         this.data[1].cut_y = val;
+        this.subCutCallback({ L2_CY: val });
       },
       cutW1Callback(val) {
         if(val + this.data[1].cut_x > this.data[1].cut_w_max) {
           this.data[1].cut_x = this.data[1].cut_w_max - val;
         }
         this.data[1].cut_w = val;
+        this.subCutCallback({ L2_CW: val });
       },
       cutH1Callback(val) {
         if(val + this.data[1].cut_y > this.data[1].cut_h_max) {
@@ -550,6 +666,7 @@
           this.data[1].cut_y = this.data[1].cut_y_max - val;
         }
         this.data[1].cut_h = val;
+        this.subCutCallback({ L2_CH: val });
       },
       getCutInfo() {
         let i = this.data[0].src;
@@ -570,16 +687,51 @@
             _: this._
           }
         }).then(res => {
-          this.data[0].cut_x_max = res[`In${i}_ResW`] - 64;
-          this.data[0].cut_w_max = res[`In${i}_ResW`];
-          this.data[0].cut_y_max = res[`In${i}_ResH`] - 64;
-          this.data[0].cut_h_max = res[`In${i}_ResH`];
+          console.log('L${i}_ResW', res); // 模拟不出来了
+          let temp = Object.assign({}, this.data[0], {
+            cutsta: +res[`L1_CSta`],
+            cut_x: +res[`L1_CX`],
+            cut_x_max: +res[`In${i}_ResW`] - 64,
+            cut_y: +res[`L1_CY`],
+            cut_y_max: +res[`In${i}_ResH`] - 64,
+            cut_w: +res[`L1_CW`],
+            cut_w_max: +res[`In${i}_ResW`],
+            cut_h: +res[`L1_CH`],
+            cut_h_max: +res[`In${i}_ResH`],
+          });
+          this.$set(this.data, 0, temp);
+          console.log('cut_temp', temp);
 
-          this.data[0].cutsta = res[L1_CSta];
-          this.data[0].cut_w = res[L1_CW];
-          this.data[0].cut_h = res[L1_CH];
-          this.data[0].cut_x = res[L1_CX];
-          this.data[0].cut_y = res[L1_CY];
+
+
+          // console.log('res.L1_CSta', res.L1_CSta);
+          // this.data[0].cutsta = res.L1_CSta;
+          // console.log('this.data[0].cutsta', this.data[0].cutsta);
+          // console.log('res[L1_CSta]', res['L1_CSta']);
+          // if(`In${i}_ResW` == 0 && `In${i}_ResH` == 0) {
+          //   this.data[0].cut_x_max = 0;
+          //   this.data[0].cut_w_max = 0;
+          //   this.data[0].cut_y_max = 0;
+          //   this.data[0].cut_h_max = 0;
+          //   this.data[0].cut_w = 0;
+          //   this.data[0].cut_h = 0;
+          //   this.data[0].cut_x = 0;
+          //   this.data[0].cut_y = 0;
+          // } else {
+          //   console.log('RES', res);
+          //   console.log('res[L1_CY]', res[L1_CY]);
+          //   this.data[0].cut_x_max = res[`In${i}_ResW`] - 64;
+          //   this.data[0].cut_w_max = res[`In${i}_ResW`];
+          //   this.data[0].cut_y_max = res[`In${i}_ResH`] - 64;
+          //   this.data[0].cut_h_max = res[`In${i}_ResH`];
+
+          //   this.data[0].cutsta = res[L1_CSta];
+          //   this.data[0].cut_w = res[L1_CW];
+          //   this.data[0].cut_h = res[L1_CH];
+          //   this.data[0].cut_x = res[L1_CX];
+          //   this.data[0].cut_y = res[L1_CY];
+          // }
+
         });
         this.data[0].showcutout = true;
       },
@@ -603,21 +755,147 @@
             _: this._
           }
         }).then(res => {
-          this.data[1].cut_x_max = res[`In${i}_ResW`] - 64;
-          this.data[1].cut_w_max = res[`In${i}_ResW`];
-          this.data[1].cut_y_max = res[`In${i}_ResH`] - 64;
-          this.data[1].cut_h_max = res[`In${i}_ResH`];
 
-          this.data[1].cutsta = res[L2_CSta];
-          this.data[1].cut_w = res[L2_CW];
-          this.data[1].cut_h = res[L2_CH];
-          this.data[1].cut_x = res[L2_CX];
-          this.data[1].cut_y = res[L2_CY];
+          console.log('L${i}_ResW', res); // 模拟不出来了
+          let temp = Object.assign({}, this.data[1], {
+            cutsta: +res[`L2_CSta`],
+            cut_x: +res[`L2_CX`],
+            cut_x_max: +res[`In${i}_ResW`] - 64,
+            cut_y: +res[`L2_CY`],
+            cut_y_max: +res[`In${i}_ResH`] - 64,
+            cut_w: +res[`L2_CW`],
+            cut_w_max: +res[`In${i}_ResW`],
+            cut_h: +res[`L2_CH`],
+            cut_h_max: +res[`In${i}_ResH`],
+          });
+          this.$set(this.data, 1, temp);
+          console.log('cut_temp', temp);
+
+          // this.data[0].cutsta = res[L1_CSta];
+
+          // if(`In${i}_ResW` == 0 && `In${i}_ResH` == 0) {
+          //   this.data[1].cut_x_max = 0;
+          //   this.data[1].cut_w_max = 0;
+          //   this.data[1].cut_y_max = 0;
+          //   this.data[1].cut_h_max = 0;
+          //   this.data[1].cut_w = 0;
+          //   this.data[1].cut_h = 0;
+          //   this.data[1].cut_x = 0;
+          //   this.data[1].cut_y = 0;
+          // } else {
+          //   console.log('RES', res);
+          //   console.log('res[L2_CY]', res[L2_CY]);
+          //   this.data[1].cut_x_max = res[`In${i}_ResW`] - 64;
+          //   this.data[1].cut_w_max = res[`In${i}_ResW`];
+          //   this.data[1].cut_y_max = res[`In${i}_ResH`] - 64;
+          //   this.data[1].cut_h_max = res[`In${i}_ResH`];
+
+          //   this.data[1].cutsta = res[L2_CSta];
+          //   this.data[1].cut_w = res[L2_CW];
+          //   this.data[1].cut_h = res[L2_CH];
+          //   this.data[1].cut_x = res[L2_CX];
+          //   this.data[1].cut_y = res[L2_CY];
+          // }
         });
         this.data[1].showcutout = true;
       },
+      // ------------------   BKG   -------------------
       switchBkg(val) {
-        console.log(val);
+        this.data[2].sta = val;
+
+        this.ajax({
+          name: 'url',
+          data: {
+            RW: 1,
+            DevID: 0,
+            CMD: 11,
+            BKG_Sta: val,
+            _: this._
+          }
+        }).then(res => {
+          Message('BKG' + this.switchlist[this.data[2].sta].r);
+        });
+      },
+      selectType(obj) {
+        this.data[2].type = obj.index;
+        if(this.data[2].sta) {
+          this.ajax({
+            name: 'url',
+            data: {
+              RW: 1,
+              DevID: 0,
+              CMD: 12,
+              BKG_Mod: obj.index,
+              _: this._            }
+          }).then(res => {
+            Message('BKG类型已已切换至' + this.typelist[this.data[2].type].r);
+          });
+        }
+      },
+      //  R  G  B
+      RGBCallback(newobj) {
+        let obj = {};
+        obj[`BKG_PCBR`] = this.data[2].r;
+        obj[`BKG_PCBG`] = this.data[2].g;
+        obj[`BKG_PCBB`] = this.data[2].b;
+        if(this.data[2].sta) {
+          this.ajax({
+            name: 'url',
+            data: Object.assign({
+              RW: 1,
+              DevID: 0,
+              CMD: 13,
+              ...obj,
+              _: this._
+            }, newobj)
+          }).then(res => {
+
+          });
+        }
+      },
+      rCallback(val) {
+        this.data[2].r = val;
+        this.RGBCallback({ BKG_PCBR: val });
+      },
+      gCallback(val) {
+        this.data[2].g = val;
+        this.RGBCallback({ BKG_PCBG: val });
+      },
+      bCallback(val) {
+        this.data[2].b = val;
+        this.RGBCallback({ BKG_PCBB: val });
+      },
+      // bkg apply
+      bkgApply() {
+        this.ajax({
+          name: 'url',
+          data: {
+            RW: 1,
+            DevID: 0,
+            CMD: 14,
+            BKG_IMG: this.data[2].active,
+            _: this._
+          }
+        }).then(res => {
+          this.data[2].apply = this.data[2].active;
+          Message('BKG抓拍成功');
+        });
+      },
+      // Capture 输入源
+      capture(obj) {
+        this.ajax({
+          name: 'url',
+          data: {
+            RW: 1,
+            DevID: 0,
+            CMD: 15,
+            BKG_CSrc: this.data[2].cutsrc,
+            BKG_CSID: this.data[2].cutapply,
+            _: this._
+          }
+        }).then(res => {
+          Message('BKG抓拍成功');
+        });
       }
     }
   }

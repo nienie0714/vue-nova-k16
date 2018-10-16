@@ -84,6 +84,14 @@
           this.value = newVal;
         }
         this.drag = false;
+      },
+      max: function(newValue) {
+        if(newValue >= 0) {
+          this.max = newValue;
+        } else {
+          // this.max = this.min;
+        }
+        console.log('max', this.max);
       }
     },
     methods: {

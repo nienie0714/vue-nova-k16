@@ -44,8 +44,6 @@ Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
                 ret[item] = mockData[item];
             }
         }
-        ret[`In0_ResW`] = 1920;
-        ret[`In0_ResH`] = 1080;
 
         store.commit('setMock', ret);
         // 拼接成功标志
