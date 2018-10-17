@@ -45,7 +45,9 @@ setInterval(() => {
     count++;
     store.commit('setCount', count % 2);
     if (count % 2 && localStorage.getItem('_')) {
-        readPolling(count);
+        if (store.getters.getCommon.Switch) {
+            readPolling(count);
+        }
     }
 }, 1000);
 

@@ -10,6 +10,7 @@ export default new Vuex.Store({
     state: {
         // 接收常规接口每次传进来的数据
         common: getSen('common') || {
+            Switch: true,
             DP_Sta: '',
             HDMI_Sta: '',
             SDI1_Sta: '',
@@ -23,8 +24,7 @@ export default new Vuex.Store({
             FRZ_Sta: '',
             BLACK_Sta: '',
             Account: '',
-            sourceActive: 0,
-            windowActive: 0
+            sourceActive: 0
         },
         mosic: getSen('mosic') || {
             In9_MosL: '',
@@ -35,49 +35,7 @@ export default new Vuex.Store({
         window: getSen('window') || {
             windowActive: 0
         },
-        mock:
-            getSen('mock') ||
-            {
-                // DP_Sta: '1',
-                // HDMI_Sta: '1',
-                // SDI1_Sta: '1',
-                // SDI2_Sta: '1',
-                // DVI1_Sta: '1',
-                // DVI2_Sta: '1',
-                // DVI3_Sta: '1',
-                // DVI4_Sta: '1',
-                // // DVI_Mosaic_Sta: '1',
-                // BKG_Sta: '1',
-                // FRZ_Sta: '1',
-                // BLACK_Sta: '1',
-                // L1_Pri: '2',
-                // L1_Src: '0',
-                // L1_Sta: '1',
-                // L1_CSta: '1',
-                // L1_H: '900',
-                // L1_W: '901',
-                // L1_X: '902',
-                // L1_Y: '903',
-                // L1_CH: '1900',
-                // L1_CW: '1000',
-                // L1_CX: '2',
-                // L1_CY: '3',
-                // In0_ResW: '1920',
-                // In0_ResH: '1080',
-                // L2_Pri: '1',
-                // L2_H: '900',
-                // L2_Src: '0',
-                // L2_Sta: '1',
-                // L2_CSta: '1',
-                // L2_W: '901',
-                // L2_X: '902',
-                // L2_Y: '903',
-                // L2_CH: '1901',
-                // L2_CW: '1001',
-                // L2_CX: '4',
-                // L2_CY: '5',
-                // BKG_IMG: '3'
-            },
+        mock: getSen('mock') || {},
         cacheData: getSen('cacheData') || {},
         lang: getLoc('lang') || 'zh',
         count: 0

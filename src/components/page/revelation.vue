@@ -299,27 +299,5 @@
     background-color: #1f2a51;
     color: white;
   }
-
-  // 浮窗
-  .slide-box {
-    width: 100%;
-    height: 100%;
-    background: rgba(57, 62, 67, 0.8);
-    transform: translateX(0);
-    transition: transform ease 0.5s;
-    &.subactive {
-      transform: translateX(100%);
-    }
-  }
-
-  .mask {
-    width: 80%;
-    height: 80%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    overflow: hidden;
-  }
 </style>
 

@@ -3,13 +3,6 @@
     padding: 0;
 }
 
-.el-slider__bar {
-    background-color: #febe00;
-}
-.el-slider__button {
-    border: 2px solid #febe00;
-}
-
 html,
 body,
 #app,

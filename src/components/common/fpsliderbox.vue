@@ -91,7 +91,6 @@
         } else {
           // this.max = this.min;
         }
-        console.log('max', this.max);
       }
     },
     methods: {
