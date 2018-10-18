@@ -135,7 +135,7 @@
               </ul>
             </div>
             <div class="showdatano showdatahr" v-if="data[2].type">
-              <div class="tabgroup">
+              <div class="tabgroup pt10">
                 <div class="tabtitle">BKG</div>
                 <div class="applybtn" @click="bkgApply"><img src="~assets/icon/icon_apply.png" alt="">应用</div>
               </div>
@@ -158,7 +158,7 @@
               </ul>
             </div>
             <div class="showdatano showdatahr" v-if="data[2].type">
-              <div class="tabgroup">
+              <div class="tabgroup pt10">
                 <div class="tabtitle">Capture</div>
                 <div class="applybtn" @click="capture"><img src="~assets/icon/icon_capture.png" alt="">抓拍</div>
               </div>
@@ -334,9 +334,6 @@
       // data(val, oldVal) {
       //   console.log(val[1], oldVal[1]);
       // }
-      active(val) {
-        this.readData(this.active);
-      }
     },
     methods: {
       ...mapActions(['ajax']),
@@ -403,10 +400,10 @@
             // let temp = Object.assign({}, this.data[2], {
             this.data[2].sta = +res.BKG_Sta;
             this.data[2].type = +res.BKG_Mod;
-            this.data[2].b1img = +res.BKG_G0Sta;
-            this.data[2].b2img = +res.BKG_G1Sta;
-            this.data[2].b3img = +res.BKG_G2Sta;
-            this.data[2].b4img = +res.BKG_G3Sta;
+            this.data[2].b0img = +res.BKG_G0Sta;
+            this.data[2].b1img = +res.BKG_G1Sta;
+            this.data[2].b2img = +res.BKG_G2Sta;
+            this.data[2].b3img = +res.BKG_G3Sta;
             this.data[2].apply = +res.BKG_IMG;
             this.data[2].r = +res.BKG_PCBR || 0;  // todo
             this.data[2].g = +res.BKG_PCBG || 0;
@@ -579,6 +576,7 @@
           this.data[0].cut_w = this.data[0].cut_w_max - val;
         }
         this.data[0].cut_x = val;
+        console.log(333, val);
         this.mainCutCallback();
       },
       cutYCallback(val) {
@@ -594,6 +592,8 @@
           this.data[0].cut_x = this.data[0].cut_w_max - val;
         }
         this.data[0].cut_w = val;
+
+        console.log(444, this.data[0].cut_x);
         this.mainCutCallback();
       },
       cutHCallback(val) {
@@ -678,12 +678,14 @@
             _: this._
           }
         }).then(res => {
+          let maxW = res[`In${i}_ResW`] == 0 ? 0 : (+res[`In${i}_ResW`] - 64);
+          let maxH = res[`In${i}_ResH`] == 0 ? 0 : (+res[`In${i}_ResH`] - 64);
           let temp = Object.assign({}, this.data[0], {
             cutsta: +res[`L1_CSta`],
             cut_x: +res[`L1_CX`],
-            cut_x_max: +res[`In${i}_ResW`] - 64,
+            cut_x_max: maxW,
             cut_y: +res[`L1_CY`],
-            cut_y_max: +res[`In${i}_ResH`] - 64,
+            cut_y_max: maxH,
             cut_w: +res[`L1_CW`],
             cut_w_max: +res[`In${i}_ResW`],
             cut_h: +res[`L1_CH`],
@@ -696,6 +698,7 @@
       },
 
       getCutInfo1() {
+        console.log(111111);
         let i = this.data[1].src;
         let currentSrc = {};
         currentSrc[`In${i}_ResW`] = 0;
@@ -714,13 +717,14 @@
             _: this._
           }
         }).then(res => {
-
+          let maxW = res[`In${i}_ResW`] == 0 ? 0 : (+res[`In${i}_ResW`] - 64);
+          let maxH = res[`In${i}_ResH`] == 0 ? 0 : (+res[`In${i}_ResH`] - 64);
           let temp = Object.assign({}, this.data[1], {
             cutsta: +res[`L2_CSta`],
             cut_x: +res[`L2_CX`],
-            cut_x_max: +res[`In${i}_ResW`] - 64,
+            cut_x_max: maxW,
             cut_y: +res[`L2_CY`],
-            cut_y_max: +res[`In${i}_ResH`] - 64,
+            cut_y_max: maxH,
             cut_w: +res[`L2_CW`],
             cut_w_max: +res[`In${i}_ResW`],
             cut_h: +res[`L2_CH`],

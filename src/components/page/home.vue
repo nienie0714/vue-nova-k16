@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper-container">
     <div class="wrapper" :class="{subactive: subactive}">
       <v-header></v-header>
       <div class="contentwrapper">
@@ -8,7 +8,6 @@
         </transition>
       </div>
     </div>
-    {{subactive}}
     <v-floating :subactive.sync="subactive"></v-floating>
   </div>
 </template>
@@ -28,6 +27,10 @@
 </script>
 
 <style lang="less" scoped>
+  .wrapper-container {
+    height: 100%;
+  }
+
   .subactive {
     position: fixed;
     top: 0;

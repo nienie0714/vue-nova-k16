@@ -41,5 +41,9 @@ export default {
     In0_ResR: '6000',
     BKG_Mod: '0',
     In3_ResW: '1920',
-    In3_ResH: '1080'
+    In3_ResH: '1080',
+    BKG_G0Sta: 1,
+    BKG_G1Sta: 1,
+    BKG_G2Sta: 1,
+    BKG_G3Sta: 1
 };

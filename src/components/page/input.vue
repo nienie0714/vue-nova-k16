@@ -155,7 +155,7 @@
               </ul>
             </div>
             <div class="showdata showdatadvi">
-              <div class="btnapply">
+              <div class="btnapply pt30">
                 <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(obj)=>{data[3].btnactive=obj}"></v-button>
                 <div class="applybtn" @click="apply(3)"><img src="~assets/icon/icon_apply.png" alt="">应用</div>
               </div>
@@ -350,10 +350,13 @@
         this.list1 = Object.assign([], this.list1_1);
         this.mosic.templateList = Object.assign([], this.mosic.templateList1);
         this.handleLink(1);
-      } else {
+      } else if(this.active == 3 && this.mosic.link == 2) {
         this.list1 = Object.assign([], this.list1_2);
         this.mosic.templateList = Object.assign([], this.mosic.templateList2);
         this.handleLink(2);
+      } else {
+        this.list1 = Object.assign([], this.list1_2);
+        this.mosic.templateList = Object.assign([], this.mosic.templateList2);
       }
       // this.list1 = Object.assign([], this.list1_2);  // DP/HDMI数据来源默认为双链
 
@@ -522,6 +525,7 @@
         this.mosicVisible = false;
       },
       handleLink(val) {
+        console.log(1111111111111, val);
         this.mosic.link = val;
         // this.list1 = JSON.parse(JSON.stringify(val == 1 ? this.list1_1 : this.list1_2));   // error: w of undefined
         this.data[3].dvimax = val == 1 ? 2048 : 3840;

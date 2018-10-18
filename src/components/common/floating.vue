@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="floatingbtn" @click="slideActive = !slideActive">
+    <div class="floatingbtn" @click.stop="slideActive = !slideActive">
       <img class="floatingicon" src="@/assets/icon/icon_dashboard.png" alt="" draggable="false">
     </div>
     <div class="mask" :class="{'mask-active': !slideActive}">
@@ -32,7 +32,7 @@
           </div>
           <div class="statusinfo" :class="{active: true}">
             <div class="status" :class="{active: true}">开启中</div>
-            <div class="details">DVIMOSAIC 3840x2160@60Hx</div>
+            <div class="details">DVIMOSAIC 3840x2160@60Hz</div>
           </div>
           <div class="info">
             <div>大小:</div>
@@ -58,7 +58,7 @@
           </div>
           <div class="statusinfo" :class="{active: false}">
             <div class="status" :class="{active: false}">已关闭</div>
-            <div class="details">HDMI 3840x2160@60Hx</div>
+            <div class="details">HDMI 3840x2160@60Hz</div>
           </div>
           <div class="info">
             <div>大小:</div>
@@ -132,7 +132,8 @@
     data() {
       return {
         active: true,
-        slideActive: false
+        slideActive: false,
+        timer: null
       };
     },
     props: [
@@ -150,7 +151,7 @@
   .floatingbtn {
     position: fixed;
     right: 0;
-    top: 70px;
+    top: 80px;
     height: 50px;
     line-height: 50px;
     .floatingicon {
@@ -180,10 +181,6 @@
     transform: translate(-50%, -50%);
     overflow: hidden;
     z-index: 99;
-    // display: none;
-    // .maskactive {
-    //   display: block;
-    // }
     &.mask-active {
       z-index: -1;
     }
@@ -232,13 +229,13 @@
       box-sizing: border-box;
       font-size: 20px;
       display: flex;
+      align-items: center;
       padding: 10px 0;
       > div:nth-child(1) {
         color: #adb4cf;
         width: 92px;
       }
       > div:nth-child(2) {
-        margin-top: 1px;
         color: #fff;
       }
     }
