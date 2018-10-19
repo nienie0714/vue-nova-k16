@@ -34,7 +34,7 @@
             </div>
             <div class="back">
               <!-- 背面内容-输入源 -->
-              <div class="menu-box" v-for="(router, index) in routers" :key="index" :class="router.className" @click="go(router)">
+              <div class="menu-box inputclass" v-for="item in 9" @click="go(router)">
 
               </div>
             </div>
@@ -99,8 +99,11 @@
         value: 50
       };
     },
+    created() {
+      this.value = +this.getMosic.Screen_Bri;
+    },
     computed: {
-      ...mapGetters(['getCommon', 'getCacheData'])
+      ...mapGetters(['getMosic'])
     },
     watch: {
       value(val) {
@@ -129,7 +132,7 @@
             DevID: 0,
             CMD: 4,
             Screen_Bri: this.value,
-            _: localStorage.getItem('_')
+            _: sessionStorage.getItem('_')
           }
         });
       }
@@ -146,7 +149,7 @@
   //  正反面反转
   /* entire container, keeps perspective */
   .flip-container {
-    perspective: 1900;
+    perspective: 8000;
   }
   /* flip the pane when hovered */
   // .flip-container:hover .flipper,
@@ -298,6 +301,9 @@
     font-size: 34px;
     background-color: #1f2a51;
     color: white;
+  }
+  .inputclass {
+    background-color: #1f2a51;
   }
 </style>
 

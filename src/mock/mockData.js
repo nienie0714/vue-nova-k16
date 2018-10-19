@@ -1,4 +1,5 @@
 export default {
+    Screen_Bri: '98',
     DP_Sta: '1',
     HDMI_Sta: '1',
     SDI1_Sta: '1',

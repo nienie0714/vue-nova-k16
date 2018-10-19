@@ -11,7 +11,7 @@
       <!-- tab -->
       <div class="tabs">
         <div class="tab tab3" v-for="(item, index) in data" :class="{active: active == index}" @click="readData(index)" :key="index">
-          <b>{{item.name}}</b>
+          <span>{{item.name}}</span>
         </div>
       </div>
       <div class="container">
@@ -38,18 +38,20 @@
                 <v-textbox></v-textbox>
               </li>
             </ul>
+
             <ul class="cardul">
               <li>
-                <v-fpsliderbox :title="'窗口水平起始'" :min="0" :max="20000" :val="data[0].x" @callback="xCallback" @change="mainCallback"></v-fpsliderbox>
+                {{data[0]}}
+                <v-fpsliderbox :title="'窗口水平起始'" :min="0" :max="20000" :val="data[0].x" @callback="xCallback"></v-fpsliderbox>
               </li>
               <li>
-                <v-fpsliderbox :title="'窗口垂直起始'" :min="0" :max="20000" :val="data[0].y" @callback="yCallback" @change="mainCallback"></v-fpsliderbox>
+                <v-fpsliderbox :title="'窗口垂直起始'" :min="0" :max="20000" :val="data[0].y" @callback="yCallback"></v-fpsliderbox>
               </li>
               <li>
-                <v-fpsliderbox :title="'窗口水平宽度'" :min="64" :max="20000" :val="data[0].w" @callback="wCallback" @change="mainCallback"></v-fpsliderbox>
+                <v-fpsliderbox :title="'窗口水平宽度'" :min="64" :max="20000" :val="data[0].w" @callback="wCallback"></v-fpsliderbox>
               </li>
               <li>
-                <v-fpsliderbox :title="'窗口垂直宽度'" :min="64" :max="20000" :val="data[0].h" @callback="hCallback" @change="mainCallback"></v-fpsliderbox>
+                <v-fpsliderbox :title="'窗口垂直宽度'" :min="64" :max="20000" :val="data[0].h" @callback="hCallback"></v-fpsliderbox>
               </li>
               <li class="noneli">
                 <v-textbox></v-textbox>
@@ -83,16 +85,16 @@
             </ul>
             <ul class="cardul">
               <li>
-                <v-fpsliderbox :title="'窗口水平起始'" :min="0" :max="20000" :val="data[1].x" @callback="xCallback" @change="mainCallback"></v-fpsliderbox>
+                <v-fpsliderbox :title="'窗口水平起始'" :min="0" :max="20000" :val="data[1].x" @callback="xCallback"></v-fpsliderbox>
               </li>
               <li>
-                <v-fpsliderbox :title="'窗口垂直起始'" :min="0" :max="20000" :val="data[1].y" @callback="yCallback" @change="mainCallback"></v-fpsliderbox>
+                <v-fpsliderbox :title="'窗口垂直起始'" :min="0" :max="20000" :val="data[1].y" @callback="yCallback"></v-fpsliderbox>
               </li>
               <li>
-                <v-fpsliderbox :title="'窗口水平宽度'" :min="64" :max="20000" :val="data[1].w" @callback="wCallback" @change="mainCallback"></v-fpsliderbox>
+                <v-fpsliderbox :title="'窗口水平宽度'" :min="64" :max="20000" :val="data[1].w" @callback="wCallback"></v-fpsliderbox>
               </li>
               <li>
-                <v-fpsliderbox :title="'窗口垂直宽度'" :min="64" :max="20000" :val="data[1].h" @callback="hCallback" @change="mainCallback"></v-fpsliderbox>
+                <v-fpsliderbox :title="'窗口垂直宽度'" :min="64" :max="20000" :val="data[1].h" @callback="hCallback"></v-fpsliderbox>
               </li>
               <li class="noneli">
                 <v-textbox></v-textbox>
@@ -121,13 +123,13 @@
               <ul class="cardul" v-if="!data[2].type">
                 <!-- <span style="color:#fff;">{{data[2]}}</span> -->
                 <li>
-                  <v-fpsliderbox :title="'R(红分量)'" :min="0" :max="255" :val="data[2].r" @callback="rCallback" @change="RGBCallback"></v-fpsliderbox>
+                  <v-fpsliderbox :title="'R(红分量)'" :min="0" :max="255" :val="data[2].r" @callback="rCallback"></v-fpsliderbox>
                 </li>
                 <li>
-                  <v-fpsliderbox :title="'G(绿分量)'" :min="0" :max="255" :val="data[2].g" @callback="gCallback" @change="RGBCallback"></v-fpsliderbox>
+                  <v-fpsliderbox :title="'G(绿分量)'" :min="0" :max="255" :val="data[2].g" @callback="gCallback"></v-fpsliderbox>
                 </li>
                 <li>
-                  <v-fpsliderbox :title="'B(蓝分量)'" :min="0" :max="255" :val="data[2].b" @callback="bCallback" @change="RGBCallback"></v-fpsliderbox>
+                  <v-fpsliderbox :title="'B(蓝分量)'" :min="0" :max="255" :val="data[2].b" @callback="bCallback"></v-fpsliderbox>
                 </li>
                 <li v-for="item in 2" class="noneli">
                   <v-textbox></v-textbox>
@@ -240,6 +242,7 @@
         </div>
       </div>
     </div>
+    <div v-if="alertmask" class="alertmask"></div>
   </div>
 </template>
 <script>
@@ -262,6 +265,7 @@
         scalaModel: [{ r: '自定义缩放', default: true }],
         typelist: [{ r: '纯色BKG' }, { r: '图片BKG' }],
         imglist: [{ r: 'BKG1' }, { r: 'BKG2' }, { r: 'BKG3' }, { r: 'BKG4' }],
+        alertmask: false,
         data: [
           {
             name: '主窗口',
@@ -375,42 +379,12 @@
               h: +res[`L${i}_H`],
             });
             this.$set(this.data, index, temp);
+            console.log(this.data[0]);
           });
         }
+        // 进入BKG页面
         if(index == 2) {
-
-          this.ajax({
-            name: 'url',
-            data: {
-              RW: 0,
-              DevID: 0,
-              BKG_Sta: 0,
-              BKG_Mod: 0,
-              BKG_IMG: 0,
-              BKG_G0Sta: 0,
-              BKG_G1Sta: 0,
-              BKG_G2Sta: 0,
-              BKG_G3Sta: 0,
-              BKG_PCBR: 0,
-              BKG_PCBG: 0,
-              BKG_PCBB: 0,
-              _: this._            }
-          }).then(res => {
-            console.log('----BKG-----状态信息同步', res);
-            // let temp = Object.assign({}, this.data[2], {
-            this.data[2].sta = +res.BKG_Sta;
-            this.data[2].type = +res.BKG_Mod;
-            this.data[2].b0img = +res.BKG_G0Sta;
-            this.data[2].b1img = +res.BKG_G1Sta;
-            this.data[2].b2img = +res.BKG_G2Sta;
-            this.data[2].b3img = +res.BKG_G3Sta;
-            this.data[2].apply = +res.BKG_IMG;
-            this.data[2].r = +res.BKG_PCBR || 0;  // todo
-            this.data[2].g = +res.BKG_PCBG || 0;
-            this.data[2].b = +res.BKG_PCBB || 0;
-            // });
-            // this.$set(this.data, 2, temp);
-          });
+          this.getBKGInfo();
         }
       },
       closeCard() {
@@ -485,6 +459,7 @@
         let num = this.active + 1;
         if(this.data[num - 1].sta == 1) {
           let obj = {};
+          console.log('main：', this.data[num - 1].w);
           obj[`L${num}_W`] = this.data[num - 1].w;
           obj[`L${num}_H`] = this.data[num - 1].h;
           obj[`L${num}_X`] = this.data[num - 1].x;
@@ -515,6 +490,7 @@
         this.mainCallback();
       },
       wCallback(val) {
+        console.log('w', val);
         let num = this.active + 1;
         this.data[num - 1].w = val;
         this.mainCallback();
@@ -818,6 +794,7 @@
       },
       // Capture 输入源
       capture(obj) {
+        this.alertmask = true;
         this.setCommon({ Switch: false });
         this.ajax({
           name: 'url',
@@ -830,8 +807,51 @@
             _: this._
           }
         }).then(res => {
-          Message('BKG抓拍成功');
-          this.setCommon({ Switch: true });
+          Message({
+            message: '请等待',
+            customClass: 'align-center',
+            duration: 3000,
+            onClose: () => {
+              this.setCommon({ Switch: true });
+              this.getBKGInfo();
+              this.alertmask = false;
+            }
+          });
+          // this.getBKGInfo();
+        });
+      },
+      getBKGInfo() {
+        this.ajax({
+          name: 'url',
+          data: {
+            RW: 0,
+            DevID: 0,
+            BKG_Sta: 0,
+            BKG_Mod: 0,
+            BKG_IMG: 0,
+            BKG_G0Sta: 0,
+            BKG_G1Sta: 0,
+            BKG_G2Sta: 0,
+            BKG_G3Sta: 0,
+            BKG_PCBR: 0,
+            BKG_PCBG: 0,
+            BKG_PCBB: 0,
+            _: this._          }
+        }).then(res => {
+          console.log('----BKG-----状态信息同步', res);
+          // let temp = Object.assign({}, this.data[2], {
+          this.data[2].sta = +res.BKG_Sta;
+          this.data[2].type = +res.BKG_Mod;
+          this.data[2].b0img = +res.BKG_G0Sta;
+          this.data[2].b1img = +res.BKG_G1Sta;
+          this.data[2].b2img = +res.BKG_G2Sta;
+          this.data[2].b3img = +res.BKG_G3Sta;
+          this.data[2].apply = +res.BKG_IMG;
+          this.data[2].r = +res.BKG_PCBR || 0;  // todo
+          this.data[2].g = +res.BKG_PCBG || 0;
+          this.data[2].b = +res.BKG_PCBB || 0;
+          // });
+          // this.$set(this.data, 2, temp);
         });
       }
     }
@@ -853,6 +873,14 @@
         visibility: hidden;
       }
     }
+  }
+  .alertmask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
   }
 </style>
 

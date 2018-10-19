@@ -53,16 +53,16 @@
           data: { RW: 1, DevID: 0, CMD: 0, Account: command, _: command }
         }).then(res => {
           this.getMosaicData(command);
-          localStorage.setItem('_', command);
+          sessionStorage.setItem('_', command);
           this.$router.push({ path: "/" });
         });
-        // localStorage.setItem('_', command);
+        // sessionStorage.setItem('_', command);
         // this.$router.push({ path: "/" });
       },
       getMosaicData(command) {
         this.ajax({
           name: 'url',
-          data: { RW: 0, DevID: 0, In9_MosL: 0, In9_MosM: 0, In9_MosW: 0, In9_MosH: 0, Account: command, _: command }
+          data: { RW: 0, DevID: 0, Screen_Bri: 0, In9_MosL: 0, In9_MosM: 0, In9_MosW: 0, In9_MosH: 0, _: command }
         }).then(res => {
           // { "In9_MosL":"1", "In9_MosM":"2", "In9_MosW":"1920", "In9_MosH":"1080", "ERRC": "0"}
           this.setMosic(res);

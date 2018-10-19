@@ -8,6 +8,7 @@
         </transition>
       </div>
     </div>
+    <div :class="{subactive: subactive}"></div>
     <v-floating :subactive.sync="subactive"></v-floating>
   </div>
 </template>
@@ -22,6 +23,18 @@
     created() {
     },
     computed: {
+    },
+    watch: {
+      // slideActive(val) {
+      //   if(val) {
+      //     this.slideActive = true;
+      //     this.beforeActive = true;
+      //   } else {
+      //     this.beforeActive = false;
+      //     this.timmer = setTimeout(() => { this.slideActive = false }, 3000);
+      //   }
+      //   this.$emit('update:subactive', val);
+      // }
     }
   }
 </script>

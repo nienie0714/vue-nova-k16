@@ -11,7 +11,7 @@
       <!-- tab -->
       <div class="tabs">
         <div class="tab" v-for="(item, index) in data" :class="{active: active == index}" @click="readData(index)" :key="index">
-          <b>{{item.name}}</b>
+          <span>{{item.name}}</span>
         </div>
       </div>
       <div class="container">

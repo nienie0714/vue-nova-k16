@@ -48,8 +48,8 @@ Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
         store.commit('setMock', ret);
         // 拼接成功标志
         ret['ERRC'] = '0';
-        // ret['Account'] = params['Account'] == '0' ? localStorage.getItem('_') : params['Account'];
-        ret['Account'] = localStorage.getItem('_');
+        // ret['Account'] = params['Account'] == '0' ? sessionStorage.removeItem('_') : params['Account'];
+        ret['Account'] = sessionStorage.removeItem('_');
 
         // console.log('Param', params);
         // console.log('MockData', ret);

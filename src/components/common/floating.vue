@@ -3,12 +3,12 @@
     <div class="floatingbtn" @click.stop="slideActive = !slideActive">
       <img class="floatingicon" src="@/assets/icon/icon_dashboard.png" alt="" draggable="false">
     </div>
-    <div class="mask" :class="{'mask-active': !slideActive}">
+
+    <div class="mask" :class="{'mask-active': !afterActive}">
       <div class="slide-box" :class="{subactive: !slideActive}">
         <!-- 画质信息 -->
         <div class="common square">
           <div class="title mb18">
-            画质信息
           </div>
           <div class="circleflex">
             <div class="innerflex">
@@ -131,7 +131,7 @@
   export default {
     data() {
       return {
-        active: true,
+        afterActive: false,
         slideActive: false,
         timer: null
       };
@@ -140,8 +140,16 @@
       'subactive'
     ],
     watch: {
+      // slideActive(val) {
+      //   this.$emit('update:subactive', val);
+      // }
       slideActive(val) {
-        console.log(val);
+        clearTimeout(this.timmer);
+        if(val) {
+          this.afterActive = true;
+        } else {
+          this.timmer = setTimeout(() => { this.afterActive = false }, 300);
+        }
         this.$emit('update:subactive', val);
       }
     }

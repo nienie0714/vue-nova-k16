@@ -24,6 +24,8 @@
       return {
         value: 0,
         count: 0,
+        time: new Date(),
+        oldVal: 0,
         drag: true // 防止通过props 改变而下发
       };
     },
@@ -69,21 +71,27 @@
       this.value = this.val;
     },
     watch: {
-      value: function(newVal) {
-        if(this.count && this.drag) {
-          if(!this.islock) {
-            this.$emit('callback', newVal);
+      value: function(newVal, oldVal) {
+        this.oldVal = oldVal;
+        if(new Date() - this.time > 1000) {
+          this.time = new Date();
+          console.log(1, newVal);
+          if(this.count && this.drag) {
+            if(!this.islock) {
+              console.log(2, newVal);
+              this.$emit('callback', newVal);
+            }
+          } else {
+            this.drag = true;
           }
-        } else {
-          this.drag = true;
+          this.count++;
         }
-        this.count++;
       },
       val: function(newVal) {
         if(this.value !== newVal) {
           this.value = newVal;
         }
-        this.drag = false;
+        // this.drag = false;
       },
       max: function(newValue) {
         if(newValue >= 0) {
@@ -95,7 +103,11 @@
     },
     methods: {
       change(val) {
-        this.$emit('change', val);
+        // this.$emit('change', val);
+        console.log(111);
+        if(val != this.oldVal) {
+          this.$emit('callback', val);
+        }
       },
       inputChange(val) {
         if(!this.islock) {
