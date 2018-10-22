@@ -73,7 +73,7 @@
     watch: {
       value: function(newVal, oldVal) {
         this.oldVal = oldVal;
-        if(new Date() - this.time > 1000) {
+        if(new Date() - this.time > 100) {
           this.time = new Date();
           console.log(1, newVal);
           if(this.count && this.drag) {

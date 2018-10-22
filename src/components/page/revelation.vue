@@ -1,50 +1,61 @@
 <template>
   <div class="revelation">
-    <div class="wrapper">
-      <div class="center">
-        <div class="flip-container" :class="{active: active}">
-          <!--  ontouchstart="this.classList.toggle('hover');"  -->
-          <div class="flipper">
-            <div class="front">
-              <!-- 前面内容-home主页 -->
-              <!-- <div class="menu-box" :class="light.className">
+
+    <div class="center">
+      <div class="flip-container" :class="{active: active}">
+        <!--  ontouchstart="this.classList.toggle('hover');"  -->
+        <div class="flipper">
+          <div class="front">
+            <!-- 前面内容-home主页 -->
+            <!-- <div class="menu-box" :class="light.className">
                 <div>{{$t('home.light')}}</div>
               </div> -->
-              <div class="menu-box light">
-                <div>{{$t('home.light')}}</div>
-                <div class="card-btm">
-                  <div class="innum"><input v-model.number="value" onafterpaste="this.value=this.value.replace(/\D/g,'')" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onkeypress="this.value=this.value.replace(/[^0-9]/g,'')" @blur="handleLight"></div>
-                  <div class="inimggroup">
-                    <div class="decrease" @click="decrease" :class="{disabled: value <= 0}">
-                    </div>
-                    <div class="increase" @click="increase" :class="{disabled: value >= 100}">
-                    </div>
+            <div class="menu-box light">
+              <div>{{$t('home.light')}}</div>
+              <div class="card-btm">
+                <div class="innum"><input v-model.number="value" onafterpaste="this.value=this.value.replace(/\D/g,'')" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" onkeypress="this.value=this.value.replace(/[^0-9]/g,'')" @blur="handleLight"></div>
+                <div class="inimggroup">
+                  <div class="decrease" @click="decrease" :class="{disabled: value <= 0}">
+                  </div>
+                  <div class="increase" @click="increase" :class="{disabled: value >= 100}">
                   </div>
                 </div>
-                <!-- slider -->
-                <div class="block">
-                  <el-slider v-model="value" @change="handleLight">
-                    <!--  min=0 max=1920 -->
-                  </el-slider>
-                </div>
               </div>
-              <div class="menu-box" v-for="(router, index) in routers" :key="index" :class="router.className" @click="go(router)">
-                <div>{{router.name}}</div>
+              <!-- slider -->
+              <div class="block">
+                <el-slider v-model="value" @change="handleLight">
+                  <!--  min=0 max=1920 -->
+                </el-slider>
               </div>
             </div>
-            <div class="back">
-              <!-- 背面内容-输入源 -->
-              <div class="menu-box inputclass" v-for="item in 9" @click="go(router)">
-
+            <div class="menu-box" v-for="(router, index) in routers" :key="index" :class="router.className" @click="go(router)">
+              <div>{{router.name}}</div>
+            </div>
+          </div>
+          <div class="back">
+            <!-- 背面内容-输入源 -->
+            <div class="menu-backbox inputclass" v-for="(item, index) in srclist">
+              <div class="info">
+                <div class="title">{{item.title}}</div>
+                <div class="src">{{item.src}}</div>
+                <template>
+                  <div class="srcinfo" v-if="item.isSingle">{{item.w}}x{{item.h}}@{{item.r}}</div>
+                  <div class="srcinfo" v-else>{{item.no}}</div>
+                </template>
               </div>
+              <!-- <div class="srcactive">
+                <div class="main" @click="setMain(index)">Main</div>
+                <div class="pip" @click="setPIP(index)">PIP</div>
+              </div> -->
             </div>
           </div>
         </div>
       </div>
-      <div class="btncenter">
-        <v-button :maintitle="'功能'" :subtitle="'输入源'" @getBtn="(data)=>{btnactive=data, btnactive==1?active=false:active=true;}"></v-button>
-      </div>
     </div>
+    <div class="btncenter">
+      <v-button :maintitle="'功能'" :subtitle="'输入源'" @getBtn="(data)=>{btnactive=data, btnactive==1?active=false:active=true;}"></v-button>
+    </div>
+
   </div>
 </template>
 
@@ -92,6 +103,98 @@
           className: 'communication'
         }
         ],
+        srclist: [
+          {
+            title: 'input',
+            src: 'HDMI 2.0',
+            className: 'srcactive',
+            isSingle: false,
+            w: '1920',
+            h: '1080',
+            r: '120',
+            no: 'No Single'
+          },
+          {
+            title: 'input',
+            src: 'DP 1.2',
+            className: 'srcactive',
+            isSingle: false,
+            w: '1920',
+            h: '1080',
+            r: '120',
+            no: 'No Single'
+          },
+          {
+            title: 'input',
+            src: '12G SDI-1',
+            className: 'srcactive',
+            isSingle: false,
+            w: '1920',
+            h: '1080',
+            r: '120',
+            no: 'No Single'
+          },
+          {
+            title: 'input',
+            src: '12G SDI-2',
+            className: 'srcactive',
+            isSingle: false,
+            w: '1920',
+            h: '1080',
+            r: '120',
+            no: 'No Single'
+          },
+          {
+            title: 'input',
+            src: 'DVI-1',
+            className: 'srcactive',
+            isSingle: false,
+            w: '1920',
+            h: '1080',
+            r: '120',
+            no: 'No Single'
+          },
+          {
+            title: 'input',
+            src: 'DVI-2',
+            className: 'srcactive',
+            isSingle: false,
+            w: '1920',
+            h: '1080',
+            r: '120',
+            no: 'No Single'
+          },
+          {
+            title: 'input',
+            src: 'DVI-3',
+            className: 'srcactive',
+            isSingle: false,
+            w: '1920',
+            h: '1080',
+            r: '120',
+            no: 'No Single'
+          },
+          {
+            title: 'input',
+            src: 'DVI-4',
+            className: 'srcactive',
+            isSingle: false,
+            w: '1920',
+            h: '1080',
+            r: '120',
+            no: 'No Single'
+          },
+          {
+            title: 'input',
+            src: 'DVI Mosaic',
+            className: 'srcactive',
+            isSingle: false,
+            w: '1920',
+            h: '1080',
+            r: '120',
+            no: 'No Single'
+          }
+        ],
         active: false,
         subactive: true,
         btnactive: 1,
@@ -100,10 +203,11 @@
       };
     },
     created() {
-      this.value = +this.getMosic.Screen_Bri;
+      this.value = +this.getMosic['Screen_Bri'];
+      this.initSrc();
     },
     computed: {
-      ...mapGetters(['getMosic'])
+      ...mapGetters(['getCommon', 'getMosic'])
     },
     watch: {
       value(val) {
@@ -135,6 +239,43 @@
             _: sessionStorage.getItem('_')
           }
         });
+      },
+      initSrc() {
+        let list = ['DP_Sta', 'HDMI_Sta', 'SDI1_Sta', 'SDI2_Sta', 'DVI1_Sta', 'DVI2_Sta', 'DVI3_Sta', 'DVI4_Sta', 'DVI_Mosaic_Sta'];
+        let statelist = [this.getCommon['DP_Sta'], this.getCommon['HDMI_Sta'], this.getCommon['SDI1_Sta'], this.getCommon['SDI2_Sta'], this.getCommon['DVI1_Sta'], this.getCommon['DVI2_Sta'], this.getCommon['DVI3_Sta'], this.getCommon['DVI4_Sta'], "1"];
+        let ret = {};
+        let val = [];
+
+        // console.log(111111, statelist);
+        statelist.forEach((item, index) => {
+          if(item == 1 || item == 2) {
+            this.srclist[index].isSingle = true;
+            ret[`In${index}_ResW`] = 0;
+            ret[`In${index}_ResH`] = 0;
+            ret[`In${index}_ResR`] = 0;
+            val.push(index);
+          } else {
+            this.srclist[index].isSingle = false;
+          }
+        });
+        console.log(999, val);
+        this.ajax({
+          name: 'url',
+          data: { RW: 0, DevID: 0, ...ret, _: sessionStorage.getItem('_') }
+        }).then(res => {
+          // todo
+          val.forEach((data, i) => {
+            this.srclist[i]['h'] = +res[`In${i}_ResH`]
+            this.srclist[i]['w'] = +res[`In${i}_ResW`]
+            this.srclist[i]['r'] = +res[`In${i}_ResR`] / 100;
+          });
+        });
+      },
+      setMain(index) {
+        console.log(index);
+      },
+      setPIP(index) {
+        console.log(index);
       }
     }
   }
@@ -144,7 +285,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 70px;
+    margin-top: 135px;
   }
   //  正反面反转
   /* entire container, keeps perspective */
@@ -304,6 +445,81 @@
   }
   .inputclass {
     background-color: #1f2a51;
+    display: flex;
+    flex-direction: column;
+    .title {
+      font-size: 16px;
+      color: #adb4cf;
+      margin-bottom: 30px;
+    }
+    .src {
+      font-size: 24px;
+      color: #ffffff;
+      margin-bottom: 16px;
+    }
+    .srcinfo {
+      font-size: 20px;
+      color: #ffffff;
+    }
+  }
+  .menu-backbox {
+    float: left;
+    box-sizing: border-box;
+    width: 360px;
+    height: 200px;
+    margin: 0 40px 40px 0;
+    padding: 40px 30px 20px 30px;
+    color: #fff;
+    font-size: 28px;
+    transform: translateY(5px);
+    transition: all 0.3s;
+    position: relative;
+    &:hover {
+      transform: translateX(0);
+      // .srcactive {
+      //   display: block;
+      // }
+    }
+  }
+  .srcactive {
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid #cecfd5;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      width: 120px;
+      height: 48px;
+      padding: 14px 14px;
+      margin-right: 20px;
+      border: 1px solid #febe00;
+      color: #febe00;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .pip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      width: 60px;
+      height: 48px;
+      padding: 14px 33px;
+      background-color: #62c655;
+      color: #061031;
+      font-size: 24px;
+      cursor: pointer;
+    }
   }
 </style>
 

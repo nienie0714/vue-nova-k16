@@ -1,12 +1,28 @@
 <template>
-  <div class="login-wrap">
-    <!-- <div class="ms-title">后台管理系统</div> -->
-    <div class="ms-login">
-      <el-form>
-        <div class="login-btn">
-          <el-button type="primary" @click="submitForm()">登录</el-button>
+  <div class="wrapper-container">
+    <div class="wrapper">
+      <v-header :showName="false"></v-header>
+      <div class="login-wrap">
+        <!-- <div class="ms-title">后台管理系统</div> -->
+        <div class="ms-login">
+          <div class="login-center">
+            <div class="product">
+              <img src="@/assets/icon/img_product.png" alt="">
+            </div>
+            <div class="right-login">
+              <div class="procuct-name">
+                <span>WELCOME to</span>
+                <img src="@/assets/icon_productname.png" alt="">
+              </div>
+              <el-form>
+                <div class="login-btn" @click="submitForm()">
+                  <img src="@/assets/icon/icon_right.png" alt="">
+                </div>
+              </el-form>
+            </div>
+          </div>
         </div>
-      </el-form>
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +51,6 @@
         }).then(res => {
           this.getMosaicData(command);
           sessionStorage.setItem('_', command);
-          this.$router.push({ path: "/" });
         });
         // sessionStorage.setItem('_', command);
         // this.$router.push({ path: "/" });
@@ -47,39 +62,60 @@
         }).then(res => {
           // { "In9_MosL":"1", "In9_MosM":"2", "In9_MosW":"1920", "In9_MosH":"1080", "ERRC": "0"}
           this.setMosic(res);
+          this.$router.push({ path: "/" });
         });
       }
     }
   }
 </script>
 
-<style scoped>
+<style scoped lang="less">
+  .wrapper-container {
+    height: 100%;
+    background: url('../../assets/img_bg_login.png') center center no-repeat / cover;
+  }
   .login-wrap {
     position: relative;
     width: 100%;
     height: 100%;
   }
-  .ms-title {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    margin-top: -230px;
-    text-align: center;
-    font-size: 30px;
-    color: #fff;
-  }
   .ms-login {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
     height: 300px;
-    padding: 40px;
-    background: #fff;
+    padding: 98px 0 69px 0;
+    background-color: rgba(31, 40, 70, 0.5);
+  }
+  .login-center {
+    width: 1100px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .right-login {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .procuct-name {
+      color: #fff;
+      font-size: 32px;
+    }
   }
   .login-btn {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 50px;
+    background-color: #febe00;
   }
   .login-btn button {
     width: 100%;

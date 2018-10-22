@@ -41,7 +41,6 @@
 
             <ul class="cardul">
               <li>
-                {{data[0]}}
                 <v-fpsliderbox :title="'窗口水平起始'" :min="0" :max="20000" :val="data[0].x" @callback="xCallback"></v-fpsliderbox>
               </li>
               <li>
@@ -332,7 +331,7 @@
       this.readData(this.active);
     },
     computed: {
-      ...mapGetters(['getCommon', 'getWindow']),
+      ...mapGetters(['getCommon', 'getWindow'])
     },
     watch: {
       // data(val, oldVal) {
@@ -794,31 +793,45 @@
       },
       // Capture 输入源
       capture(obj) {
-        this.alertmask = true;
-        this.setCommon({ Switch: false });
-        this.ajax({
-          name: 'url',
-          data: {
-            RW: 1,
-            DevID: 0,
-            CMD: 15,
-            BKG_CSrc: this.data[2].cutsrc,
-            BKG_CSID: this.data[2].cutapply,
-            _: this._
-          }
-        }).then(res => {
-          Message({
-            message: '请等待',
-            customClass: 'align-center',
-            duration: 3000,
-            onClose: () => {
-              this.setCommon({ Switch: true });
-              this.getBKGInfo();
-              this.alertmask = false;
+        let list = ['DP_Sta', 'HDMI_Sta', 'SDI1_Sta', 'SDI2_Sta', 'DVI1_Sta', 'DVI2_Sta', 'DVI3_Sta', 'DVI4_Sta', 'DVI_Mosaic_Sta'];
+        let state = this.getCommon[list[this.data[2].cutsrc]];
+        console.log(999, state);
+        // 有信号
+        if(state == 1 || state == 2) {
+
+          this.alertmask = true;
+          this.setCommon({ Switch: false });
+
+          this.ajax({
+            name: 'url',
+            data: {
+              RW: 1,
+              DevID: 0,
+              CMD: 15,
+              BKG_CSrc: this.data[2].cutsrc,
+              BKG_CSID: this.data[2].cutapply,
+              _: this._
             }
+          }).then(res => {
+            Message({
+              message: '抓取中,请等待...',
+              customClass: 'align-center',
+              duration: 3000,
+              onClose: () => {
+                this.setCommon({ Switch: true });
+                this.getBKGInfo();
+                this.alertmask = false;
+              }
+            });
+            // this.getBKGInfo();
           });
-          // this.getBKGInfo();
-        });
+        } else {
+          Message({
+            message: '当前输入源无信号',
+            customClass: 'align-center',
+            duration: 2000
+          });
+        }
       },
       getBKGInfo() {
         this.ajax({

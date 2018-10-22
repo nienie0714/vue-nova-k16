@@ -6,9 +6,9 @@
     </div> -->
     <div class="logo">
       <img src="../../assets/icon_logo.png" draggable="false">
-      <div class="proname">
-        NovaPro UHD Jr
-      </div>
+      <template v-if="showName">
+        <img src="../../assets/NovaProUHDJr.png" draggable="false">
+      </template>
     </div>
     <div class="header-right">
       <div class="header-user-con">
@@ -45,6 +45,12 @@
     data() {
       return {
         fullscreen: false
+      }
+    },
+    props: {
+      showName: {
+        default: true,
+        type: Boolean
       }
     },
     methods: {
@@ -94,8 +100,10 @@
 </script>
 <style scoped>
   .header {
-    position: relative;
+    position: fixed;
     box-sizing: border-box;
+    top: 0px;
+    left: 0px;
     width: 100%;
     height: 80px;
     font-size: 18px;

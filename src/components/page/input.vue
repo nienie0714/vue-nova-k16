@@ -220,6 +220,8 @@
               </ul>
             </div>
             <div class="mosicright">
+              <!-- <div style="color: white">mosic.templateIndex:{{mosic.templateIndex}}</div>
+              <div style="color: white">this.mosic.templateList: {{this.mosic.templateList}}</div> -->
               <div class="aa" v-if="mosic.templateList[mosic.templateIndex]">
                 拼接总宽高（px） {{`${mosic.w * mosic.templateList[mosic.templateIndex].col} x ${mosic.h * mosic.templateList[mosic.templateIndex].row}`}}
               </div>
@@ -248,11 +250,13 @@
         </div>
       </div>
     </div>
+    <div v-if="alertmask" class="alertmask"></div>
   </div>
 </template>
 <script>
   import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
   import { getLoc } from '../../utils';
+  import { Message } from 'element-ui';
   export default {
     name: 'aaa',
     data() {
@@ -262,6 +266,7 @@
         freshVisible: false,
         mosicVisible: false,
         active: 0,                                   // tab active      
+        alertmask: false,
         // list1: ['800*600', '1024*768', '1280*720', '1280*768', '1280*800', '1280*1024', '1366*768', '1440*900', '1600*900', '1600*1200', '1600*1050', '1920*1080', '1920*1200', '1920*2160', '2048*640', '2048*1152', '2048*1536', '2304*1152', '2560*816', '2560*960', '2560*1600', '3840*1080', '3840*2160 (默认)', '4096*2160'],  // 分辨率  DP HDMI  DL-DVI
         list1: [],
         list1_1: [{ w: 800, h: 600 }, { w: 1024, h: 768 }, { w: 1280, h: 720 }, { w: 1280, h: 768 }, { w: 1280, h: 800 }, { w: 1280, h: 1024 }, { w: 1366, h: 768 }, { w: 1440, h: 900 }, { w: 1600, h: 900 }, { w: 1600, h: 1200 },
@@ -337,6 +342,8 @@
       }
     },
     created() {
+      this.active = this.getCommon.sourceActive;
+
       this._ = getLoc('_');
       this.mosic.link = +this.getMosic.In9_MosL + 1;
 
@@ -346,24 +353,21 @@
         this.data[3].ratio[1].w = 1920;   // 预设分辨率默认值
       }
 
-      if(this.active == 3 && this.mosic.link == 1) {   // dvi的单链模式
-        this.list1 = Object.assign([], this.list1_1);
-        this.mosic.templateList = Object.assign([], this.mosic.templateList1);
-        this.handleLink(1);
-      } else if(this.active == 3 && this.mosic.link == 2) {
-        this.list1 = Object.assign([], this.list1_2);
-        this.mosic.templateList = Object.assign([], this.mosic.templateList2);
-        this.handleLink(2);
+      if(this.active == 3) {
+        if(this.mosic.link == 1) {
+          this.list1 = Object.assign([], this.list1_1);
+          this.mosic.templateList = Object.assign([], this.mosic.templateList1);
+        } else {
+          this.list1 = Object.assign([], this.list1_2);
+          this.mosic.templateList = Object.assign([], this.mosic.templateList2);
+        }
       } else {
         this.list1 = Object.assign([], this.list1_2);
-        this.mosic.templateList = Object.assign([], this.mosic.templateList2);
       }
-      // this.list1 = Object.assign([], this.list1_2);  // DP/HDMI数据来源默认为双链
 
       this.mosic.templateIndex = +this.getMosic.In9_MosM;
       this.mosic.w = +this.getMosic.In9_MosW;
       this.mosic.h = +this.getMosic.In9_MosH;
-      this.active = this.getCommon.sourceActive;
     },
     computed: {
       ...mapGetters(['getCommon', 'getCount', 'getMosic']),
@@ -525,14 +529,8 @@
         this.mosicVisible = false;
       },
       handleLink(val) {
-        console.log(1111111111111, val);
-        this.mosic.link = val;
-        // this.list1 = JSON.parse(JSON.stringify(val == 1 ? this.list1_1 : this.list1_2));   // error: w of undefined
-        this.data[3].dvimax = val == 1 ? 2048 : 3840;
-        this.data[3].ratio[0].wh = val == 1 ? 11 : 21;
-        this.data[3].ratio[1].w = val == 1 ? 1920 : 3840;   // 预设分辨率默认值
-        this.mosic.templateList = val == 1 ? Object.assign([], this.mosic.templateList1) : Object.assign([], this.mosic.templateList2);
-
+        this.alertmask = true;
+        this.setCommon({ Switch: false });
         this.ajax({
           name: 'url',
           data: {
@@ -542,6 +540,23 @@
             In9_MosL: val - 1,
             _: this._
           }
+        }).then(res => {
+          this.mosic.link = val;
+          // this.list1 = JSON.parse(JSON.stringify(val == 1 ? this.list1_1 : this.list1_2));   // error: w of undefined
+          this.data[3].dvimax = val == 1 ? 2048 : 3840;
+          this.data[3].ratio[0].wh = val == 1 ? 11 : 21;
+          this.data[3].ratio[1].w = val == 1 ? 1920 : 3840;   // 预设分辨率默认值
+          this.mosic.templateList = val == 1 ? Object.assign([], this.mosic.templateList1) : Object.assign([], this.mosic.templateList2);
+          Message({
+            message: '正在切换模式, 请等待...',
+            customClass: 'align-center',
+            duration: 3000,
+            onClose: () => {
+              this.setCommon({ Switch: true });
+              this.alertmask = false;
+            }
+          });
+          // this.getBKGInfo();
         });
       }
     }
@@ -746,6 +761,14 @@
 </style>
 
 <style lang="less">
+  .alertmask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+  }
   .mosic-template {
     display: flex;
     flex-wrap: wrap;
