@@ -36,17 +36,23 @@
             <!-- 背面内容-输入源 -->
             <div class="menu-backbox inputclass" v-for="(item, index) in srclist">
               <div class="info">
-                <div class="title">{{item.title}}</div>
+                <div class="titlerol">
+                  <div class="title">{{item.title}}</div>
+                  <div class="titlebtn">
+                    <div class="smain" v-if="item.isMain">Main</div>
+                    <div class="spip" v-if="item.isPIP">PIP</div>
+                  </div>
+                </div>
                 <div class="src">{{item.src}}</div>
                 <template>
                   <div class="srcinfo" v-if="item.isSingle">{{item.w}}x{{item.h}}@{{item.r}}</div>
                   <div class="srcinfo" v-else>{{item.no}}</div>
                 </template>
               </div>
-              <!-- <div class="srcactive">
+              <div class="srcactive">
                 <div class="main" @click="setMain(index)">Main</div>
                 <div class="pip" @click="setPIP(index)">PIP</div>
-              </div> -->
+              </div>
             </div>
           </div>
         </div>
@@ -112,7 +118,9 @@
             w: '1920',
             h: '1080',
             r: '120',
-            no: 'No Single'
+            no: 'No Single',
+            isMain: false,
+            isPIP: false
           },
           {
             title: 'input',
@@ -122,7 +130,9 @@
             w: '1920',
             h: '1080',
             r: '120',
-            no: 'No Single'
+            no: 'No Single',
+            isMain: false,
+            isPIP: false
           },
           {
             title: 'input',
@@ -132,7 +142,9 @@
             w: '1920',
             h: '1080',
             r: '120',
-            no: 'No Single'
+            no: 'No Single',
+            isMain: false,
+            isPIP: false
           },
           {
             title: 'input',
@@ -142,7 +154,9 @@
             w: '1920',
             h: '1080',
             r: '120',
-            no: 'No Single'
+            no: 'No Single',
+            isMain: false,
+            isPIP: false
           },
           {
             title: 'input',
@@ -152,7 +166,9 @@
             w: '1920',
             h: '1080',
             r: '120',
-            no: 'No Single'
+            no: 'No Single',
+            isMain: false,
+            isPIP: false
           },
           {
             title: 'input',
@@ -162,7 +178,9 @@
             w: '1920',
             h: '1080',
             r: '120',
-            no: 'No Single'
+            no: 'No Single',
+            isMain: false,
+            isPIP: false
           },
           {
             title: 'input',
@@ -172,7 +190,9 @@
             w: '1920',
             h: '1080',
             r: '120',
-            no: 'No Single'
+            no: 'No Single',
+            isMain: false,
+            isPIP: false
           },
           {
             title: 'input',
@@ -182,7 +202,9 @@
             w: '1920',
             h: '1080',
             r: '120',
-            no: 'No Single'
+            no: 'No Single',
+            isMain: false,
+            isPIP: false
           },
           {
             title: 'input',
@@ -192,7 +214,9 @@
             w: '1920',
             h: '1080',
             r: '120',
-            no: 'No Single'
+            no: 'No Single',
+            isMain: false,
+            isPIP: false
           }
         ],
         active: false,
@@ -205,6 +229,7 @@
     created() {
       this.value = +this.getMosic['Screen_Bri'];
       this.initSrc();
+      this.initMP();
     },
     computed: {
       ...mapGetters(['getCommon', 'getMosic'])
@@ -246,7 +271,6 @@
         let ret = {};
         let val = [];
 
-        // console.log(111111, statelist);
         statelist.forEach((item, index) => {
           if(item == 1 || item == 2) {
             this.srclist[index].isSingle = true;
@@ -258,12 +282,10 @@
             this.srclist[index].isSingle = false;
           }
         });
-        console.log(999, val);
         this.ajax({
           name: 'url',
           data: { RW: 0, DevID: 0, ...ret, _: sessionStorage.getItem('_') }
         }).then(res => {
-          // todo
           val.forEach((data, i) => {
             this.srclist[i]['h'] = +res[`In${i}_ResH`]
             this.srclist[i]['w'] = +res[`In${i}_ResW`]
@@ -272,10 +294,53 @@
         });
       },
       setMain(index) {
-        console.log(index);
+        this.ajax({
+          name: 'url',
+          data: { RW: 1, DevID: 0, CMD: 6, L1_Src: index, _: sessionStorage.getItem('_') }
+        }).then(res => {
+          this.srclist.forEach((item, i) => {
+            if(i == index) {
+              item.isMain = true;
+            } else {
+              item.isMain = false;
+            }
+          });
+        });
       },
       setPIP(index) {
-        console.log(index);
+        this.ajax({
+          name: 'url',
+          data: { RW: 1, DevID: 0, CMD: 6, L2_Src: index, _: sessionStorage.getItem('_') }
+        }).then(res => {
+          this.srclist.forEach((item, i) => {
+            if(i == index) {
+              item.isPIP = true;
+            } else {
+              item.isPIP = false;
+            }
+          });
+        });
+      },
+      initMP() {
+        this.ajax({
+          name: 'url',
+          data: { RW: 0, DevID: 0, L1_Src: 0, L2_Src: 0, _: sessionStorage.getItem('_') }
+        }).then(res => {
+          this.srclist.forEach((item, i) => {
+            if(i == res['L1_Src']) {
+              item.isMain = true;
+            } else {
+              item.isMain = false;
+            }
+          });
+          this.srclist.forEach((item, i) => {
+            if(i == res['L2_Src']) {
+              item.isPIP = true;
+            } else {
+              item.isPIP = false;
+            }
+          });
+        });
       }
     }
   }
@@ -290,7 +355,7 @@
   //  正反面反转
   /* entire container, keeps perspective */
   .flip-container {
-    perspective: 8000;
+    perspective: 7000;
   }
   /* flip the pane when hovered */
   // .flip-container:hover .flipper,
@@ -447,10 +512,44 @@
     background-color: #1f2a51;
     display: flex;
     flex-direction: column;
-    .title {
-      font-size: 16px;
-      color: #adb4cf;
+    .titlerol {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
       margin-bottom: 30px;
+      .title {
+        font-size: 16px;
+        color: #adb4cf;
+      }
+      .titlebtn {
+        display: flex;
+        flex-direction: row;
+        .smain {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
+          width: 48px;
+          height: 24px;
+          margin-right: 10px;
+          // padding: 14px 33px;
+          background-color: #febe00;
+          color: #061031;
+          font-size: 16px;
+        }
+        .spip {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
+          width: 48px;
+          height: 24px;
+          // padding: 14px 33px;
+          background-color: #62c655;
+          color: #061031;
+          font-size: 16px;
+        }
+      }
     }
     .src {
       font-size: 24px;
@@ -476,14 +575,17 @@
     position: relative;
     &:hover {
       transform: translateX(0);
-      // .srcactive {
-      //   display: block;
-      // }
+    }
+    &:hover .srcactive {
+      opacity: 1;
+    }
+    &:hover .info {
+      opacity: 0.5;
     }
   }
   .srcactive {
     box-sizing: border-box;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -493,6 +595,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 0;
+    transition: 0.3s;
     .main {
       display: flex;
       align-items: center;

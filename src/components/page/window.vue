@@ -199,9 +199,6 @@
               <li>
                 <v-fpsliderbox :title="'垂直宽度(px)'" :val="data[0].cut_h" :min="64" :max="data[0].cut_h_max" @callback="cutHCallback" @change="mainCutCallback"></v-fpsliderbox>
               </li>
-              <li class="noneli">
-                <v-textbox></v-textbox>
-              </li>
             </ul>
           </div>
           <div class="btncenter mosaicbtn">
@@ -229,9 +226,6 @@
               </li>
               <li>
                 <v-fpsliderbox :title="'垂直宽度(px)'" :val="data[1].cut_h" :min="64" :max="data[1].cut_h_max" @callback="cutH1Callback" @change="subCutCallback"></v-fpsliderbox>
-              </li>
-              <li class="noneli">
-                <v-textbox></v-textbox>
               </li>
             </ul>
           </div>

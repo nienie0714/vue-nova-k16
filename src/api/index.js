@@ -8,7 +8,7 @@ let loading = false;
 let timer = null;
 let loadingInstance;
 
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 10000;
 
 //添加请求拦截器
 axios.interceptors.request.use(
@@ -125,7 +125,7 @@ let xhr = config => {
         if (loading) {
             loadingInstance = Loading.service();
         }
-    }, 2000);
+    }, 10000);
 
     if (config instanceof Array) {
         return axios.all(config);

@@ -75,6 +75,7 @@
     background: url('../../assets/img_bg_login.png') center center no-repeat / cover;
   }
   .login-wrap {
+    margin-top: 80px;
     position: relative;
     width: 100%;
     height: 100%;
@@ -90,6 +91,7 @@
     transform: translate(-50%, -50%);
     width: 100%;
     height: 300px;
+    margin-top: -80px;
     padding: 98px 0 69px 0;
     background-color: rgba(31, 40, 70, 0.5);
   }
@@ -116,6 +118,7 @@
     width: 120px;
     height: 50px;
     background-color: #febe00;
+    cursor: pointer;
   }
   .login-btn button {
     width: 100%;

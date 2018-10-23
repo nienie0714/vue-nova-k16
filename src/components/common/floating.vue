@@ -1,136 +1,357 @@
 <template>
   <div>
     <div class="floatingbtn" @click.stop="slideActive = !slideActive">
-      <img class="floatingicon" src="@/assets/icon/icon_dashboard.png" alt="" draggable="false">
+      <template>
+        <img class="floatingicon" src="@/assets/icon/icon_dashboard.png" alt="" draggable="false" v-if="!slideActive">
+        <img class="floatingicon" src="@/assets/icon/icon_close.png" alt="" draggable="false" v-if="slideActive">
+      </template>
     </div>
 
     <div class="mask" :class="{'mask-active': !afterActive}">
       <div class="slide-box" :class="{subactive: !slideActive}">
-        <!-- <el-progress type="circle" :width="80" :percentage="80" color="#ff7d45"></el-progress>       -->
         <!-- MainLayer -->
         <div class="main-layer">
+          <!-- 状态及名称 -->
           <div class="statusinfo">
             <div class="status" :class="{active: true}">开启中</div>
             <div class="title">
               MainLayer
             </div>
           </div>
-          <div class="details">DVIMOSAIC 3840x2160@60Hz</div>
-          <div class="info">
-            <div>大小:</div>
-            <div>3000x1000</div>
+          <!-- 分辨率 -->
+          <div class="details">
+            <span>DVIMOSAIC</span>
+            <span>3840x2160@60Hz</span>
           </div>
-          <div class="info">
-            <div>位置:</div>
-            <div>(3000,1000)</div>
-          </div>
-          <div class="info">
-            <div>优先级:</div>
-            <div>置地</div>
-          </div>
-          <div class="info">
-            <div>截取状态:</div>
-            <div>开启中</div>
+          <!-- 其他信息 -->
+          <div class="infos">
+            <div class="info">
+              <div>大小 :</div>
+              <div>3000x1000</div>
+            </div>
+            <div class="info">
+              <div>优先级 :</div>
+              <div>置地</div>
+            </div>
+            <div class="info">
+              <div>位置 :</div>
+              <div>(3000,1000)</div>
+            </div>
+            <div class="info">
+              <div>截取状态 :</div>
+              <div>开启中</div>
+            </div>
           </div>
         </div>
         <!-- PIPLayer -->
         <div class="PIPLayer">
+          <!-- 状态及名称 -->
           <div class="statusinfo">
-            <div class="status" :class="{active: true}">开启中</div>
+            <div class="status" :class="{active: false}">已关闭</div>
             <div class="title">
               PIP
             </div>
           </div>
-          <div class="details">DVIMOSAIC 3840x2160@60Hz</div>
-          <div class="info">
-            <div>大小:</div>
-            <div>3000x1000</div>
+          <!-- 分辨率 -->
+          <div class="details">
+            <span>DVIMOSAIC</span>
+            <span>3840x2160@60Hz</span>
           </div>
-          <div class="info">
-            <div>位置:</div>
-            <div>(3000,1000)</div>
-          </div>
-          <div class="info">
-            <div>优先级:</div>
-            <div>置地</div>
-          </div>
-          <div class="info">
-            <div>截取状态:</div>
-            <div>开启中</div>
+          <!-- 其他信息 -->
+          <div class="infos">
+            <div class="info">
+              <div>大小 :</div>
+              <div>3000x1000</div>
+            </div>
+            <div class="info">
+              <div>优先级 :</div>
+              <div>置地</div>
+            </div>
+            <div class="info">
+              <div>位置 :</div>
+              <div>(3000,1000)</div>
+            </div>
+            <div class="info">
+              <div>截取状态 :</div>
+              <div>开启中</div>
+            </div>
           </div>
         </div>
-        <!-- <div class="common square2">
+        <div class="screeninfo">
+          <!-- 状态及名称 -->
           <div class="title">
-            PIPLayer
+            屏体信息
           </div>
-          <div class="statusinfo" :class="{active: false}">
-            <div class="status" :class="{active: false}">已关闭</div>
-            <div class="details">HDMI 3840x2160@60Hz</div>
-          </div>
-          <div class="info">
-            <div>大小:</div>
-            <div>3000x1000</div>
-          </div>
-          <div class="info">
-            <div>位置:</div>
-            <div>(3000,1000)</div>
-          </div>
-          <div class="info">
-            <div>优先级:</div>
-            <div>置地</div>
-          </div>
-          <div class="info">
-            <div>截取状态:</div>
-            <div>开启中</div>
+          <div class="screen-content">
+            <div class="screen-left">
+              <el-progress type="circle" :width="160" :percentage="80" :stroke-width="10" color="#febe00"></el-progress>
+            </div>
+            <div class="screen-right">
+              <div class="info">
+                <div>配屏大小 :</div>
+                <div>8192x1080</div>
+              </div>
+              <div class="info">
+                <div>Gamma :</div>
+                <div>2.8</div>
+              </div>
+              <div class="info">
+                <div>色温 :</div>
+                <div>自定义</div>
+              </div>
+            </div>
           </div>
         </div>
-        其他
-        <div class="common rectangle1">
-          <div class="title mb18">
+        <!-- 画质信息 -->
+        <div class="pictureinfo">
+          <div class="title">
+            画质信息
+          </div>
+          <div class="infos">
+            <div class="info">
+              <div>亮度 :</div>
+              <div>
+                <el-progress :percentage="40" :stroke-width="10" color="#ffffff"></el-progress>
+              </div>
+            </div>
+            <div class="info">
+              <div>饱和度 :</div>
+              <div>
+                <el-progress :percentage="80" :stroke-width="10" color="#ffffff"></el-progress>
+              </div>
+            </div>
+            <div class="info">
+              <div>对比度 :</div>
+              <div>
+                <el-progress :percentage="80" :stroke-width="10" color="#ffffff"></el-progress>
+              </div>
+            </div>
+            <div class="info">
+              <div>色调 :</div>
+              <div>
+                <el-progress :percentage="80" :stroke-width="10" color="#ffffff"></el-progress>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 其他 -->
+        <div class="otherinfo">
+          <div class="title">
             其他
           </div>
-          <div class="info">
-            <div>屏体亮度:</div>
-            <div>60%</div>
+          <div class="otherbtn">
+            <div class="bkg">BKG</div>
+            <div class="bkg bkg-active">HDR</div>
           </div>
-          <div class="info">
-            <div>配屏大小:</div>
-            <div>8192x1080</div>
-          </div>
-          <div class="info">
-            <div>BKG状态:</div>
-            <div>开启中</div>
-          </div>
-          <div class="info">
-            <div>同步状态:</div>
-            <div>关闭</div>
-          </div>
-          <div class="info">
-            <div>设备冗余:</div>
-            <div>主控</div>
+          <div class="infos">
+            <div class="info">
+              <div>设备冗余 :</div>
+              <div>主控</div>
+            </div>
+            <div class="info">
+              <div>同步状态 :</div>
+              <div>关闭</div>
+            </div>
           </div>
         </div>
-        <div class="common rectangle2">
-          <div class="title small">
-            光纤
-          </div>
-        </div>
-        输入 
-        <div class="common rowrectangle1">
+        <!-- 输入 -->
+        <div class="inputinfo">
           <div class="title">
             输入
           </div>
-
+          <div class="infos">
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/DP_1.png" alt="">
+              </div>
+              <div>HDMI</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/HDMI_1.png" alt="">
+              </div>
+              <div>DP</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/SDI_1.png" alt="">
+              </div>
+              <div>SDI1</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/SDI_1.png" alt="">
+              </div>
+              <div>SDI2</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/DVI_1.png" alt="">
+              </div>
+              <div>DVI1</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/DVI_1.png" alt="">
+              </div>
+              <div>DVI2</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/DVI_1.png" alt="">
+              </div>
+              <div>DVI3</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/DVI_1.png" alt="">
+              </div>
+              <div>DVI4</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/MOSAIC_1.png" alt="">
+              </div>
+              <div>MOSAIC</div>
+            </div>
+          </div>
         </div>
-        输出 
-        <div class="common rowrectangle2">
+        <!-- 输出  -->
+        <div class="outputinfo">
           <div class="title">
             输出
           </div>
-
-        </div>-->
+          <div class="infos">
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>1</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>2</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>3</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>4</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>5</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>6</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>7</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>8</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>9</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>10</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>11</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>12</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>13</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>14</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>15</div>
+            </div>
+            <div class="info">
+              <div class="img">
+                <img src="@/assets/ctrls/icon_output_1.png" alt="">
+              </div>
+              <div>16</div>
+            </div>
+          </div>
+        </div>
+        <!-- 光纤 -->
+        <div class="shineinfo">
+          <div class="infos">
+            <div class="info">
+              <div>OPT1</div>
+              <div class="img">
+                <img src="@/assets/ctrls/icon_opt_1.png" alt="">
+              </div>
+            </div>
+            <div class="info">
+              <div>OPT2</div>
+              <div class="img">
+                <img src="@/assets/ctrls/icon_opt_1.png" alt="">
+              </div>
+            </div>
+            <div class="info">
+              <div>OPT3</div>
+              <div class="img">
+                <img src="@/assets/ctrls/icon_opt_1.png" alt="">
+              </div>
+            </div>
+            <div class="info">
+              <div>OPT4</div>
+              <div class="img">
+                <img src="@/assets/ctrls/icon_opt_1.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
     <div class="bg"></div>
   </div>
 </template>
@@ -158,6 +379,14 @@
           this.timmer = setTimeout(() => { this.afterActive = false }, 300);
         }
         this.$emit('update:subactive', val);
+      }
+    },
+    created() {
+      this.getAllInfo();
+    },
+    methods: {
+      getAllInfo() {
+
       }
     }
   }
@@ -223,6 +452,7 @@
     top: 0;
     left: 0px;
     padding: 34px 30px 34px 30px;
+    // 标题及状态
     .statusinfo {
       height: 24px;
       width: 320px;
@@ -244,124 +474,308 @@
         line-height: 24px;
       }
     }
+    .details {
+      box-sizing: border-box;
+      height: 70px;
+      line-height: 24px;
+      padding: 18px 0;
+      color: #fff;
+      :first-child {
+        margin-right: 10px;
+      }
+    }
+    .infos {
+      box-sizing: border-box;
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      align-items: center;
+      .info {
+        box-sizing: border-box;
+        width: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 15px 0;
+        > div:nth-child(1) {
+          width: 100%;
+          color: #adb4cf;
+          font-size: 16px;
+          margin-bottom: 5px;
+        }
+        > div:nth-child(2) {
+          width: 100%;
+          color: #fff;
+          font-size: 16px;
+        }
+      }
+    }
   }
   .PIPLayer {
     left: 401px;
   }
 
-  // 具体信息
-  //   .statusinfo {
-  //     margin: 35px 0;
-  //     height: 24px;
-  //     width: 320px;
-  //     border: 1px solid #adb4cf;
-  //     .status {
-  //       box-sizing: border-box;
-  //       width: 60px;
-  //       height: 100%;
-  //       background-color: #adb4cf;
-  //       padding-left: 6px;
-  //       float: left;
-  //       &.active {
-  //         background-color: #62c655;
-  //       }
-  //     }
-  //     .details {
-  //       height: 100%;
-  //       line-height: 24px;
-  //       padding-left: 70px;
-  //       color: #fff;
-  //     }
-  //     &.active {
-  //       border: 1px solid #62c655;
-  //     }
-  //   }
-  //   .info {
-  //     box-sizing: border-box;
-  //     font-size: 20px;
-  //     display: flex;
-  //     align-items: center;
-  //     padding: 10px 0;
-  //     > div:nth-child(1) {
-  //       color: #adb4cf;
-  //       width: 92px;
-  //     }
-  //     > div:nth-child(2) {
-  //       color: #fff;
-  //     }
-  //   }
-  //   .common {
-  //     box-sizing: border-box;
-  //     background-color: rgba(0, 0, 0, 0.5);
-  //     padding: 35px 30px 45px 30px;
-  //   }
-  //   .square {
-  //     width: 470px;
-  //     height: 430px;
-  //     position: absolute;
-  //     top: 0;
-  //     left: 0;
-  //   }
+  .screeninfo {
+    box-sizing: border-box;
+    width: 390px;
+    height: 320px;
+    position: absolute;
+    padding: 34px 30px 34px 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    right: 0px;
+    .title {
+      width: 100%;
+      height: 24px;
+      margin-bottom: 40px;
+      font-size: 20px;
+      line-height: 24px;
+    }
+    .screen-content {
+      display: flex;
+      justify-content: flex-start;
 
-  //   .square2 {
-  //     width: 425px;
-  //     height: 430px;
-  //     position: absolute;
-  //     top: 0;
-  //     left: 907px;
-  //   }
-  //   .rectangle1 {
-  //     width: 400px;
-  //     height: 430px;
-  //     position: absolute;
-  //     top: 0;
-  //     right: 0px;
-  //   }
-  //   .rectangle2 {
-  //     width: 400px;
-  //     height: 268px;
-  //     position: absolute;
-  //     top: 432px;
-  //     right: 0px;
-  //   }
-  //   .rowrectangle1 {
-  //     width: 1332px;
-  //     height: 130px;
-  //     position: absolute;
-  //     bottom: 132px;
-  //     left: 0px;
-  //   }
-  //   .rowrectangle2 {
-  //     width: 1332px;
-  //     height: 130px;
-  //     position: absolute;
-  //     bottom: 0;
-  //     left: 0px;
-  //   }
-  //   .circleflex {
-  //     display: flex;
-  //     justify-content: space-between;
-  //     .innerflex {
-  //       display: flex;
-  //       flex-direction: column;
-  //       color: #fff;
-  //       text-align: center;
-  //       font-size: 20px;
-  //       .light {
-  //         margin-top: 20px;
-  //         color: #ff7d45;
-  //       }
-  //       .contrast {
-  //         margin-top: 20px;
-  //         color: #f5bf4f;
-  //       }
-  //       .saturability {
-  //         margin-top: 20px;
-  //         color: #40beff;
-  //       }
-  //     }
-  //   }
-  // }
+      .screen-left {
+        width: 100%;
+      }
+      .screen-right {
+        width: 100%;
+        .info {
+          box-sizing: border-box;
+          width: 100%;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          padding: 15px 20px 0;
+          > div:nth-child(1) {
+            width: 100%;
+            color: #adb4cf;
+            font-size: 16px;
+            margin-bottom: 5px;
+          }
+          > div:nth-child(2) {
+            width: 100%;
+            color: #fff;
+            font-size: 16px;
+          }
+        }
+        .info:first-child {
+          padding-top: 0;
+        }
+      }
+    }
+  }
+
+  // 画质信息
+  .pictureinfo {
+    box-sizing: border-box;
+    width: 801px;
+    height: 245px;
+    position: absolute;
+    padding: 34px 30px 34px 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 330px;
+    left: 0px;
+    .title {
+      width: 100%;
+      height: 24px;
+      margin-bottom: 16px;
+      font-size: 20px;
+      line-height: 24px;
+    }
+    .infos {
+      box-sizing: border-box;
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      align-items: center;
+      .info {
+        box-sizing: border-box;
+        width: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 15px 0;
+        > div:nth-child(1) {
+          width: 100%;
+          color: #adb4cf;
+          font-size: 16px;
+          margin-bottom: 5px;
+        }
+        > div:nth-child(2) {
+          width: 100%;
+          color: #fff;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  // 其他
+  .otherinfo {
+    box-sizing: border-box;
+    width: 390px;
+    height: 245px;
+    position: absolute;
+    padding: 34px 30px 34px 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 330px;
+    right: 0px;
+    .title {
+      width: 100%;
+      height: 24px;
+      margin-bottom: 30px;
+      font-size: 20px;
+      line-height: 24px;
+    }
+    .otherbtn {
+      height: 28px;
+      display: flex;
+      margin-bottom: 30px;
+      .bkg {
+        color: #061031;
+        width: 60px;
+        height: 28px;
+        background-color: #525972;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &.bkg-active {
+          background-color: #fff;
+        }
+      }
+      .bkg:first-child {
+        margin-right: 10px;
+      }
+    }
+    .infos {
+      box-sizing: border-box;
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      align-items: center;
+      .info {
+        box-sizing: border-box;
+        width: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 15px 0;
+        > div:nth-child(1) {
+          width: 100%;
+          color: #adb4cf;
+          font-size: 16px;
+          margin-bottom: 5px;
+        }
+        > div:nth-child(2) {
+          width: 100%;
+          color: #fff;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  // 输入
+  .inputinfo {
+    box-sizing: border-box;
+    position: absolute;
+    padding: 34px 30px 30px 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 1081px;
+    height: 129px;
+    bottom: 131px;
+    left: 0px;
+    display: flex;
+    .title {
+      width: 60px;
+      height: 100%;
+      font-size: 20px;
+      line-height: 24px;
+    }
+    .infos {
+      display: flex;
+      justify-content: center;
+      .info {
+        box-sizing: border-box;
+        width: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 10px 10px 0 10px;
+        .img {
+          display: flex;
+          justify-content: center;
+        }
+        > div:nth-child(2) {
+          display: flex;
+          justify-content: center;
+          color: #fff;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  .outputinfo {
+    box-sizing: border-box;
+    display: flex;
+    position: absolute;
+    padding: 34px 30px 24px 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 1081px;
+    height: 130px;
+    bottom: 0;
+    left: 0px;
+    .title {
+      width: 60px;
+      height: 100%;
+      font-size: 20px;
+      line-height: 24px;
+    }
+    .infos {
+      display: flex;
+      justify-content: center;
+      .info {
+        box-sizing: border-box;
+        width: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0 10px;
+        .img {
+          display: flex;
+          justify-content: center;
+        }
+        > div:nth-child(2) {
+          display: flex;
+          justify-content: center;
+          color: #fff;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  .shineinfo {
+    box-sizing: border-box;
+    position: absolute;
+    padding: 34px 20px 34px 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 119px;
+    height: 260px;
+    bottom: 0;
+    right: 0px;
+    font-size: 14px;
+    color: #fff;
+    .infos {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .info {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
 </style>
 
 

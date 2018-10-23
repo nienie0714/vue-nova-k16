@@ -272,7 +272,7 @@
         list1_1: [{ w: 800, h: 600 }, { w: 1024, h: 768 }, { w: 1280, h: 720 }, { w: 1280, h: 768 }, { w: 1280, h: 800 }, { w: 1280, h: 1024 }, { w: 1366, h: 768 }, { w: 1440, h: 900 }, { w: 1600, h: 900 }, { w: 1600, h: 1200 },
         { w: 1600, h: 1050 }, { w: 1920, h: 1080, default: true }, { w: 1920, h: 1200 }, { w: 2048, h: 640 }],  // 单链
         list1_2: [{ w: 800, h: 600 }, { w: 1024, h: 768 }, { w: 1280, h: 720 }, { w: 1280, h: 768 }, { w: 1280, h: 800 }, { w: 1280, h: 1024 }, { w: 1366, h: 768 }, { w: 1440, h: 900 }, { w: 1600, h: 900 }, { w: 1600, h: 1200 },
-        { w: 1600, h: 1050 }, { w: 1920, h: 1080 }, { w: 1920, h: 1200 }, { w: 1920, h: 2160 }, { w: 2048, h: 640 }, { w: 2048, h: 1152 }, { w: 2048, h: 1536 }, { w: 2304, h: 816 }, { w: 2560, h: 960 }, { w: 2560, h: 1600 }, { w: 3840, h: 1080 }, { w: 3840, h: 2160, default: true }, { w: 4096, h: 2160 }],  // 分辨率  DP HDMI  双链        
+        { w: 1680, h: 1050 }, { w: 1920, h: 1080 }, { w: 1920, h: 1200 }, { w: 1920, h: 2160 }, { w: 2048, h: 640 }, { w: 2048, h: 1152 }, { w: 2048, h: 1536 }, { w: 2304, h: 1152 }, { w: 2560, h: 816 }, { w: 2560, h: 960 }, { w: 2560, h: 1600 }, { w: 3840, h: 1080 }, { w: 3840, h: 2160, default: true }, { w: 4096, h: 2160 }],  // 分辨率  DP HDMI  双链        
         list2: [{ r: 23.98 }, { r: 24 }, { r: 25 }, { r: 29.97 }, { r: 30 }, { r: 47.96 }, { r: 48 }, { r: 50 }, { r: 59.94 }, { r: 60, default: true }, { r: 75 }, { r: 120 }],  // 刷新率
         data: [
           {
@@ -280,7 +280,7 @@
             btnactive: 1,
             showdata: 'No Single',
             ratio: [{
-              wh: 21,
+              wh: 22,
               r: 9
             }, {
               w: 3840,
@@ -293,7 +293,7 @@
             btnactive: 1,
             showdata: 'No Single',
             ratio: [{
-              wh: 21,
+              wh: 22,
               r: 9
             }, {
               w: 1920,
@@ -314,7 +314,7 @@
             showdata2: 'No Single',
             showdata3: 'No Single',
             ratio: [{
-              wh: 21,    // 默认为双链
+              wh: 22,    // 默认为双链
               r: 9   // 选中index
             }, {
               w: 3840,
@@ -356,10 +356,11 @@
       if(this.active == 3) {
         if(this.mosic.link == 1) {
           this.list1 = Object.assign([], this.list1_1);
-          this.mosic.templateList = Object.assign([], this.mosic.templateList1);
+          this.mosic.templateList = Object.assign([], this.mosic.templateList1);   // 可能是有延时   时间太长
         } else {
           this.list1 = Object.assign([], this.list1_2);
           this.mosic.templateList = Object.assign([], this.mosic.templateList2);
+          console.log(1111, this.mosic.templateList);
         }
       } else {
         this.list1 = Object.assign([], this.list1_2);
@@ -368,6 +369,7 @@
       this.mosic.templateIndex = +this.getMosic.In9_MosM;
       this.mosic.w = +this.getMosic.In9_MosW;
       this.mosic.h = +this.getMosic.In9_MosH;
+      console.log(1111, this.mosic.templateList);
     },
     computed: {
       ...mapGetters(['getCommon', 'getCount', 'getMosic']),
@@ -383,10 +385,21 @@
         if(!val) {
           this.readData(this.getCommon['sourceActive']);
         }
+      },
+      active() {
+        if(this.active == 3) {
+          if(this.mosic.link == 1) {
+            this.list1 = Object.assign([], this.list1_1);
+            this.mosic.templateList = Object.assign([], this.mosic.templateList1);
+          } else {
+            this.list1 = Object.assign([], this.list1_2);
+            this.mosic.templateList = Object.assign([], this.mosic.templateList2);
+            console.log(1111, this.mosic.templateList);
+          }
+        } else {
+          this.list1 = Object.assign([], this.list1_2);
+        }
       }
-      // 'mosic.w'(val) {
-      //   this.mosic.w = val > this.mosic.wm ? this.mosic.wm : val;
-      // }
     },
     methods: {
       ...mapActions(['ajax']),
@@ -544,7 +557,7 @@
           this.mosic.link = val;
           // this.list1 = JSON.parse(JSON.stringify(val == 1 ? this.list1_1 : this.list1_2));   // error: w of undefined
           this.data[3].dvimax = val == 1 ? 2048 : 3840;
-          this.data[3].ratio[0].wh = val == 1 ? 11 : 21;
+          this.data[3].ratio[0].wh = val == 1 ? 11 : 22;
           this.data[3].ratio[1].w = val == 1 ? 1920 : 3840;   // 预设分辨率默认值
           this.mosic.templateList = val == 1 ? Object.assign([], this.mosic.templateList1) : Object.assign([], this.mosic.templateList2);
           Message({
