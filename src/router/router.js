@@ -4,6 +4,11 @@ const routes = [
         component: resolve => require(['../components/page/home.vue'], resolve),
         children: [
             {
+                name: 'login',
+                path: '/login',
+                component: resolve => require(['../components/page/login.vue'], resolve)
+            },
+            {
                 name: 'revelation',
                 path: '/',
                 component: resolve => require(['../components/page/revelation.vue'], resolve)
@@ -19,11 +24,6 @@ const routes = [
                 component: resolve => require(['../components/page/window.vue'], resolve)
             }
         ]
-    },
-    {
-        name: 'login',
-        path: '/login',
-        component: resolve => require(['../components/page/login.vue'], resolve)
     },
     {
         name: '404',

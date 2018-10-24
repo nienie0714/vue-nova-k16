@@ -355,7 +355,7 @@
   //  正反面反转
   /* entire container, keeps perspective */
   .flip-container {
-    perspective: 7000;
+    perspective: 4000;
   }
   /* flip the pane when hovered */
   // .flip-container:hover .flipper,
@@ -425,7 +425,8 @@
     &.light {
       display: flex;
       flex-direction: column;
-      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_light.png') center center no-repeat / 360px 200px;
+      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_light.png') center no-repeat;
+      background-size: 360px 200px;
       .card-btm {
         margin-top: 20px;
         margin-bottom: 10px;
@@ -477,28 +478,36 @@
       }
     }
     &.input {
-      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_input.png') center center no-repeat / 360px 200px;
+      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_input.png') center no-repeat;
+      background-size: 360px 200px;
     }
     &.screen {
-      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_screen.png') center center no-repeat / 360px 200px;
+      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_screen.png') center no-repeat;
+      background-size: 360px 200px;
     }
     &.window {
-      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_window.png') center center no-repeat / 360px 200px;
+      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_window.png') center no-repeat;
+      background-size: 360px 200px;
     }
     &.picture {
-      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_picture.png') center center no-repeat / 360px 200px;
+      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_picture.png') center no-repeat;
+      background-size: 360px 200px;
     }
     &.connect {
-      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_connect.png') center center no-repeat / 360px 200px;
+      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_connect.png') center no-repeat;
+      background-size: 360px 200px;
     }
     &.scene {
-      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_scene.png') center center no-repeat / 360px 200px;
+      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_scene.png') center no-repeat;
+      background-size: 360px 200px;
     }
     &.communication {
-      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_communication.png') center center no-repeat / 360px 200px;
+      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_communication.png') center no-repeat;
+      background-size: 360px 200px;
     }
     &.setting {
-      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_setting.png') center center no-repeat / 360px 200px;
+      background: rgba(0, 0, 0, 0.8) url('../../assets/home/img_setting.png') center no-repeat;
+      background-size: 360px 200px;
     }
   }
   input {

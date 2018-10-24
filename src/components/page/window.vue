@@ -236,6 +236,9 @@
       </div>
     </div>
     <div v-if="alertmask" class="alertmask"></div>
+    <div v-if="alertmask" class="alertwindow">
+      <div class="border">{{waiting}}</div>
+    </div>
   </div>
 </template>
 <script>
@@ -259,6 +262,7 @@
         typelist: [{ r: '纯色BKG' }, { r: '图片BKG' }],
         imglist: [{ r: 'BKG1' }, { r: 'BKG2' }, { r: 'BKG3' }, { r: 'BKG4' }],
         alertmask: false,
+        waiting: '请等待...',
         data: [
           {
             name: '主窗口',
@@ -789,10 +793,9 @@
       capture(obj) {
         let list = ['DP_Sta', 'HDMI_Sta', 'SDI1_Sta', 'SDI2_Sta', 'DVI1_Sta', 'DVI2_Sta', 'DVI3_Sta', 'DVI4_Sta', 'DVI_Mosaic_Sta'];
         let state = this.getCommon[list[this.data[2].cutsrc]];
-        console.log(999, state);
         // 有信号
         if(state == 1 || state == 2) {
-
+          this.waiting = '请等待...'
           this.alertmask = true;
           this.setCommon({ Switch: false });
 
@@ -807,24 +810,17 @@
               _: this._
             }
           }).then(res => {
-            Message({
-              message: '抓取中,请等待...',
-              customClass: 'align-center',
-              duration: 3000,
-              onClose: () => {
-                this.setCommon({ Switch: true });
-                this.getBKGInfo();
-                this.alertmask = false;
-              }
-            });
-            // this.getBKGInfo();
+            // 等到返回errc: 0再消失
+            this.alertmask = false;
+            this.setCommon({ Switch: true });
+            this.getBKGInfo();
           });
         } else {
-          Message({
-            message: '当前输入源无信号',
-            customClass: 'align-center',
-            duration: 2000
-          });
+          this.alertmask = true;
+          this.waiting = '当前输入源无信号'
+          setTimeout(() => {
+            this.alertmask = false;
+          }, 1500);
         }
       },
       getBKGInfo() {

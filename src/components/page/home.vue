@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper-container">
     <div class="wrapper" :class="{subactive: subactive}">
-      <v-header></v-header>
+      <v-header :showName="islogin"></v-header>
       <div class="contentwrapper">
         <transition name="move" mode="out-in">
           <router-view></router-view>
@@ -17,24 +17,27 @@
   export default {
     data() {
       return {
-        subactive: false
+        subactive: false,
+        islogin: false
       }
     },
     created() {
+      if(this.$route.path == "/login") {
+        this.islogin = false;
+      } else {
+        this.islogin = true;
+      }
     },
     computed: {
     },
     watch: {
-      // slideActive(val) {
-      //   if(val) {
-      //     this.slideActive = true;
-      //     this.beforeActive = true;
-      //   } else {
-      //     this.beforeActive = false;
-      //     this.timmer = setTimeout(() => { this.slideActive = false }, 3000);
-      //   }
-      //   this.$emit('update:subactive', val);
-      // }
+      '$route.path'(val) {
+        if(this.$route.path == "/login") {
+          this.islogin = false;
+        } else {
+          this.islogin = true;
+        }
+      }
     }
   }
 </script>

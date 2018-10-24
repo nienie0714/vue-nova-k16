@@ -24,6 +24,7 @@
   // @import './style/index.less';
 
   #app {
-    background: url('./assets/img_BG.png') center center no-repeat / cover;
+    background: url('./assets/img_BG.png') center no-repeat;
+    background-size: cover;
   }
 </style>

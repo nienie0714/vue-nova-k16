@@ -1,256 +1,261 @@
 <template>
-  <div class="wrapper" @click="closeCard">
-    <!-- <v-header></v-header> -->
-    <!-- 页面名称 -->
-    <div class="jrtitle">
-      <img class="homeicon" src="@/assets/icon/icon_home.png" alt="" @click="$router.go(-1);" draggable="false">
-      <img class="iicon" src="@/assets/icon/icon_input.png" alt="" draggable="false">
-      <span class="snav">输入设置</span>
-    </div>
-    <div class="content-box">
-      <!-- tab -->
-      <div class="tabs">
-        <div class="tab" v-for="(item, index) in data" :class="{active: active == index}" @click="readData(index)" :key="index">
-          <span>{{item.name}}</span>
-        </div>
+  <div class="wrapper-container">
+    <div class="wrapper" @click="closeCard" :class="{alertmask: alertmask}">
+      <!-- <v-header></v-header> -->
+      <!-- 页面名称 -->
+      <div class="jrtitle">
+        <img class="homeicon" src="@/assets/icon/icon_home.png" alt="" @click="$router.go(-1);" draggable="false">
+        <img class="iicon" src="@/assets/icon/icon_input.png" alt="" draggable="false">
+        <span class="snav">输入设置</span>
       </div>
-      <div class="container">
-        <!-- content -->
-        <div class="content">
-          <!-- dp -->
-          <div class="tabdp" v-show="active == 0">
-            <div class="showdata">
-              <ul class="cardul">
-                <li>
-                  <v-readbox :title="'当前输入分辨率'" :defaultcontent="data[0].showdata"></v-readbox>
-                </li>
-                <li v-for="item in 4" class="noneli">
-                  <v-readbox></v-readbox>
-                </li>
-              </ul>
-            </div>
-            <div class="setdata">
-              <div class="btnapply">
-                <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(item)=>{data[0].btnactive=item}"></v-button>
-                <div class="applybtn" @click="apply(0)">
-                  <img src="~assets/icon/icon_apply.png" alt="">应用
-                </div>
-              </div>
-              <ul class="cardul">
-                <template v-if="data[0].btnactive==1">
-                  <li v-if="list1[data[0].ratio[0].wh]">
-                    <v-textbox :activeIndex="data[0].ratio[0].wh" v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="list1[data[0].ratio[0].wh].w + '*' + list1[data[0].ratio[0].wh].h" :list="list1" @getData="obj => {data[0].ratio[0].wh = obj.index}"></v-textbox>
-                  </li>
-                  <li>
-                    <v-textbox :activeIndex="data[0].ratio[0].r" v-model="freshVisible" :showdrop="1" :title="'预设刷新率(Hz)'" :defaultcontent="list2[data[0].ratio[0].r].r" :list="list2" @getData="obj => {data[0].ratio[0].r = obj.index}"></v-textbox>
-                  </li>
-                  <li v-for="item in 3" class="noneli">
-                    <v-readbox></v-readbox>
-                  </li>
-                </template>
-                <template v-else>
-                  <li>
-                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="data[0].ratio[1].w" :min="800" :max="3840" :step="4"></v-sliderbox>
-                  </li>
-                  <li>
-                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data[0].ratio[1].h" :min="600" :max="3840"></v-sliderbox>
-                  </li>
-                  <li>
-                    <v-sliderbox :title="'刷新率(Hz)'" v-model.number="data[0].ratio[1].r" :min="24" :max="120"></v-sliderbox>
-                  </li>
-                  <li v-for="item in 2" class="noneli">
-                    <v-readbox></v-readbox>
-                  </li>
-                </template>
-              </ul>
-            </div>
+      <div class="content-box">
+        <!-- tab -->
+        <div class="tabs">
+          <div class="tab" v-for="(item, index) in data" :class="{active: active == index}" @click="readData(index)" :key="index">
+            <span>{{item.name}}</span>
           </div>
-          <!-- hdmi -->
-          <div class="tabcontent2" v-show="active == 1">
-            <div class="showdata">
-              <ul class="cardul">
-                <li>
-                  <v-readbox :title="'当前输入分辨率'" :defaultcontent="data[1].showdata"></v-readbox>
-                </li>
-                <li v-for="item in 4" class="noneli">
-                  <v-readbox></v-readbox>
-                </li>
-              </ul>
-            </div>
-            <div class="setdata">
-              <div class="btnapply">
-                <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(obj)=>{data[1].btnactive=obj}"></v-button>
-                <div class="applybtn" @click="apply(1)"><img src="~assets/icon/icon_apply.png" alt="">应用</div>
-              </div>
-              <ul class="cardul">
-                <template v-if="data[1].btnactive==1">
-                  <li v-if="list1[data[1].ratio[0].wh]">
-                    <v-textbox :activeIndex="data[1].ratio[0].wh" v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="list1[data[1].ratio[0].wh].w + '*' + list1[data[1].ratio[0].wh].h" :list="list1" @getData="(obj)=>{data[1].ratio[0].wh = obj.index}"></v-textbox>
-                  </li>
-                  <li>
-                    <v-textbox :activeIndex="data[1].ratio[0].r" v-model="freshVisible" :showdrop="1" :title="'预设刷新率(Hz)'" :defaultcontent="list2[data[1].ratio[0].r].r" :list="list2" @getData="(obj)=>{data[1].ratio[0].r=obj.index}"></v-textbox>
-                  </li>
-                  <li v-for="item in 3" class="noneli">
-                    <v-readbox></v-readbox>
-                  </li>
-                </template>
-                <template v-else>
-                  <li>
-                    <v-sliderbox :title="'水平分辨率(px)'" v-model.number="data[1].ratio[1].w" :min="800" :max="3840" :step="4"></v-sliderbox>
-                  </li>
-                  <li>
-                    <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data[1].ratio[1].h" :min="600" :max="3840"></v-sliderbox>
-                  </li>
-                  <li>
-                    <v-sliderbox :title="'刷新率(Hz)'" v-model.number="data[1].ratio[1].r" :min="24" :max="120"></v-sliderbox>
-                  </li>
-                  <li v-for="item in 2" class="noneli">
-                    <v-readbox></v-readbox>
-                  </li>
-                </template>
-              </ul>
-            </div>
-          </div>
-          <!-- sdi -->
-          <div class="tabcontent3" v-show="active == 2">
-            <div class="showdata">
-              <ul class="cardul">
-                <li>
-                  <v-readbox :title="'SDI1分辨率'" :defaultcontent="data[2].showdata0"></v-readbox>
-                </li>
-                <li>
-                  <v-readbox :title="'SDI2分辨率'" :defaultcontent="data[2].showdata1"></v-readbox>
-                </li>
-                <li v-for="item in 3" class="noneli">
-                  <v-readbox></v-readbox>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!-- dvi -->
-          <div class="tabcontent4" v-show="active == 3" :class="{active: mosic.showmosaic}">
-            <div class="showdata showdatadvi">
-              <div class="btnapply">
-                <v-button v-model="mosic.link" :maintitle="'单链模式'" :subtitle="'双链模式'" @getBtn="handleLink"></v-button>
-              </div>
-              <ul class="cardul">
-                <li>
-                  <v-readbox :title="'DVI1输入分辨率'" :defaultcontent="data[3].showdata0"></v-readbox>
-                </li>
-                <li v-if="mosic.link==1">
-                  <v-readbox :title="'DVI2输入分辨率'" :defaultcontent="data[3].showdata1"></v-readbox>
-                </li>
-                <li>
-                  <v-readbox :title="'DVI3输入分辨率'" :defaultcontent="data[3].showdata2"></v-readbox>
-                </li>
-                <li v-if="mosic.link==1">
-                  <v-readbox :title="'DVI4输入分辨率'" :defaultcontent="data[3].showdata3"></v-readbox>
-                </li>
-                <li v-if="mosic.link==1" class="noneli">
-                  <v-readbox></v-readbox>
-                </li>
-                <li v-for="item in 3" v-if="mosic.link==2" class="noneli">
-                  <v-readbox></v-readbox>
-                </li>
-              </ul>
-            </div>
-            <div class="showdata showdatadvi">
-              <div class="btnapply pt30">
-                <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(obj)=>{data[3].btnactive=obj}"></v-button>
-                <div class="applybtn" @click="apply(3)"><img src="~assets/icon/icon_apply.png" alt="">应用</div>
-              </div>
-              <ul class="cardul">
-                <template v-if="data[3].btnactive==1">
-                  <li v-if="list1[data[3].ratio[0].wh]">
-                    <v-textbox :activeIndex="data[3].ratio[0].wh" v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="list1[data[3].ratio[0].wh].w + '*' + list1[data[3].ratio[0].wh].h" :list="list1" @getData="(obj)=>{data[3].ratio[0].wh=obj.index}"></v-textbox>
-                  </li>
-                  <li>
-                    <v-textbox :activeIndex="data[3].ratio[0].r" v-model="freshVisible" :showdrop="1" :title="'预设刷新率(Hz)'" :defaultcontent="list2[data[3].ratio[0].r].r" :list="list2" @getData="(obj)=>{data[3].ratio[0].r=obj.index}"></v-textbox>
-                  </li>
-                  <li v-for="item in 3" class="noneli">
-                    <v-textbox></v-textbox>
-                  </li>
-                </template>
-                <template v-else>
-                  <li>
-                    <v-sliderbox :title="'水平分辨率(px)'" :min="800" :max="data[3].dvimax" :step="mosic.link" v-model.number="data[3].ratio[1].w"></v-sliderbox>
-                  </li>
-                  <li>
-                    <v-sliderbox :title="'垂直分辨率(px)'" :min="600" :max="data[3].dvimax" v-model.number="data[3].ratio[1].h"></v-sliderbox>
-                  </li>
-                  <li>
-                    <v-sliderbox :title="'刷新率（Hz）'" :min="24" :max="120" v-model.number="data[3].ratio[1].r"></v-sliderbox>
-                  </li>
-                  <li v-for="item in 2" class="noneli">
-                    <v-textbox></v-textbox>
-                  </li>
-                </template>
-              </ul>
-            </div>
-            <div class="btncenter mosicbtn">
-              <div class="applybtn mosicc" @click="mosic.showmosaic = true"><img src="~assets/icon/icon_more.png" alt="">DVI MOSAIC</div>
-            </div>
-          </div>
-
         </div>
-        <div class="subcontainer" v-show="active == 3" :class="{active: mosic.showmosaic}">
-          <div class="tabgroup">
-            <div class="tabtitle">此处可将各DVI源按照所选模板进行统一拼接，拼接源可独立源使用</div>
-            <div class="applybtn" @click="mosicapply"><img src="~assets/icon/icon_apply.png" alt="">应用</div>
-          </div>
-          <div class="mosic">
-            <div class="mosicleft">
-              <ul class="cardul">
-                <li>
-                  <v-textbox ref="text-box1" v-model="mosicVisible" :title="'拼接模板'" :showdrop="1">
-                    <div class="mosic-template">
-                      <div @click="saveTmplate(index)" v-for="(item, index) in mosic.templateList" class="mosic-img" :class="{['mosic-img-' + index]: true, selectActive: index === mosic.templateIndex}"></div>
-                    </div>
-                    <div slot="template">
-                      <div class="mosic-img" :class="'mosic-img-' + mosic.templateIndex"></div>
-                    </div>
-                  </v-textbox>
-                </li>
-                <li>
-                  <v-sliderbox :title="'模板宽 (H)'" :min="64" :max="mosic.wm" :defaultcontent="mosic.w" v-model.number="mosic.w"></v-sliderbox>
-                </li>
-                <li>
-                  <v-sliderbox :title="'模板高（V）'" :min="64" :max="mosic.hm" :defaultcontent="mosic.h" v-model.number="mosic.h"></v-sliderbox>
-                </li>
-              </ul>
-            </div>
-            <div class="mosicright">
-              <!-- <div style="color: white">mosic.templateIndex:{{mosic.templateIndex}}</div>
-              <div style="color: white">this.mosic.templateList: {{this.mosic.templateList}}</div> -->
-              <div class="aa" v-if="mosic.templateList[mosic.templateIndex]">
-                拼接总宽高（px） {{`${mosic.w * mosic.templateList[mosic.templateIndex].col} x ${mosic.h * mosic.templateList[mosic.templateIndex].row}`}}
+        <div class="container">
+          <!-- content -->
+          <div class="content">
+            <!-- dp -->
+            <div class="tabdp" v-show="active == 0">
+              <div class="showdata">
+                <ul class="cardul">
+                  <li>
+                    <v-readbox :title="'当前输入分辨率'" :defaultcontent="data[0].showdata"></v-readbox>
+                  </li>
+                  <li v-for="item in 4" class="noneli">
+                    <v-readbox></v-readbox>
+                  </li>
+                </ul>
               </div>
+              <div class="setdata">
+                <div class="btnapply">
+                  <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(item)=>{data[0].btnactive=item}"></v-button>
+                  <div class="applybtn" @click="apply(0)">
+                    <img src="~assets/icon/icon_apply.png" alt="">应用
+                  </div>
+                </div>
+                <ul class="cardul">
+                  <template v-if="data[0].btnactive==1">
+                    <li v-if="list1[data[0].ratio[0].wh]">
+                      <v-textbox :activeIndex="data[0].ratio[0].wh" v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="list1[data[0].ratio[0].wh].w + '*' + list1[data[0].ratio[0].wh].h" :list="list1" @getData="obj => {data[0].ratio[0].wh = obj.index}"></v-textbox>
+                    </li>
+                    <li>
+                      <v-textbox :activeIndex="data[0].ratio[0].r" v-model="freshVisible" :showdrop="1" :title="'预设刷新率(Hz)'" :defaultcontent="list2[data[0].ratio[0].r].r" :list="list2" @getData="obj => {data[0].ratio[0].r = obj.index}"></v-textbox>
+                    </li>
+                    <li v-for="item in 3" class="noneli">
+                      <v-readbox></v-readbox>
+                    </li>
+                  </template>
+                  <template v-else>
+                    <li>
+                      <v-sliderbox :title="'水平分辨率(px)'" v-model.number="data[0].ratio[1].w" :min="800" :max="3840" :step="4"></v-sliderbox>
+                    </li>
+                    <li>
+                      <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data[0].ratio[1].h" :min="600" :max="3840"></v-sliderbox>
+                    </li>
+                    <li>
+                      <v-sliderbox :title="'刷新率(Hz)'" v-model.number="data[0].ratio[1].r" :min="24" :max="120"></v-sliderbox>
+                    </li>
+                    <li v-for="item in 2" class="noneli">
+                      <v-readbox></v-readbox>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </div>
+            <!-- hdmi -->
+            <div class="tabcontent2" v-show="active == 1">
+              <div class="showdata">
+                <ul class="cardul">
+                  <li>
+                    <v-readbox :title="'当前输入分辨率'" :defaultcontent="data[1].showdata"></v-readbox>
+                  </li>
+                  <li v-for="item in 4" class="noneli">
+                    <v-readbox></v-readbox>
+                  </li>
+                </ul>
+              </div>
+              <div class="setdata">
+                <div class="btnapply">
+                  <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(obj)=>{data[1].btnactive=obj}"></v-button>
+                  <div class="applybtn" @click="apply(1)"><img src="~assets/icon/icon_apply.png" alt="">应用</div>
+                </div>
+                <ul class="cardul">
+                  <template v-if="data[1].btnactive==1">
+                    <li v-if="list1[data[1].ratio[0].wh]">
+                      <v-textbox :activeIndex="data[1].ratio[0].wh" v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="list1[data[1].ratio[0].wh].w + '*' + list1[data[1].ratio[0].wh].h" :list="list1" @getData="(obj)=>{data[1].ratio[0].wh = obj.index}"></v-textbox>
+                    </li>
+                    <li>
+                      <v-textbox :activeIndex="data[1].ratio[0].r" v-model="freshVisible" :showdrop="1" :title="'预设刷新率(Hz)'" :defaultcontent="list2[data[1].ratio[0].r].r" :list="list2" @getData="(obj)=>{data[1].ratio[0].r=obj.index}"></v-textbox>
+                    </li>
+                    <li v-for="item in 3" class="noneli">
+                      <v-readbox></v-readbox>
+                    </li>
+                  </template>
+                  <template v-else>
+                    <li>
+                      <v-sliderbox :title="'水平分辨率(px)'" v-model.number="data[1].ratio[1].w" :min="800" :max="3840" :step="4"></v-sliderbox>
+                    </li>
+                    <li>
+                      <v-sliderbox :title="'垂直分辨率(px)'" v-model.number="data[1].ratio[1].h" :min="600" :max="3840"></v-sliderbox>
+                    </li>
+                    <li>
+                      <v-sliderbox :title="'刷新率(Hz)'" v-model.number="data[1].ratio[1].r" :min="24" :max="120"></v-sliderbox>
+                    </li>
+                    <li v-for="item in 2" class="noneli">
+                      <v-readbox></v-readbox>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </div>
+            <!-- sdi -->
+            <div class="tabcontent3" v-show="active == 2">
+              <div class="showdata">
+                <ul class="cardul">
+                  <li>
+                    <v-readbox :title="'SDI1分辨率'" :defaultcontent="data[2].showdata0"></v-readbox>
+                  </li>
+                  <li>
+                    <v-readbox :title="'SDI2分辨率'" :defaultcontent="data[2].showdata1"></v-readbox>
+                  </li>
+                  <li v-for="item in 3" class="noneli">
+                    <v-readbox></v-readbox>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- dvi -->
+            <div class="tabcontent4" v-show="active == 3" :class="{active: mosic.showmosaic}">
+              <div class="showdata showdatadvi">
+                <div class="btnapply">
+                  <v-button v-model="mosic.link" :maintitle="'单链模式'" :subtitle="'双链模式'" @getBtn="handleLink"></v-button>
+                </div>
+                <ul class="cardul">
+                  <li>
+                    <v-readbox :title="'DVI1输入分辨率'" :defaultcontent="data[3].showdata0"></v-readbox>
+                  </li>
+                  <li v-if="mosic.link==1">
+                    <v-readbox :title="'DVI2输入分辨率'" :defaultcontent="data[3].showdata1"></v-readbox>
+                  </li>
+                  <li>
+                    <v-readbox :title="'DVI3输入分辨率'" :defaultcontent="data[3].showdata2"></v-readbox>
+                  </li>
+                  <li v-if="mosic.link==1">
+                    <v-readbox :title="'DVI4输入分辨率'" :defaultcontent="data[3].showdata3"></v-readbox>
+                  </li>
+                  <li v-if="mosic.link==1" class="noneli">
+                    <v-readbox></v-readbox>
+                  </li>
+                  <li v-for="item in 3" v-if="mosic.link==2" class="noneli">
+                    <v-readbox></v-readbox>
+                  </li>
+                </ul>
+              </div>
+              <div class="showdata showdatadvi">
+                <div class="btnapply pt30">
+                  <v-button :maintitle="'预设分辨率'" :subtitle="'自定义分辨率'" @getBtn="(obj)=>{data[3].btnactive=obj}"></v-button>
+                  <div class="applybtn" @click="apply(3)"><img src="~assets/icon/icon_apply.png" alt="">应用</div>
+                </div>
+                <ul class="cardul">
+                  <template v-if="data[3].btnactive==1">
+                    <li v-if="list1[data[3].ratio[0].wh]">
+                      <v-textbox :activeIndex="data[3].ratio[0].wh" v-model="ratioVisible" :showdrop="1" :title="'预设分辨率'" :defaultcontent="list1[data[3].ratio[0].wh].w + '*' + list1[data[3].ratio[0].wh].h" :list="list1" @getData="(obj)=>{data[3].ratio[0].wh=obj.index}"></v-textbox>
+                    </li>
+                    <li>
+                      <v-textbox :activeIndex="data[3].ratio[0].r" v-model="freshVisible" :showdrop="1" :title="'预设刷新率(Hz)'" :defaultcontent="list2[data[3].ratio[0].r].r" :list="list2" @getData="(obj)=>{data[3].ratio[0].r=obj.index}"></v-textbox>
+                    </li>
+                    <li v-for="item in 3" class="noneli">
+                      <v-textbox></v-textbox>
+                    </li>
+                  </template>
+                  <template v-else>
+                    <li>
+                      <v-sliderbox :title="'水平分辨率(px)'" :min="800" :max="data[3].dvimax" :step="mosic.link" v-model.number="data[3].ratio[1].w"></v-sliderbox>
+                    </li>
+                    <li>
+                      <v-sliderbox :title="'垂直分辨率(px)'" :min="600" :max="data[3].dvimax" v-model.number="data[3].ratio[1].h"></v-sliderbox>
+                    </li>
+                    <li>
+                      <v-sliderbox :title="'刷新率（Hz）'" :min="24" :max="120" v-model.number="data[3].ratio[1].r"></v-sliderbox>
+                    </li>
+                    <li v-for="item in 2" class="noneli">
+                      <v-textbox></v-textbox>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+              <div class="btncenter mosicbtn">
+                <div class="applybtn mosicc" @click="mosic.showmosaic = true"><img src="~assets/icon/icon_more.png" alt="">DVI MOSAIC</div>
+              </div>
+            </div>
 
-              <div class="bb" v-if="mosic.templateList[mosic.templateIndex]" :style="{width: cRationumH + 'px', height: cRationumZ + 'px', transform: `translateX(${-Math.round((cRationumH - 400) / 2)}px) translateY(${-Math.round((cRationumZ - 200) / 2)}px)`}">
+          </div>
+          <div class="subcontainer" v-show="active == 3" :class="{active: mosic.showmosaic}">
+            <div class="tabgroup">
+              <div class="tabtitle">此处可将各DVI源按照所选模板进行统一拼接，拼接源可独立源使用</div>
+              <div class="applybtn" @click="mosicapply"><img src="~assets/icon/icon_apply.png" alt="">应用</div>
+            </div>
+            <div class="mosic">
+              <div class="mosicleft">
+                <ul class="cardul">
+                  <li>
+                    <v-textbox ref="text-box1" v-model="mosicVisible" :title="'拼接模板'" :showdrop="1">
+                      <div class="mosic-template">
+                        <div @click="saveTmplate(index)" v-for="(item, index) in mosic.templateList" class="mosic-img" :class="{['mosic-img-' + index]: true, selectActive: index === mosic.templateIndex}"></div>
+                      </div>
+                      <div slot="template">
+                        <div class="mosic-img" :class="'mosic-img-' + mosic.templateIndex"></div>
+                      </div>
+                    </v-textbox>
+                  </li>
+                  <li>
+                    <v-sliderbox :title="'模板宽 (H)'" :min="64" :max="mosic.wm" :defaultcontent="mosic.w" v-model.number="mosic.w"></v-sliderbox>
+                  </li>
+                  <li>
+                    <v-sliderbox :title="'模板高（V）'" :min="64" :max="mosic.hm" :defaultcontent="mosic.h" v-model.number="mosic.h"></v-sliderbox>
+                  </li>
+                </ul>
+              </div>
+              <div class="mosicright">
+                <!-- <div style="color: white">mosic.templateIndex:{{mosic.templateIndex}}</div>
+              <div style="color: white">this.mosic.templateList: {{this.mosic.templateList}}</div> -->
+                <div class="aa" v-if="mosic.templateList[mosic.templateIndex]">
+                  拼接总宽高（px） {{`${mosic.w * mosic.templateList[mosic.templateIndex].col} x ${mosic.h * mosic.templateList[mosic.templateIndex].row}`}}
+                </div>
 
-                <div class="row1" v-for="(r,rowIndex) in mosic.templateList[mosic.templateIndex].row">
-                  <div class="col1" v-for="(c,colIndex) in mosic.templateList[mosic.templateIndex].col" :class="{active: !rowIndex && !colIndex}">
-                    <div class="H" v-if="!rowIndex && !colIndex">
-                      <div class="HCenter"></div>
-                      <div class="Hdata">H</div>
+                <div class="bb" v-if="mosic.templateList[mosic.templateIndex]" :style="{width: cRationumH + 'px', height: cRationumZ + 'px', transform: `translateX(${-Math.round((cRationumH - 400) / 2)}px) translateY(${-Math.round((cRationumZ - 200) / 2)}px)`}">
+
+                  <div class="row1" v-for="(r,rowIndex) in mosic.templateList[mosic.templateIndex].row">
+                    <div class="col1" v-for="(c,colIndex) in mosic.templateList[mosic.templateIndex].col" :class="{active: !rowIndex && !colIndex}">
+                      <div class="H" v-if="!rowIndex && !colIndex">
+                        <div class="HCenter"></div>
+                        <div class="Hdata">H</div>
+                      </div>
+                      <div class="V" v-if="!rowIndex && !colIndex">
+                        <div class="HCenter"></div>
+                        <div class="Hdata">V</div>
+                      </div>
+                      {{(r-1) * mosic.templateList[mosic.templateIndex].col + c }}
                     </div>
-                    <div class="V" v-if="!rowIndex && !colIndex">
-                      <div class="HCenter"></div>
-                      <div class="Hdata">V</div>
-                    </div>
-                    {{(r-1) * mosic.templateList[mosic.templateIndex].col + c }}
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="btncenter mosaicbtn">
-            <div class="applybtn" @click="mosic.showmosaic = false"><img class="down" src="~assets/icon/icon_more.png">返回</div>
+            <div class="btncenter mosaicbtn">
+              <div class="applybtn" @click="mosic.showmosaic = false"><img class="down" src="~assets/icon/icon_more.png">返回</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="alertmask" class="alertmask"></div>
+    <div :class="{alertmask: alertmask}"></div>
+    <div v-if="alertmask" class="alertwindow">
+      <div class="border">正在切换模式, 请等待...</div>
+    </div>
   </div>
 </template>
 <script>
@@ -307,7 +312,7 @@
             showdata1: 'No Single',
           },
           {
-            name: 'DVI',
+            name: 'DVI 1/3',
             btnactive: 1,
             showdata0: 'No Single',
             showdata1: 'No Single',
@@ -351,6 +356,7 @@
         this.data[3].dvimax = 2048;
         this.data[3].ratio[0].wh = 11;
         this.data[3].ratio[1].w = 1920;   // 预设分辨率默认值
+        this.data[3].name = 'DVI 1/2/3/4';
       }
 
       if(this.active == 3) {
@@ -369,7 +375,6 @@
       this.mosic.templateIndex = +this.getMosic.In9_MosM;
       this.mosic.w = +this.getMosic.In9_MosW;
       this.mosic.h = +this.getMosic.In9_MosH;
-      console.log(1111, this.mosic.templateList);
     },
     computed: {
       ...mapGetters(['getCommon', 'getCount', 'getMosic']),
@@ -383,6 +388,7 @@
     watch: {
       getCount(val) {
         if(!val) {
+          console.log(1111, val);
           this.readData(this.getCommon['sourceActive']);
         }
       },
@@ -556,21 +562,22 @@
         }).then(res => {
           this.mosic.link = val;
           // this.list1 = JSON.parse(JSON.stringify(val == 1 ? this.list1_1 : this.list1_2));   // error: w of undefined
+          this.data[3].name = val == 1 ? 'DVI 1/2/3/4' : 'DVI 1/3';
           this.data[3].dvimax = val == 1 ? 2048 : 3840;
           this.data[3].ratio[0].wh = val == 1 ? 11 : 22;
           this.data[3].ratio[1].w = val == 1 ? 1920 : 3840;   // 预设分辨率默认值
           this.mosic.templateList = val == 1 ? Object.assign([], this.mosic.templateList1) : Object.assign([], this.mosic.templateList2);
-          Message({
-            message: '正在切换模式, 请等待...',
-            customClass: 'align-center',
-            duration: 3000,
-            onClose: () => {
-              this.setCommon({ Switch: true });
-              this.alertmask = false;
-            }
-          });
-          // this.getBKGInfo();
+          let timer = setTimeout(() => {
+            this.setCommon({ Switch: true });
+            this.alertmask = false;
+          }, 3000);
+          timer = null;
         });
+        // 设置十秒超时再让switch开起来
+        // setTimeout(() => {
+        //   this.setCommon({ Switch: true });
+        //   this.alertmask = false;
+        // }, 10000);
       }
     }
   }
@@ -774,14 +781,6 @@
 </style>
 
 <style lang="less">
-  .alertmask {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 99;
-  }
   .mosic-template {
     display: flex;
     flex-wrap: wrap;

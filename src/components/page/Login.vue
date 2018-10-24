@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper-container">
     <div class="wrapper">
-      <v-header :showName="false"></v-header>
+      <!-- <v-header :showName="false"></v-header> -->
       <div class="login-wrap">
         <!-- <div class="ms-title">后台管理系统</div> -->
         <div class="ms-login">
@@ -72,7 +72,8 @@
 <style scoped lang="less">
   .wrapper-container {
     height: 100%;
-    background: url('../../assets/img_bg_login.png') center center no-repeat / cover;
+    background: url('../../assets/img_bg_login.png') center no-repeat;
+    background-size: cover;
   }
   .login-wrap {
     margin-top: 80px;

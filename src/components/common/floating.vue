@@ -47,36 +47,37 @@
         <div class="PIPLayer">
           <!-- 状态及名称 -->
           <div class="statusinfo">
-            <div class="status" :class="{active: false}">已关闭</div>
+            <div class="status" :class="{active: +pipres[0].L2_Sta}">已关闭</div>
             <div class="title">
               PIP
             </div>
           </div>
           <!-- 分辨率 -->
           <div class="details">
-            <span>DVIMOSAIC</span>
-            <span>3840x2160@60Hz</span>
+            <span>{{srclist[pipres[0].L2_Src]}}</span>
+            <span>{{pipres[0].In1_ResW}}x{{pipres[0].In1_ResH}}@{{pipres[0].In1_ResR}}Hz</span>
           </div>
           <!-- 其他信息 -->
           <div class="infos">
             <div class="info">
               <div>大小 :</div>
-              <div>3000x1000</div>
+              <div>{{pipres[0].L2_W}}x{{pipres[0].L2_H}}</div>
             </div>
             <div class="info">
               <div>优先级 :</div>
-              <div>置地</div>
+              <div>{{pipres[0].L2_Pri}}</div>
             </div>
             <div class="info">
               <div>位置 :</div>
-              <div>(3000,1000)</div>
+              <div>({{pipres[0].L2_X}},{{pipres[0].L2_Y}})</div>
             </div>
             <div class="info">
               <div>截取状态 :</div>
-              <div>开启中</div>
+              <div>{{pipres[0].L2_CSta}}</div>
             </div>
           </div>
         </div>
+        <!-- 屏体信息 -->
         <div class="screeninfo">
           <!-- 状态及名称 -->
           <div class="title">
@@ -84,20 +85,22 @@
           </div>
           <div class="screen-content">
             <div class="screen-left">
-              <el-progress type="circle" :width="160" :percentage="80" :stroke-width="10" color="#febe00"></el-progress>
+              <!-- <el-progress type="circle" :width="135" :percentage="{{+pipres[0].Screen_Bri}}" :stroke-width="10" color="#febe00"></el-progress> -->
+              <el-progress type="circle" :width="135" :percentage="80" :stroke-width="10" color="#febe00"></el-progress>
+              <div class="light">屏体亮度</div>
             </div>
             <div class="screen-right">
               <div class="info">
                 <div>配屏大小 :</div>
-                <div>8192x1080</div>
+                <div>{{pipres[0].Screen_W}}x{{pipres[0].Screen_H}}</div>
               </div>
               <div class="info">
                 <div>Gamma :</div>
-                <div>2.8</div>
+                <div>{{pipres[0].Pic_Gam}}</div>
               </div>
               <div class="info">
                 <div>色温 :</div>
-                <div>自定义</div>
+                <div>{{pipres[0].Pic_CloTem}}</div>
               </div>
             </div>
           </div>
@@ -111,24 +114,28 @@
             <div class="info">
               <div>亮度 :</div>
               <div>
-                <el-progress :percentage="40" :stroke-width="10" color="#ffffff"></el-progress>
+                <!-- <el-progress :percentage="+pipres[0].Pic_Bri" :stroke-width="10" color="#ffffff"></el-progress> -->
+                <el-progress :percentage="80" :stroke-width="10" color="#ffffff"></el-progress>
               </div>
             </div>
             <div class="info">
               <div>饱和度 :</div>
               <div>
+                <!-- <el-progress :percentage="+pipres[0].Pic_Sat" :stroke-width="10" color="#ffffff"></el-progress> -->
                 <el-progress :percentage="80" :stroke-width="10" color="#ffffff"></el-progress>
               </div>
             </div>
             <div class="info">
               <div>对比度 :</div>
               <div>
+                <!-- <el-progress :percentage="+res.Pic_Con" :stroke-width="10" color="#ffffff"></el-progress> -->
                 <el-progress :percentage="80" :stroke-width="10" color="#ffffff"></el-progress>
               </div>
             </div>
             <div class="info">
               <div>色调 :</div>
               <div>
+                <!-- <el-progress :percentage="+pipres[0].Pic_Hue" :stroke-width="10" color="#ffffff"></el-progress> -->
                 <el-progress :percentage="80" :stroke-width="10" color="#ffffff"></el-progress>
               </div>
             </div>
@@ -140,17 +147,19 @@
             其他
           </div>
           <div class="otherbtn">
+            <!-- <div class="bkg" :class="{"bkg-active": pipres[0].BKG_Sta}">BKG</div> -->
             <div class="bkg">BKG</div>
-            <div class="bkg bkg-active">HDR</div>
+            <!-- <div class="bkg" :class="{"bkg-active": pipres[0].HDR_Sta}">HDR</div> -->
+            <div class="bkg">HDR</div>
           </div>
           <div class="infos">
             <div class="info">
               <div>设备冗余 :</div>
-              <div>主控</div>
+              <div>{{pipres[0].Redu_Sta}}</div>
             </div>
             <div class="info">
               <div>同步状态 :</div>
-              <div>关闭</div>
+              <div>{{pipres[0].Sync_Sta}}</div>
             </div>
           </div>
         </div>
@@ -160,59 +169,12 @@
             输入
           </div>
           <div class="infos">
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/DP_1.png" alt="">
-              </div>
-              <div>HDMI</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/HDMI_1.png" alt="">
-              </div>
-              <div>DP</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/SDI_1.png" alt="">
-              </div>
-              <div>SDI1</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/SDI_1.png" alt="">
-              </div>
-              <div>SDI2</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/DVI_1.png" alt="">
-              </div>
-              <div>DVI1</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/DVI_1.png" alt="">
-              </div>
-              <div>DVI2</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/DVI_1.png" alt="">
-              </div>
-              <div>DVI3</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/DVI_1.png" alt="">
-              </div>
-              <div>DVI4</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/MOSAIC_1.png" alt="">
-              </div>
-              <div>MOSAIC</div>
+            <div class="info" v-for="(item, index) in data[4].input">
+              <el-tooltip effect="dark" :content="`使用中`" placement="top">
+                <div class="img">
+                </div>
+              </el-tooltip>
+              <div>{{srclist[index]}}</div>
             </div>
           </div>
         </div>
@@ -222,155 +184,86 @@
             输出
           </div>
           <div class="infos">
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>1</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>2</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>3</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>4</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>5</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>6</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>7</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>8</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>9</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>10</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>11</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>12</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>13</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>14</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>15</div>
-            </div>
-            <div class="info">
-              <div class="img">
-                <img src="@/assets/ctrls/icon_output_1.png" alt="">
-              </div>
-              <div>16</div>
+            <div class="info" v-for="(item, index) in data[2].out">
+              <el-tooltip effect="dark" :content="`使用中`" placement="top">
+                <div class="img"></div>
+              </el-tooltip>
+              <div>{{index+1}}</div>
             </div>
           </div>
         </div>
         <!-- 光纤 -->
         <div class="shineinfo">
           <div class="infos">
-            <div class="info">
-              <div>OPT1</div>
-              <div class="img">
-                <img src="@/assets/ctrls/icon_opt_1.png" alt="">
-              </div>
-            </div>
-            <div class="info">
-              <div>OPT2</div>
-              <div class="img">
-                <img src="@/assets/ctrls/icon_opt_1.png" alt="">
-              </div>
-            </div>
-            <div class="info">
-              <div>OPT3</div>
-              <div class="img">
-                <img src="@/assets/ctrls/icon_opt_1.png" alt="">
-              </div>
-            </div>
-            <div class="info">
-              <div>OPT4</div>
-              <div class="img">
-                <img src="@/assets/ctrls/icon_opt_1.png" alt="">
-              </div>
+            <div class="info" v-for="(item, index) in data[3].opt">
+              <div>OPT{{index+1}}</div>
+              <el-tooltip effect="dark" :content="`使用中`" placement="right">
+                <div class="img"></div>
+              </el-tooltip>
             </div>
           </div>
         </div>
       </div>
     </div>
-
     <div class="bg"></div>
   </div>
 </template>
 <script>
+  import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
   export default {
     data() {
       return {
         afterActive: false,
         slideActive: false,
-        timer: null
+        timer: null,
+        srclist: ['DP', 'HDMI', 'SDI1', 'SDI2', 'DVI1', 'DVI2', 'DVI3', 'DVI4', 'MOSAIC'],
+        data: [
+          {
+            name: 'MainLayer',
+            status: 0,
+            src: 0,
+            pri: '1',
+            w: '3840',
+            h: '2160',
+            r: '60',
+            sx: '3000',
+            sy: '1000',
+            sw: '3000',
+            sy: '1000',
+            csta: '0'
+          },
+          {
+            name: 'PIP',
+            status: 0,
+            src: 0,
+            pri: '1',
+            w: '3840',
+            h: '2160',
+            r: '60',
+            sx: '3000',
+            sy: '1000',
+            sw: '3000',
+            sy: '1000',
+            csta: '0'
+          },
+          {
+            out: ['1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']
+          },
+          {
+            opt: ['1', '0', '0', '0']
+          },
+          {
+            input: ['1', '0', '0', '0', '0', '0', '0', '0', '0']
+          }
+        ],
+        mainres: [],
+        pipres: []
       };
     },
     props: [
       'subactive'
     ],
     watch: {
-      // slideActive(val) {
-      //   this.$emit('update:subactive', val);
-      // }
       slideActive(val) {
         clearTimeout(this.timmer);
         if(val) {
@@ -382,11 +275,67 @@
       }
     },
     created() {
-      this.getAllInfo();
+      // this.getMainInfo();
+      // this.getPipInfo();
     },
     methods: {
-      getAllInfo() {
-
+      ...mapActions(['ajax']),
+      getMainInfo() {
+        this.ajax({
+          name: 'url',
+          data: { RW: 0, DevID: 0, L1_Info: 0, Output_Info: 0, Input_Info: 0, _: sessionStorage.getItem('_') }
+        }).then(res => {
+          this.mainres.push(res);
+          // this.data[0].status = res.L1_Sta;
+          // this.data[0].src = res.L1_Src;
+          // this.data[0].pri = res.L1_Pri;
+          // this.data[0].w = res.In1_ResW;
+          // this.data[0].h = res.In1_ResH;
+          // this.data[0].r = res.In1_ResR;
+          // this.data[0].sw = res.L1_W;
+          // this.data[0].sh = res.L1_H;
+          // this.data[0].sx = res.L1_X;
+          // this.data[0].sy = res.L1_Y;
+          // this.data[0].sy = res.L1_Y;
+          // this.data[0].csta = res.L1_CSta;
+        });
+      },
+      getPipInfo() {
+        this.ajax({
+          name: 'url',
+          data: { RW: 0, DevID: 0, L2_Info: 0, Pic_Info: 0, Other_Info: 0, _: sessionStorage.getItem('_') }
+        }).then(res => {
+          this.pipres.push(res);
+          // {"L2_Sta":"0", "L2_Src":"1", "In1_ResW":"1920", "In1_ResH":"1080", "In1_ResR":"6000", "L2_W":"1920", "L2_H":"1080", "L2_X":"0", "L2_Y":"0", "L2_Pri":"2", "L2_CSta":"0", "Pic_Bri":"60", "Pic_Con":"50", "Pic_Sat":"50", "Pic_Hue":"0", "Pic_CloTem":"0", "Pic_Gam":"15", "Screen_Bri":"60", "Screen_W":"2096", "Screen_H":"1080", "BKG_Sta":"0", "HDR_Sta":"0", "Sync_Sta":"0", "Redu_Sta":"0", "Opt1_Sta":"0", "Opt2_Sta":"0", "Opt3_Sta":"0", "Opt4_Sta":"0", "ERRC": "0"}
+          // res.L2_Sta
+          // res.L2_Src
+          // res.In1_ResW
+          // res.In1_ResH
+          // res.In1_ResR
+          // res.L2_W
+          // res.L2_H
+          // res.L2_X
+          // res.L2_Y
+          // res.L2_Pri
+          // res.L2_CSta
+          // res.Pic_Bri
+          // res.Pic_Con
+          // res.Pic_Sat
+          // res.Pic_Hue
+          // res.Pic_CloTem
+          // res.Pic_Gam
+          // res.Screen_Bri
+          // res.Screen_W
+          // res.Screen_H
+          // res.BKG_Sta
+          // res.HDR_Sta
+          // res.Sync_Sta
+          // res.Redu_Sta
+          // res.Opt1_Sta
+          // res.Opt2_Sta
+          // res.Opt3_Sta
+          // res.Opt4_Sta
+        });
       }
     }
   }
@@ -421,7 +370,7 @@
   .slide-box {
     width: 100%;
     height: 100%;
-    background: rgba(57, 62, 67, 0.8);
+    // background: rgba(57, 62, 67, 0.8);
     transform: translateX(0);
     transition: transform ease 0.5s;
     &.subactive {
@@ -442,10 +391,45 @@
       }
     }
   }
+
+  .title {
+    width: 100%;
+    height: 24px;
+    margin-bottom: 40px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .infos {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    .info {
+      box-sizing: border-box;
+      width: 50%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 15px 0;
+      > div:nth-child(1) {
+        width: 100%;
+        color: #adb4cf;
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
+      > div:nth-child(2) {
+        width: 100%;
+        color: #fff;
+        font-size: 16px;
+      }
+    }
+  }
   .main-layer,
   .PIPLayer {
     box-sizing: border-box;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
     width: 400px;
     height: 320px;
     position: absolute;
@@ -484,32 +468,6 @@
         margin-right: 10px;
       }
     }
-    .infos {
-      box-sizing: border-box;
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      align-items: center;
-      .info {
-        box-sizing: border-box;
-        width: 50%;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        padding: 15px 0;
-        > div:nth-child(1) {
-          width: 100%;
-          color: #adb4cf;
-          font-size: 16px;
-          margin-bottom: 5px;
-        }
-        > div:nth-child(2) {
-          width: 100%;
-          color: #fff;
-          font-size: 16px;
-        }
-      }
-    }
   }
   .PIPLayer {
     left: 401px;
@@ -521,7 +479,7 @@
     height: 320px;
     position: absolute;
     padding: 34px 30px 34px 30px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
     top: 0;
     right: 0px;
     .title {
@@ -537,6 +495,12 @@
 
       .screen-left {
         width: 100%;
+        color: #fff;
+        .light {
+          color: #adb4cf;
+          margin-top: 5px;
+          padding-left: 40px;
+        }
       }
       .screen-right {
         width: 100%;
@@ -573,7 +537,7 @@
     height: 245px;
     position: absolute;
     padding: 34px 30px 34px 30px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
     top: 330px;
     left: 0px;
     .title {
@@ -617,7 +581,7 @@
     height: 245px;
     position: absolute;
     padding: 34px 30px 34px 30px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
     top: 330px;
     right: 0px;
     .title {
@@ -679,7 +643,7 @@
     box-sizing: border-box;
     position: absolute;
     padding: 34px 30px 30px 30px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
     width: 1081px;
     height: 129px;
     bottom: 131px;
@@ -699,11 +663,14 @@
         width: 80px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
         padding: 10px 10px 0 10px;
         .img {
           display: flex;
           justify-content: center;
+          width: 60px;
+          height: 40px;
+          background: url('../../assets/ctrls/DP_1.png') center no-repeat;
         }
         > div:nth-child(2) {
           display: flex;
@@ -719,7 +686,7 @@
     display: flex;
     position: absolute;
     padding: 34px 30px 24px 30px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
     width: 1081px;
     height: 130px;
     bottom: 0;
@@ -741,8 +708,11 @@
         justify-content: space-between;
         padding: 0 10px;
         .img {
+          width: 40px;
+          height: 40px;
           display: flex;
           justify-content: center;
+          background: url('../../assets/ctrls/output_1.png') center no-repeat;
         }
         > div:nth-child(2) {
           display: flex;
@@ -757,7 +727,7 @@
     box-sizing: border-box;
     position: absolute;
     padding: 34px 20px 34px 20px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
     width: 119px;
     height: 260px;
     bottom: 0;
@@ -766,13 +736,25 @@
     color: #fff;
     .infos {
       height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
       .info {
         width: 100%;
         display: flex;
-        justify-content: space-between;
+        align-items: center;
+        > div:nth-child(1) {
+          display: flex;
+          width: 48px;
+          margin-bottom: 0;
+          justify-content: flex-start;
+          align-items: center;
+          color: #fff;
+          font-size: 16px;
+        }
+        .img {
+          width: 30px;
+          height: 18px;
+          display: flex;
+          background: url('../../assets/ctrls/opt_1.png') top no-repeat;
+        }
       }
     }
   }
