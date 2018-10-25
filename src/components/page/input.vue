@@ -348,6 +348,7 @@
     },
     created() {
       this.active = this.getCommon.sourceActive;
+      this.readData(this.getCommon['sourceActive']);
 
       this._ = getLoc('_');
       this.mosic.link = +this.getMosic.In9_MosL + 1;
@@ -366,7 +367,6 @@
         } else {
           this.list1 = Object.assign([], this.list1_2);
           this.mosic.templateList = Object.assign([], this.mosic.templateList2);
-          console.log(1111, this.mosic.templateList);
         }
       } else {
         this.list1 = Object.assign([], this.list1_2);
@@ -388,11 +388,11 @@
     watch: {
       getCount(val) {
         if(!val) {
-          console.log(1111, val);
           this.readData(this.getCommon['sourceActive']);
         }
       },
       active() {
+        this.readData(this.getCommon['sourceActive']);
         if(this.active == 3) {
           if(this.mosic.link == 1) {
             this.list1 = Object.assign([], this.list1_1);

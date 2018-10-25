@@ -4,21 +4,21 @@ import { Loading, Message } from 'element-ui';
 import store from '../store';
 import qs from 'qs';
 
-let loading = false;
-let timer = null;
-let loadingInstance;
+// let loading = false;
+// let timer = null;
+// let loadingInstance;
 
 axios.defaults.timeout = 10000;
 
 //添加请求拦截器
 axios.interceptors.request.use(
     config => {
-        loading = true;
+        // loading = true;
         return config;
     },
     error => {
-        loading = false;
-        loadingInstance.close();
+        // loading = false;
+        // loadingInstance.close();
         return Promise.reject(error);
     }
 );
@@ -26,17 +26,17 @@ axios.interceptors.request.use(
 //添加响应拦截器
 axios.interceptors.response.use(
     response => {
-        loading = false;
-        if (loadingInstance) {
-            loadingInstance.close();
-        }
+        // loading = false;
+        // if (loadingInstance) {
+        //     loadingInstance.close();
+        // }
         return response;
     },
     error => {
-        loading = false;
-        if (loadingInstance) {
-            loadingInstance.close();
-        }
+        // loading = false;
+        // if (loadingInstance) {
+        //     loadingInstance.close();
+        // }
 
         if (error && error.response) {
             switch (error.response.status) {
@@ -88,8 +88,11 @@ axios.interceptors.response.use(
 
 //检查接口请求状态
 function checkStatus(resolve, reject, response, config) {
+    let count = 0;
+
     if (response && response.status === 200) {
         if (response.data.ERRC == '0') {
+            count = 0;
             resolve(response.data);
         } else {
             if (!config.error) {
@@ -113,19 +116,25 @@ function checkStatus(resolve, reject, response, config) {
         }
         // resolve(response.data);
     } else {
-        Message(response.message || '请求失败');
+        count += 1;
+        if (count % 5 == 0) {
+            Message(response.message || '请求失败');
+        }
         reject(response.data);
+    }
+    if (count > 2100000000) {
+        count = 0;
     }
 }
 
 let xhr = config => {
     //加载动画
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-        if (loading) {
-            loadingInstance = Loading.service();
-        }
-    }, 10000);
+    // clearTimeout(timer);
+    // timer = setTimeout(() => {
+    //     if (loading) {
+    //         loadingInstance = Loading.service();
+    //     }
+    // }, 10000);
 
     if (config instanceof Array) {
         return axios.all(config);

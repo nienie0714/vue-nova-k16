@@ -9,7 +9,9 @@
       </div>
     </div>
     <div :class="{subactive: subactive}"></div>
-    <v-floating :subactive.sync="subactive"></v-floating>
+    <template v-if="islogin">
+      <v-floating :subactive.sync="subactive"></v-floating>
+    </template>
   </div>
 </template>
 

@@ -13,33 +13,34 @@
         <div class="main-layer">
           <!-- 状态及名称 -->
           <div class="statusinfo">
-            <div class="status" :class="{active: true}">开启中</div>
+            <div class="status" :class="{active: +mainres.L1_Sta}">开启中</div>
             <div class="title">
               MainLayer
             </div>
           </div>
           <!-- 分辨率 -->
           <div class="details">
-            <span>DVIMOSAIC</span>
-            <span>3840x2160@60Hz</span>
+            <span>{{srclist[mainres.L1_Src]}}</span>
+            <!-- todo  不一定是Inx_ResH -->
+            <span>{{mainres.L1_ResW}}x{{mainres.L1_ResH}}@{{mainres.L1_ResR}}Hz</span>
           </div>
           <!-- 其他信息 -->
           <div class="infos">
             <div class="info">
               <div>大小 :</div>
-              <div>3000x1000</div>
+              <div>{{mainres.L2_W}}x{{mainres.L2_H}}</div>
             </div>
             <div class="info">
               <div>优先级 :</div>
-              <div>置地</div>
+              <div>{{mainres.L1_Pri}}</div>
             </div>
             <div class="info">
               <div>位置 :</div>
-              <div>(3000,1000)</div>
+              <div>({{mainres.L1_X}},{{mainres.L1_Y}})</div>
             </div>
             <div class="info">
               <div>截取状态 :</div>
-              <div>开启中</div>
+              <div>{{mainres.L1_CSta}}</div>
             </div>
           </div>
         </div>
@@ -47,33 +48,33 @@
         <div class="PIPLayer">
           <!-- 状态及名称 -->
           <div class="statusinfo">
-            <div class="status" :class="{active: +pipres.L2_Sta}">已关闭</div>
+            <div class="status" :class="{active: +mainres.L2_Sta}">已关闭</div>
             <div class="title">
               PIP
             </div>
           </div>
           <!-- 分辨率 -->
           <div class="details">
-            <span>{{srclist[pipres.L2_Src]}}</span>
-            <span>{{pipres.In1_ResW}}x{{pipres.In1_ResH}}@{{pipres.In1_ResR}}Hz</span>
+            <span>{{srclist[mainres.L2_Src]}}</span>
+            <span>{{mainres.L2_ResW}}x{{mainres.L2_ResH}}@{{mainres.L2_ResR}}Hz</span>
           </div>
           <!-- 其他信息 -->
           <div class="infos">
             <div class="info">
               <div>大小 :</div>
-              <div>{{pipres.L2_W}}x{{pipres.L2_H}}</div>
+              <div>{{mainres.L2_W}}x{{mainres.L2_H}}</div>
             </div>
             <div class="info">
               <div>优先级 :</div>
-              <div>{{pipres.L2_Pri}}</div>
+              <div>{{mainres.L2_Pri}}</div>
             </div>
             <div class="info">
               <div>位置 :</div>
-              <div>({{pipres.L2_X}},{{pipres.L2_Y}})</div>
+              <div>({{mainres.L2_X}},{{mainres.L2_Y}})</div>
             </div>
             <div class="info">
               <div>截取状态 :</div>
-              <div>{{pipres.L2_CSta}}</div>
+              <div>{{mainres.L2_CSta}}</div>
             </div>
           </div>
         </div>
@@ -85,21 +86,21 @@
           </div>
           <div class="screen-content">
             <div class="screen-left">
-              <el-progress type="circle" :width="135" :percentage="pipres.Screen_Bri && Number(pipres.Screen_Bri)" :stroke-width="10" color="#febe00"></el-progress>
+              <el-progress type="circle" :width="135" :percentage="mainres.Screen_Bri && Number(mainres.Screen_Bri)" :stroke-width="10" color="#febe00"></el-progress>
               <div class="light">屏体亮度</div>
             </div>
             <div class="screen-right">
               <div class="info">
                 <div>配屏大小 :</div>
-                <div>{{pipres.Screen_W}}x{{pipres.Screen_H}}</div>
+                <div>{{mainres.Screen_W}}x{{mainres.Screen_H}}</div>
               </div>
               <div class="info">
                 <div>Gamma :</div>
-                <div>{{pipres.Pic_Gam}}</div>
+                <div>{{+mainres.Pic_Gam/10}}</div>
               </div>
               <div class="info">
                 <div>色温 :</div>
-                <div>{{pipres.Pic_CloTem}}</div>
+                <div>{{+mainres.Pic_CloTem-180}}</div>
               </div>
             </div>
           </div>
@@ -113,25 +114,25 @@
             <div class="info">
               <div>亮度 :</div>
               <div>
-                <el-progress :percentage="pipres.Pic_Bri && Number(pipres.Pic_Bri)" :stroke-width="10" color="#ffffff"></el-progress>
+                <el-progress :percentage="mainres.Pic_Bri && Number(mainres.Pic_Bri)" :stroke-width="10" color="#ffffff"></el-progress>
               </div>
             </div>
             <div class="info">
               <div>饱和度 :</div>
               <div>
-                <el-progress :percentage="pipres.Pic_Sat && Number(pipres.Pic_Sat)" :stroke-width="10" color="#ffffff"></el-progress>
+                <el-progress :percentage="mainres.Pic_Sat && Number(mainres.Pic_Sat)" :stroke-width="10" color="#ffffff"></el-progress>
               </div>
             </div>
             <div class="info">
               <div>对比度 :</div>
               <div>
-                <el-progress :percentage="pipres.Pic_Con && Number(pipres.Pic_Con)" :stroke-width="10" color="#ffffff"></el-progress>
+                <el-progress :percentage="mainres.Pic_Con && Number(mainres.Pic_Con)" :stroke-width="10" color="#ffffff"></el-progress>
               </div>
             </div>
             <div class="info">
               <div>色调 :</div>
               <div>
-                <el-progress :percentage="pipres.Pic_Hue && Number(pipres.Pic_Hue)" :stroke-width="10" color="#ffffff"></el-progress>
+                <el-progress :percentage="mainres.Pic_Hue && Number(mainres.Pic_Hue)" :stroke-width="10" color="#ffffff"></el-progress>
               </div>
             </div>
           </div>
@@ -142,19 +143,19 @@
             其他
           </div>
           <div class="otherbtn">
-            <!-- <div class="bkg" :class="{"bkg-active": pipres[0].BKG_Sta}">BKG</div> -->
+            <!-- <div class="bkg" :class="{"bkg-active": mainres[0].BKG_Sta}">BKG</div> -->
             <div class="bkg">BKG</div>
-            <!-- <div class="bkg" :class="{"bkg-active": pipres[0].HDR_Sta}">HDR</div> -->
+            <!-- <div class="bkg" :class="{"bkg-active": mainres[0].HDR_Sta}">HDR</div> -->
             <div class="bkg">HDR</div>
           </div>
           <div class="infos">
             <div class="info">
               <div>设备冗余 :</div>
-              <div>{{pipres.Redu_Sta}}</div>
+              <div>{{mainres.Redu_Sta}}</div>
             </div>
             <div class="info">
               <div>同步状态 :</div>
-              <div>{{pipres.Sync_Sta}}</div>
+              <div>{{mainres.Sync_Sta}}</div>
             </div>
           </div>
         </div>
@@ -166,7 +167,7 @@
           <div class="infos">
             <!-- 同样的问题，这里如果是9个，直接写9就好 -->
             <div class="info" v-for="(item, index) in data[4].input">
-              <el-tooltip effect="dark" :content="`使用中`" placement="top">
+              <el-tooltip effect="dark" :content="mainres[srclist[index] + '_Sta'] | itoTip" placement="top">
                 <!-- <div class="img" :style="{background :url(require(`../../assets/ctrls/DP_1.png`))}"> -->
                 <div class="img" :style='mainres[srclist[index] + "_Sta"] && {backgroundImage:"url(" + require(`../../assets/ctrls/${pngSrcList[index]}_${mainres[srclist[index] + "_Sta"]}.png`) + ")" }'>
                 </div>
@@ -182,8 +183,8 @@
           </div>
           <div class="infos">
             <div class="info" v-for="(item, index) in data[2].out">
-              <el-tooltip effect="dark" :content="`使用中`" placement="top">
-                <div class="img"></div>
+              <el-tooltip effect="dark" :content="mainres['Out_Port'+ (index+1)] | otoTip" placement="top">
+                <div class="img" :style='mainres["Out_Port" + (index+1)] && {backgroundImage:"url(" + require(`../../assets/ctrls/output_${mainres["Out_Port" +(index+1)]}.png`) + ")" }'></div>
               </el-tooltip>
               <div>{{index+1}}</div>
             </div>
@@ -195,8 +196,8 @@
             <!-- 这里确定是4个吗，如果要按照回多少个就生成多少个，那这里还需要搞一搞，如果确定是4个，直接写4 -->
             <div class="info" v-for="(item, index) in data[3].opt">
               <div>OPT{{index+1}}</div>
-              <el-tooltip effect="dark" :content="pipres['Opt'+ (index+1) +'_Sta'] | toTip" placement="right">
-                <div :class="['img', 'img' + pipres['Opt'+ (index+1) +'_Sta']]"></div>
+              <el-tooltip effect="dark" :content="mainres['Opt'+ (index+1) +'_Sta'] | toTip" placement="top">
+                <div :class="['img', 'img' + mainres['Opt'+ (index+1) +'_Sta']]"></div>
               </el-tooltip>
             </div>
           </div>
@@ -213,7 +214,7 @@
       return {
         afterActive: false,
         slideActive: false,
-        timer: null,
+        timmer: null,
         // 这里的 DVI_Mosaic  最好让后端把接口名字一换，如果人家不换，在收到数据的时候换一下就可以界面上显示 MOSAIC。。。。
         // 充分展示了如何在屎山上继续铲屎
         // 有没有发现问题？　为什么你的实现需要依赖后端数据呢　为什么呢？　　这里你就需要去考虑如何解耦　前提是你把之前的实现看懂了
@@ -230,7 +231,7 @@
         // 这样你就可以在拿到UI没有协议的情况下，开发完前端的页面了
         // 我在上面用了一种最耦合的方法给你展示了什么是烂代码，基本的写法，思路都告诉你了，你用半个小时就能看完这个例子并且重构，fighting。。。
         // 希望你下面的输出模块能用这种解耦的思想来做哦~   加油狗子，做一个不被后端支配的前端大神    
-        srclist: ['DP', 'HDMI', 'SDI1', 'SDI2', 'DVI1', 'DVI2', 'DVI3', 'DVI4', 'DVI_Mosaic'],
+        srclist: ['DP', 'HDMI', 'SDI1', 'SDI2', 'DVI1', 'DVI2', 'DVI3', 'DVI4', 'MOSAIC'],
         pngSrcList: ['DP', 'HDMI', 'SDI', 'SDI', 'DVI', 'DVI', 'DVI', 'DVI', 'MOSAIC'],
         data: [
           {
@@ -284,42 +285,43 @@
     ],
     watch: {
       slideActive(val) {
+        let t = null;
         clearTimeout(this.timmer);
         if(val) {
+          t = setInterval(() => {
+            this.getAllInfo();
+          }, 2000);
           this.afterActive = true;
         } else {
+          t = null;
           this.timmer = setTimeout(() => { this.afterActive = false }, 300);
         }
         this.$emit('update:subactive', val);
       }
     },
-    mounted() {
-      this.getMainInfo();
-      this.getPipInfo(); 
+    created() {
+      this.getAllInfo();
     },
     methods: {
       ...mapActions(['ajax']),
+      getAllInfo() {
+        this.ajax({
+          name: 'url',
+          data: { RW: 0, DevID: 0, L1_Info: 0, L2_Info: 0, Pic_Info: 0, Other_Info: 0, Output_Info: 0, Input_Info: 0, _: sessionStorage.getItem('_') }
+        }).then(res => {
+          this.$nextTick(() => {
+            this.mainres = res;
+          })
+        });
+      },
       getMainInfo() {
         this.ajax({
           name: 'url',
           data: { RW: 0, DevID: 0, L1_Info: 0, Output_Info: 0, Input_Info: 0, _: sessionStorage.getItem('_') }
         }).then(res => {
-          this.$nextTick(() => {       
+          this.$nextTick(() => {
             this.mainres = res;
           })
-          
-          // this.data[0].status = res.L1_Sta;
-          // this.data[0].src = res.L1_Src;
-          // this.data[0].pri = res.L1_Pri;
-          // this.data[0].w = res.In1_ResW;
-          // this.data[0].h = res.In1_ResH;
-          // this.data[0].r = res.In1_ResR;
-          // this.data[0].sw = res.L1_W;
-          // this.data[0].sh = res.L1_H;
-          // this.data[0].sx = res.L1_X;
-          // this.data[0].sy = res.L1_Y;
-          // this.data[0].sy = res.L1_Y;
-          // this.data[0].csta = res.L1_CSta;
         });
       },
       getPipInfo() {
@@ -327,41 +329,11 @@
           name: 'url',
           data: { RW: 0, DevID: 0, L2_Info: 0, Pic_Info: 0, Other_Info: 0, _: sessionStorage.getItem('_') }
         }).then(res => {
-          this.$nextTick(() => {       
+          this.$nextTick(() => {
             this.pipres = res;
             this.pipres.Screen_Bri = Number(this.pipres.Screen_Bri);
           })
-
-  
           // {"L2_Sta":"0", "L2_Src":"1", "In1_ResW":"1920", "In1_ResH":"1080", "In1_ResR":"6000", "L2_W":"1920", "L2_H":"1080", "L2_X":"0", "L2_Y":"0", "L2_Pri":"2", "L2_CSta":"0", "Pic_Bri":"60", "Pic_Con":"50", "Pic_Sat":"50", "Pic_Hue":"0", "Pic_CloTem":"0", "Pic_Gam":"15", "Screen_Bri":"60", "Screen_W":"2096", "Screen_H":"1080", "BKG_Sta":"0", "HDR_Sta":"0", "Sync_Sta":"0", "Redu_Sta":"0", "Opt1_Sta":"0", "Opt2_Sta":"0", "Opt3_Sta":"0", "Opt4_Sta":"0", "ERRC": "0"}
-          // res.L2_Sta
-          // res.L2_Src
-          // res.In1_ResW
-          // res.In1_ResH
-          // res.In1_ResR
-          // res.L2_W
-          // res.L2_H
-          // res.L2_X
-          // res.L2_Y
-          // res.L2_Pri
-          // res.L2_CSta
-          // res.Pic_Bri
-          // res.Pic_Con
-          // res.Pic_Sat
-          // res.Pic_Hue
-          // res.Pic_CloTem
-          // res.Pic_Gam
-          // res.Screen_Bri
-          // res.Screen_W
-          // res.Screen_H
-          // res.BKG_Sta
-          // res.HDR_Sta
-          // res.Sync_Sta
-          // res.Redu_Sta
-          // res.Opt1_Sta
-          // res.Opt2_Sta
-          // res.Opt3_Sta
-          // res.Opt4_Sta
         });
       }
     },
@@ -369,16 +341,57 @@
       toNumber: function(value) {
         return Number(value)
       },
+      itoTip(value) {
+        switch(value) {
+          case '0':
+            return '输入源无信号，窗口未占用';
+            break;
+          case '1':
+            return '输入源有信号，窗口未占用';
+            break;
+          case '2':
+            return '输入源有信号，被窗口占用';
+            break;
+          case '3':
+            return '输入源无信号，被窗口占用';
+            break;
+          default:
+            return '';
+            break;
+        }
+      },
+      otoTip(value) {
+        switch(value) {
+          case '0':
+            return '未连接';
+            break;
+          case '1':
+            return '已连接';
+            break;
+          case '2':
+            return '已连接，复制模式';
+            break;
+          case '3':
+            return '已连接，备份模式';
+            break;
+          default:
+            return '';
+            break;
+        }
+      },
       toTip(value) {
         switch(value) {
           case '0':
-            return '离线';
+            return '未连接';
             break;
           case '1':
-            return '使用中';
+            return '已连接';
             break;
           case '2':
-            return '被占用';
+            return '备份未生效';
+            break;
+          case '2':
+            return '备份已生效';
             break;
           default:
             return '';
@@ -762,7 +775,8 @@
           height: 40px;
           display: flex;
           justify-content: center;
-          background: url('../../assets/ctrls/output_1.png') center no-repeat;
+          background: center no-repeat;
+          // background: url('../../assets/ctrls/output_1.png') center no-repeat;
         }
         > div:nth-child(2) {
           display: flex;
@@ -776,7 +790,7 @@
   .shineinfo {
     box-sizing: border-box;
     position: absolute;
-    padding: 34px 20px 34px 20px;
+    padding: 20px 10px 20px 20px;
     background-color: rgba(0, 0, 0, 0.75);
     width: 119px;
     height: 260px;
@@ -790,6 +804,7 @@
         width: 100%;
         display: flex;
         align-items: center;
+        padding: 0 0;
         > div:nth-child(1) {
           display: flex;
           width: 48px;
@@ -800,8 +815,8 @@
           font-size: 16px;
         }
         .img {
-          width: 30px;
-          height: 18px;
+          width: 38px;
+          height: 26px;
           display: flex;
         }
         .img0 {
@@ -812,6 +827,9 @@
         }
         .img2 {
           background: url('../../assets/ctrls/opt_2.png') top no-repeat;
+        }
+        .img3 {
+          background: url('../../assets/ctrls/opt_3.png') top no-repeat;
         }
       }
     }

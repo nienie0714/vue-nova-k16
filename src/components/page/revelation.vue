@@ -228,6 +228,7 @@
     },
     created() {
       this.value = +this.getMosic['Screen_Bri'];
+      // todo  没轮训
       this.initSrc();
       this.initMP();
     },
