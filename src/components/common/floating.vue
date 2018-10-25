@@ -85,7 +85,7 @@
           </div>
           <div class="screen-content">
             <div class="screen-left">
-              <el-progress type="circle" :width="135" :percentage="Number(pipres.Screen_Bri)" :stroke-width="10" color="#febe00"></el-progress>
+              <el-progress type="circle" :width="135" :percentage="pipres.Screen_Bri && Number(pipres.Screen_Bri)" :stroke-width="10" color="#febe00"></el-progress>
               <div class="light">屏体亮度</div>
             </div>
             <div class="screen-right">
@@ -113,25 +113,25 @@
             <div class="info">
               <div>亮度 :</div>
               <div>
-                <el-progress :percentage="Number(pipres.Pic_Bri)" :stroke-width="10" color="#ffffff"></el-progress>
+                <el-progress :percentage="pipres.Pic_Bri && Number(pipres.Pic_Bri)" :stroke-width="10" color="#ffffff"></el-progress>
               </div>
             </div>
             <div class="info">
               <div>饱和度 :</div>
               <div>
-                <el-progress :percentage="Number(pipres.Pic_Sat)" :stroke-width="10" color="#ffffff"></el-progress>
+                <el-progress :percentage="pipres.Pic_Sat && Number(pipres.Pic_Sat)" :stroke-width="10" color="#ffffff"></el-progress>
               </div>
             </div>
             <div class="info">
               <div>对比度 :</div>
               <div>
-                <el-progress :percentage="Number(pipres.Pic_Con)" :stroke-width="10" color="#ffffff"></el-progress>
+                <el-progress :percentage="pipres.Pic_Con && Number(pipres.Pic_Con)" :stroke-width="10" color="#ffffff"></el-progress>
               </div>
             </div>
             <div class="info">
               <div>色调 :</div>
               <div>
-                <el-progress :percentage="Number(pipres.Pic_Hue)" :stroke-width="10" color="#ffffff"></el-progress>
+                <el-progress :percentage="pipres.Pic_Hue && Number(pipres.Pic_Hue)" :stroke-width="10" color="#ffffff"></el-progress>
               </div>
             </div>
           </div>
@@ -168,7 +168,7 @@
             <div class="info" v-for="(item, index) in data[4].input">
               <el-tooltip effect="dark" :content="`使用中`" placement="top">
                 <!-- <div class="img" :style="{background :url(require(`../../assets/ctrls/DP_1.png`))}"> -->
-                <div class="img" :style='{backgroundImage:"url(" + require(`../../assets/ctrls/${pngSrcList[index]}_${mainres[srclist[index] + "_Sta"]}.png`) + ")" }'>
+                <div class="img" :style='mainres[srclist[index] + "_Sta"] && {backgroundImage:"url(" + require(`../../assets/ctrls/${pngSrcList[index]}_${mainres[srclist[index] + "_Sta"]}.png`) + ")" }'>
                 </div>
               </el-tooltip>
               <div>{{srclist[index]}}</div>
@@ -273,8 +273,10 @@
           }
         ],
         // 你的业务要什么时候请求数据？ 什么时候更新数据？ 要不要更新  还会不会再请求？还是只在页面加载的时候请求一次
-        mainres: { L1_Sta: '0', L1_Src: '1', In1_ResW: '1920', In1_ResH: '1080', In1_ResR: '6000', L1_W: '1920', L1_H: '1080', L1_X: '0', L1_Y: '0', L1_Pri: '2', L1_CSta: '0', Out_Port1: '0', Out_Port2: '0', Out_Port3: '0', Out_Port4: '0', Out_Port5: '0', Out_Port6: '0', Out_Port7: '0', Out_Port8: '0', Out_Port9: '0', Out_Port10: '0', Out_Port11: '0', Out_Port12: '0', Out_Port13: '0', Out_Port14: '0', Out_Port15: '0', Out_Port16: '0', DP_Sta: '0', HDMI_Sta: '0', SDI1_Sta: '0', SDI2_Sta: '0', DVI1_Sta: '0', DVI2_Sta: '1', DVI3_Sta: '2', DVI4_Sta: '3', DVI_Mosaic_Sta: '0' },
-        pipres: { L2_Sta: '0', L2_Src: '1', In1_ResW: '1920', In1_ResH: '1080', In1_ResR: '6000', L2_W: '1920', L2_H: '1080', L2_X: '0', L2_Y: '0', L2_Pri: '2', L2_CSta: '0', Pic_Bri: '60', Pic_Con: '50', Pic_Sat: '40', Pic_Hue: '0', Pic_CloTem: '0', Pic_Gam: '15', Screen_Bri: '60', Screen_W: '2096', Screen_H: '1080', BKG_Sta: '0', HDR_Sta: '0', Sync_Sta: '0', Redu_Sta: '0', Opt1_Sta: '0', Opt2_Sta: '1', Opt3_Sta: '2', Opt4_Sta: '0' }
+        // mainres: { L1_Sta: '0', L1_Src: '1', In1_ResW: '1920', In1_ResH: '1080', In1_ResR: '6000', L1_W: '1920', L1_H: '1080', L1_X: '0', L1_Y: '0', L1_Pri: '2', L1_CSta: '0', Out_Port1: '0', Out_Port2: '0', Out_Port3: '0', Out_Port4: '0', Out_Port5: '0', Out_Port6: '0', Out_Port7: '0', Out_Port8: '0', Out_Port9: '0', Out_Port10: '0', Out_Port11: '0', Out_Port12: '0', Out_Port13: '0', Out_Port14: '0', Out_Port15: '0', Out_Port16: '0', DP_Sta: '0', HDMI_Sta: '0', SDI1_Sta: '0', SDI2_Sta: '0', DVI1_Sta: '0', DVI2_Sta: '1', DVI3_Sta: '2', DVI4_Sta: '3', DVI_Mosaic_Sta: '0' },
+        // pipres: { L2_Sta: '0', L2_Src: '1', In1_ResW: '1920', In1_ResH: '1080', In1_ResR: '6000', L2_W: '1920', L2_H: '1080', L2_X: '0', L2_Y: '0', L2_Pri: '2', L2_CSta: '0', Pic_Bri: '60', Pic_Con: '50', Pic_Sat: '40', Pic_Hue: '0', Pic_CloTem: '0', Pic_Gam: '15', Screen_Bri: '60', Screen_W: '2096', Screen_H: '1080', BKG_Sta: '0', HDR_Sta: '0', Sync_Sta: '0', Redu_Sta: '0', Opt1_Sta: '0', Opt2_Sta: '1', Opt3_Sta: '2', Opt4_Sta: '0' }
+        mainres: {},
+        pipres: {}
       };
     },
     props: [
@@ -291,9 +293,9 @@
         this.$emit('update:subactive', val);
       }
     },
-    created() {
+    mounted() {
       this.getMainInfo();
-      this.getPipInfo();
+      this.getPipInfo(); 
     },
     methods: {
       ...mapActions(['ajax']),
@@ -302,7 +304,10 @@
           name: 'url',
           data: { RW: 0, DevID: 0, L1_Info: 0, Output_Info: 0, Input_Info: 0, _: sessionStorage.getItem('_') }
         }).then(res => {
-          this.mainres = res;
+          this.$nextTick(() => {       
+            this.mainres = res;
+          })
+          
           // this.data[0].status = res.L1_Sta;
           // this.data[0].src = res.L1_Src;
           // this.data[0].pri = res.L1_Pri;
@@ -322,8 +327,12 @@
           name: 'url',
           data: { RW: 0, DevID: 0, L2_Info: 0, Pic_Info: 0, Other_Info: 0, _: sessionStorage.getItem('_') }
         }).then(res => {
-          this.pipres = res;
-          this.pipres.Screen_Bri = Number(this.pipres.Screen_Bri);
+          this.$nextTick(() => {       
+            this.pipres = res;
+            this.pipres.Screen_Bri = Number(this.pipres.Screen_Bri);
+          })
+
+  
           // {"L2_Sta":"0", "L2_Src":"1", "In1_ResW":"1920", "In1_ResH":"1080", "In1_ResR":"6000", "L2_W":"1920", "L2_H":"1080", "L2_X":"0", "L2_Y":"0", "L2_Pri":"2", "L2_CSta":"0", "Pic_Bri":"60", "Pic_Con":"50", "Pic_Sat":"50", "Pic_Hue":"0", "Pic_CloTem":"0", "Pic_Gam":"15", "Screen_Bri":"60", "Screen_W":"2096", "Screen_H":"1080", "BKG_Sta":"0", "HDR_Sta":"0", "Sync_Sta":"0", "Redu_Sta":"0", "Opt1_Sta":"0", "Opt2_Sta":"0", "Opt3_Sta":"0", "Opt4_Sta":"0", "ERRC": "0"}
           // res.L2_Sta
           // res.L2_Src
