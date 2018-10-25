@@ -272,7 +272,7 @@
             input: ['1', '0', '0', '0', '0', '0', '0', '0', '0']
           }
         ],
-        mainres: {},
+        mainres: { L1_Sta: '0', L1_Src: '1', In1_ResW: '1920', In1_ResH: '1080', In1_ResR: '6000', L1_W: '1920', L1_H: '1080', L1_X: '0', L1_Y: '0', L1_Pri: '2', L1_CSta: '0', Out_Port1: '0', Out_Port2: '0', Out_Port3: '0', Out_Port4: '0', Out_Port5: '0', Out_Port6: '0', Out_Port7: '0', Out_Port8: '0', Out_Port9: '0', Out_Port10: '0', Out_Port11: '0', Out_Port12: '0', Out_Port13: '0', Out_Port14: '0', Out_Port15: '0', Out_Port16: '0', DP_Sta: '0', HDMI_Sta: '0', SDI1_Sta: '0', SDI2_Sta: '0', DVI1_Sta: '0', DVI2_Sta: '1', DVI3_Sta: '2', DVI4_Sta: '3', DVI_Mosaic_Sta: '0' },
         pipres: {}
       };
     },
