@@ -13,7 +13,7 @@
         <div class="main-layer">
           <!-- 状态及名称 -->
           <div class="statusinfo">
-            <div class="status" :class="{active: +mainres.L1_Sta}">开启中</div>
+            <div class="status" :class="{active: Number(mainres.L1_Sta)}">{{mainres.L1_Sta == 0? "已关闭" : "开启中"}}</div>
             <div class="title">
               MainLayer
             </div>
@@ -48,7 +48,7 @@
         <div class="PIPLayer">
           <!-- 状态及名称 -->
           <div class="statusinfo">
-            <div class="status" :class="{active: +mainres.L2_Sta}">已关闭</div>
+            <div class="status" :class="{active: Number(mainres.L2_Sta)}">{{mainres.L2_Sta == 0? "已关闭" : "开启中"}}</div>
             <div class="title">
               PIP
             </div>
@@ -143,10 +143,8 @@
             其他
           </div>
           <div class="otherbtn">
-            <!-- <div class="bkg" :class="{"bkg-active": mainres[0].BKG_Sta}">BKG</div> -->
-            <div class="bkg">BKG</div>
-            <!-- <div class="bkg" :class="{"bkg-active": mainres[0].HDR_Sta}">HDR</div> -->
-            <div class="bkg">HDR</div>
+            <div class="bkg" :class="{'bkg-active': Number(mainres.BKG_Sta)}">BKG</div>
+            <div class="bkg" :class="{'bkg-active': Number(mainres.HDR_Sta)}">HDR</div>
           </div>
           <div class="infos">
             <div class="info">
@@ -215,22 +213,6 @@
         afterActive: false,
         slideActive: false,
         timmer: null,
-        // 这里的 DVI_Mosaic  最好让后端把接口名字一换，如果人家不换，在收到数据的时候换一下就可以界面上显示 MOSAIC。。。。
-        // 充分展示了如何在屎山上继续铲屎
-        // 有没有发现问题？　为什么你的实现需要依赖后端数据呢　为什么呢？　　这里你就需要去考虑如何解耦　前提是你把之前的实现看懂了
-        // 我来给你一个提示
-        // testlist:[{
-        //   name: 'DP',  // 你要显示在界面上的数据
-        //   key: 'DP',   // 这个是后端发回的数据中，与之对应的名字
-        //   type: 'DP'  //对应图片需要用的前半部分
-        // }, {}, {}]
-        // 这样写是不是就解耦了？ 没看懂没关系，我来给你拿你最蛋疼的Mosaic举例
-        // 你要显示的是 MOSAIC 数据的key是DVI_Mosaic 图片是 MOSAIC_0 这里的对象一写，是不是要用啥，取啥就行了？显示绑定name 取数据用.key 拼接显示的图片用type就可以了
-        // 多说一句，为啥我这里不用你说的class替换要直接用内联样式呢。。。因为那样的话，你有多少图片就要多少class，侧边就是切换class，你可以对比看一下就知道为啥这里不能那么做
-        // 这样的话，后端给的数据叫啥跟你前台就没关系了，跟后端数据有关的只有这个对象了，改动之后你维护这个对象就行了
-        // 这样你就可以在拿到UI没有协议的情况下，开发完前端的页面了
-        // 我在上面用了一种最耦合的方法给你展示了什么是烂代码，基本的写法，思路都告诉你了，你用半个小时就能看完这个例子并且重构，fighting。。。
-        // 希望你下面的输出模块能用这种解耦的思想来做哦~   加油狗子，做一个不被后端支配的前端大神    
         srclist: ['DP', 'HDMI', 'SDI1', 'SDI2', 'DVI1', 'DVI2', 'DVI3', 'DVI4', 'MOSAIC'],
         pngSrcList: ['DP', 'HDMI', 'SDI', 'SDI', 'DVI', 'DVI', 'DVI', 'DVI', 'MOSAIC'],
         data: [
@@ -311,31 +293,11 @@
         }).then(res => {
           this.$nextTick(() => {
             this.mainres = res;
+            // this.mainres.Screen_Bri = Number(this.mainres.Screen_Bri);
           })
-        });
-      },
-      getMainInfo() {
-        this.ajax({
-          name: 'url',
-          data: { RW: 0, DevID: 0, L1_Info: 0, Output_Info: 0, Input_Info: 0, _: sessionStorage.getItem('_') }
-        }).then(res => {
-          this.$nextTick(() => {
-            this.mainres = res;
-          })
-        });
-      },
-      getPipInfo() {
-        this.ajax({
-          name: 'url',
-          data: { RW: 0, DevID: 0, L2_Info: 0, Pic_Info: 0, Other_Info: 0, _: sessionStorage.getItem('_') }
-        }).then(res => {
-          this.$nextTick(() => {
-            this.pipres = res;
-            this.pipres.Screen_Bri = Number(this.pipres.Screen_Bri);
-          })
-          // {"L2_Sta":"0", "L2_Src":"1", "In1_ResW":"1920", "In1_ResH":"1080", "In1_ResR":"6000", "L2_W":"1920", "L2_H":"1080", "L2_X":"0", "L2_Y":"0", "L2_Pri":"2", "L2_CSta":"0", "Pic_Bri":"60", "Pic_Con":"50", "Pic_Sat":"50", "Pic_Hue":"0", "Pic_CloTem":"0", "Pic_Gam":"15", "Screen_Bri":"60", "Screen_W":"2096", "Screen_H":"1080", "BKG_Sta":"0", "HDR_Sta":"0", "Sync_Sta":"0", "Redu_Sta":"0", "Opt1_Sta":"0", "Opt2_Sta":"0", "Opt3_Sta":"0", "Opt4_Sta":"0", "ERRC": "0"}
         });
       }
+      // {"L2_Sta":"0", "L2_Src":"1", "In1_ResW":"1920", "In1_ResH":"1080", "In1_ResR":"6000", "L2_W":"1920", "L2_H":"1080", "L2_X":"0", "L2_Y":"0", "L2_Pri":"2", "L2_CSta":"0", "Pic_Bri":"60", "Pic_Con":"50", "Pic_Sat":"50", "Pic_Hue":"0", "Pic_CloTem":"0", "Pic_Gam":"15", "Screen_Bri":"60", "Screen_W":"2096", "Screen_H":"1080", "BKG_Sta":"0", "HDR_Sta":"0", "Sync_Sta":"0", "Redu_Sta":"0", "Opt1_Sta":"0", "Opt2_Sta":"0", "Opt3_Sta":"0", "Opt4_Sta":"0", "ERRC": "0"}
     },
     filters: {
       toNumber: function(value) {
@@ -390,7 +352,7 @@
           case '2':
             return '备份未生效';
             break;
-          case '2':
+          case '3':
             return '备份已生效';
             break;
           default:
@@ -834,6 +796,22 @@
       }
     }
   }
+  // 这里的 DVI_Mosaic  最好让后端把接口名字一换，如果人家不换，在收到数据的时候换一下就可以界面上显示 MOSAIC。。。。
+  // 充分展示了如何在屎山上继续铲屎
+  // 有没有发现问题？　为什么你的实现需要依赖后端数据呢　为什么呢？　　这里你就需要去考虑如何解耦　前提是你把之前的实现看懂了
+  // 我来给你一个提示
+  // testlist:[{
+  //   name: 'DP',  // 你要显示在界面上的数据
+  //   key: 'DP',   // 这个是后端发回的数据中，与之对应的名字
+  //   type: 'DP'  //对应图片需要用的前半部分
+  // }, {}, {}]
+  // 这样写是不是就解耦了？ 没看懂没关系，我来给你拿你最蛋疼的Mosaic举例
+  // 你要显示的是 MOSAIC 数据的key是DVI_Mosaic 图片是 MOSAIC_0 这里的对象一写，是不是要用啥，取啥就行了？显示绑定name 取数据用.key 拼接显示的图片用type就可以了
+  // 多说一句，为啥我这里不用你说的class替换要直接用内联样式呢。。。因为那样的话，你有多少图片就要多少class，侧边就是切换class，你可以对比看一下就知道为啥这里不能那么做
+  // 这样的话，后端给的数据叫啥跟你前台就没关系了，跟后端数据有关的只有这个对象了，改动之后你维护这个对象就行了
+  // 这样你就可以在拿到UI没有协议的情况下，开发完前端的页面了
+  // 我在上面用了一种最耦合的方法给你展示了什么是烂代码，基本的写法，思路都告诉你了，你用半个小时就能看完这个例子并且重构，fighting。。。
+  // 希望你下面的输出模块能用这种解耦的思想来做哦~   加油狗子，做一个不被后端支配的前端大神
 </style>
 
 
