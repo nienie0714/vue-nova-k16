@@ -31,7 +31,6 @@ Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
                 ret[item] = params[item.replace('Res', 'Edid')];
             }
         }
-        // console.log('SetMock', ret);
         store.commit('setMock', ret);
         return Mock.mock({ ERRC: '0' });
     } else {
@@ -51,8 +50,6 @@ Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
         // ret['Account'] = params['Account'] == '0' ? sessionStorage.removeItem('_') : params['Account'];
         ret['Account'] = sessionStorage.removeItem('_');
 
-        // console.log('Param', params);
-        // console.log('MockData', ret);
         return Mock.mock(ret);
     }
 });

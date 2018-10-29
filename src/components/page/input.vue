@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-container">
-    <div class="wrapper" @click="closeCard" :class="{alertmask: alertmask}">
+    <div class="wrapper" @click="closeCard" :class="{alertmask}">
       <!-- <v-header></v-header> -->
       <!-- 页面名称 -->
       <div class="jrtitle">
@@ -254,7 +254,10 @@
     </div>
     <div :class="{alertmask: alertmask}"></div>
     <div v-if="alertmask" class="alertwindow">
-      <div class="border">正在切换模式, 请等待...</div>
+      <div class="border">
+        <div><img src="@/assets/icon/loading.gif" alt=""></div>
+        <div>{{alertMessage}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -344,7 +347,11 @@
           templateIndex: 0,
         },
         _: '',
+        alertMessage: '正在切换模式, 请等待...'
       }
+    },
+    mounted() {
+      // console.log(5555, this.$root.$children[0].$children[0].$children[0]);
     },
     created() {
       this.active = this.getCommon.sourceActive;
@@ -392,7 +399,6 @@
         }
       },
       active() {
-        this.readData(this.getCommon['sourceActive']);
         if(this.active == 3) {
           if(this.mosic.link == 1) {
             this.list1 = Object.assign([], this.list1_1);
@@ -400,7 +406,6 @@
           } else {
             this.list1 = Object.assign([], this.list1_2);
             this.mosic.templateList = Object.assign([], this.mosic.templateList2);
-            console.log(1111, this.mosic.templateList);
           }
         } else {
           this.list1 = Object.assign([], this.list1_2);
@@ -434,7 +439,9 @@
         }
         let inx = {};
         val.forEach((item, i) => {
-          let state = this.getCommon[this.data[index].name + (val.length > 1 ? (i + 1) : '') + '_Sta'];
+          let name = this.data[index].name.split(" ")[0];
+          let state = this.getCommon[name + (val.length > 1 ? (i + 1) : '') + '_Sta'];
+          console.log(111, state);
           if(state == 1 || state == 2) {
             inx[`In${item}_ResW`] = 0;
             inx[`In${item}_ResH`] = 0;
@@ -505,6 +512,10 @@
             _: this._
           }
         }).then(res => {
+          this.alertmask = true;
+          this.alertMessage = '请等待......'
+          this.$root.$children[0].$children[0].$children[0].mask = true;
+          this.setCommon({ Switch: false });
           let val = [];
           if(index == 0) {
             val = [0];
@@ -522,6 +533,11 @@
               this.data[index]['showdata' + (val.length > 1 ? i : '')] = 'No Single';
             }
           });
+          setTimeout(() => {
+            this.setCommon({ Switch: true });
+            this.alertmask = false;
+            this.$root.$children[0].$children[0].$children[0].mask = false;
+          }, 3000);
         });
       },
       saveTmplate(index) {
@@ -548,8 +564,6 @@
         this.mosicVisible = false;
       },
       handleLink(val) {
-        this.alertmask = true;
-        this.setCommon({ Switch: false });
         this.ajax({
           name: 'url',
           data: {
@@ -560,6 +574,13 @@
             _: this._
           }
         }).then(res => {
+          this.alertmask = true;
+          this.alertMessage = '正在切换模式, 请等待...'
+          // home遮罩层
+          // this.$refs['text-box1'].$parent.$parent.mask = true;
+          // console.log(77, this.$root.$children[0].$children[0].$children[0]);
+          this.$root.$children[0].$children[0].$children[0].mask = true;
+          this.setCommon({ Switch: false });
           this.mosic.link = val;
           // this.list1 = JSON.parse(JSON.stringify(val == 1 ? this.list1_1 : this.list1_2));   // error: w of undefined
           this.data[3].name = val == 1 ? 'DVI 1/2/3/4' : 'DVI 1/3';
@@ -567,17 +588,13 @@
           this.data[3].ratio[0].wh = val == 1 ? 11 : 22;
           this.data[3].ratio[1].w = val == 1 ? 1920 : 3840;   // 预设分辨率默认值
           this.mosic.templateList = val == 1 ? Object.assign([], this.mosic.templateList1) : Object.assign([], this.mosic.templateList2);
-          let timer = setTimeout(() => {
-            this.setCommon({ Switch: true });
-            this.alertmask = false;
-          }, 3000);
-          timer = null;
+          this.mosic.templateIndex = 1;
         });
-        // 设置十秒超时再让switch开起来
-        // setTimeout(() => {
-        //   this.setCommon({ Switch: true });
-        //   this.alertmask = false;
-        // }, 10000);
+        setTimeout(() => {
+          this.setCommon({ Switch: true });
+          this.alertmask = false;
+          this.$root.$children[0].$children[0].$children[0].mask = false;
+        }, 3000);
       }
     }
   }

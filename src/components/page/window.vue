@@ -1,243 +1,248 @@
 <template>
-  <div class="wrapper" @click="closeCard">
-    <!-- <v-header></v-header> -->
-    <!-- 页面名称 -->
-    <div class="jrtitle">
-      <img class="homeicon" src="@/assets/icon/icon_home.png" alt="" @click="$router.go(-1);" draggable="false">
-      <img class="iicon" src="@/assets/icon/input_window.png" alt="" draggable="false">
-      <span class="snav">窗口设置</span>
-    </div>
-    <div class="content-box">
-      <!-- tab -->
-      <div class="tabs">
-        <div class="tab tab3" v-for="(item, index) in data" :class="{active: active == index}" @click="readData(index)" :key="index">
-          <span>{{item.name}}</span>
-        </div>
+  <div class="wrapper-container">
+    <div class="wrapper" @click="closeCard" :class="{alertmask}">
+      <!-- <v-header></v-header> -->
+      <!-- 页面名称 -->
+      <div class="jrtitle">
+        <img class="homeicon" src="@/assets/icon/icon_home.png" alt="" @click="$router.go(-1);" draggable="false">
+        <img class="iicon" src="@/assets/icon/input_window.png" alt="" draggable="false">
+        <span class="snav">窗口设置</span>
       </div>
-      <div class="container">
-        <!-- content -->
-        <div class="content">
-          <!-- 主窗口 -->
-          <div class="tabcontent4" v-show="active == 0" :class="{active: data[0].showcutout}">
-            <ul class="cardul">
-              <!-- <span style="color:#fff;">{{data[0].sta}}</span> -->
-              <li v-if="switchlist[data[0].sta]">
-                <v-textbox :showswitch="1" :title="'主窗口状态'" :defaultcontent="switchlist[data[0].sta].r" :open="data[0].sta" @switchOpen="switchMainWindow"></v-textbox>
-                <!-- <v-readbox :title="'当前输入hdmi分辨率'" :defaultcontent="'aaa'"></v-readbox>  :defaultcontent="'开启'"-->
-              </li>
-              <li v-if="srclist[data[0].src]">
-                <v-textbox :activeIndex="data[0].src" v-model="ratioVisible" :showdrop="1" :title="'当前输入源'" :defaultcontent="srclist[data[0].src].r" :list="srclist" @getData="selectSrc"></v-textbox>
-              </li>
-              <li>
-                <v-textbox :activeIndex="0" v-model="freshVisible" :showdrop="1" :title="'缩放模式'" :defaultcontent="'自定义缩放'" :list="scalaModel" @getData="obj => {}"></v-textbox>
-              </li>
-              <li v-if="prilist[data[0].pri]">
-                <v-textbox :activeIndex="data[0].pri" v-model="mosicVisible" :showdrop="1" :title="'优先级'" :defaultcontent="prilist[data[0].pri].r" :list="prilist" @getData="selectPri"></v-textbox>
-              </li>
-              <li class="noneli">
-                <v-textbox></v-textbox>
-              </li>
-            </ul>
-
-            <ul class="cardul">
-              <li>
-                <v-fpsliderbox :title="'窗口水平起始'" :min="0" :max="20000" :val="data[0].x" @callback="xCallback"></v-fpsliderbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'窗口垂直起始'" :min="0" :max="20000" :val="data[0].y" @callback="yCallback"></v-fpsliderbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'窗口水平宽度'" :min="64" :max="20000" :val="data[0].w" @callback="wCallback"></v-fpsliderbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'窗口垂直宽度'" :min="64" :max="20000" :val="data[0].h" @callback="hCallback"></v-fpsliderbox>
-              </li>
-              <li class="noneli">
-                <v-textbox></v-textbox>
-              </li>
-            </ul>
-            <div class="btncenter mosicbtn">
-              <div class="applybtn mosicc" @click="getCutInfo"><img src="~assets/icon/icon_more.png" alt="">输入截取</div>
-            </div>
+      <div class="content-box">
+        <!-- tab -->
+        <div class="tabs">
+          <div class="tab tab3" v-for="(item, index) in data" :class="{active: active == index}" @click="readData(index)" :key="index">
+            <span>{{item.name}}</span>
           </div>
-
-          <!-- 副窗口 -->
-          <div class="tabcontent4" v-show="active == 1" :class="{active: data[1].showcutout}">
-            <!-- <span style="color:#fff;">{{data[1]}}</span> -->
-            <ul class="cardul">
-              <li v-if="switchlist[data[1].sta]">
-                <v-textbox :showswitch="1" :title="'副窗口状态'" :defaultcontent="switchlist[data[1].sta].r" :open="data[1].sta" @switchOpen="switchMainWindow"></v-textbox>
-              </li>
-              <li v-if="srclist[data[1].src]">
-                <v-textbox :activeIndex="data[1].src" v-model="ratioVisible" :showdrop="1" :title="'当前输入源'" :defaultcontent="srclist[data[1].src].r" :list="srclist" @getData="selectSrc"></v-textbox>
-              </li>
-              <li>
-                <v-textbox :activeIndex="0" v-model="freshVisible" :showdrop="1" :title="'缩放模式'" :defaultcontent="'自定义缩放'" :list="scalaModel" @getData="obj => {}"></v-textbox>
-              </li>
-              <li v-if="prilist[data[1].pri]">
-                <v-textbox :activeIndex="data[1].pri" v-model="mosicVisible" :showdrop="1" :title="'优先级'" :defaultcontent="prilist[data[1].pri].r" :list="prilist" @getData="selectPri"></v-textbox>
-              </li>
-
-              <li class="noneli">
-                <v-textbox></v-textbox>
-              </li>
-            </ul>
-            <ul class="cardul">
-              <li>
-                <v-fpsliderbox :title="'窗口水平起始'" :min="0" :max="20000" :val="data[1].x" @callback="xCallback"></v-fpsliderbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'窗口垂直起始'" :min="0" :max="20000" :val="data[1].y" @callback="yCallback"></v-fpsliderbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'窗口水平宽度'" :min="64" :max="20000" :val="data[1].w" @callback="wCallback"></v-fpsliderbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'窗口垂直宽度'" :min="64" :max="20000" :val="data[1].h" @callback="hCallback"></v-fpsliderbox>
-              </li>
-              <li class="noneli">
-                <v-textbox></v-textbox>
-              </li>
-            </ul>
-            <div class="btncenter mosicbtn">
-              <div class="applybtn mosicc" @click="getCutInfo1"><img src="~assets/icon/icon_more.png" alt="">输入截取</div>
-            </div>
-          </div>
-          <!-- BKG -->
-          <div class="tabcontent3" v-show="active == 2">
-            <div class="showdatano" :class="{showdatahr: data[2].type}">
-              <!-- <span style="color:#fff;">{{data[2]}}</span> -->
+        </div>
+        <div class="container">
+          <!-- content -->
+          <div class="content">
+            <!-- 主窗口 -->
+            <div class="tabcontent4" v-show="active == 0" :class="{active: data[0].showcutout}">
               <ul class="cardul">
-                <li v-if="switchlist[data[2].sta]">
-                  <v-textbox :showswitch="1" :title="'BKG状态'" :defaultcontent="switchlist[data[2].sta].r" :open="data[2].sta" @switchOpen="switchBkg"></v-textbox>
+                <!-- <span style="color:#fff;">{{data[0].sta}}</span> -->
+                <li v-if="switchlist[data[0].sta]">
+                  <v-textbox :showswitch="1" :title="'主窗口状态'" :defaultcontent="switchlist[data[0].sta].r" :open="data[0].sta" @switchOpen="switchMainWindow"></v-textbox>
+                  <!-- <v-readbox :title="'当前输入hdmi分辨率'" :defaultcontent="'aaa'"></v-readbox>  :defaultcontent="'开启'"-->
                 </li>
-                <li v-if="typelist[data[2].type]">
-                  <v-textbox :activeIndex="data[2].type" v-model="mosicVisible" :showdrop="1" :title="'BKG类型'" :defaultcontent="typelist[data[2].type].r" :list="typelist" @getData="selectType"></v-textbox>
-                </li>
-                <li v-for="item in 3" class="noneli">
-                  <v-readbox></v-readbox>
-                </li>
-              </ul>
-
-              <ul class="cardul" v-if="!data[2].type">
-                <!-- <span style="color:#fff;">{{data[2]}}</span> -->
-                <li>
-                  <v-fpsliderbox :title="'R(红分量)'" :min="0" :max="255" :val="data[2].r" @callback="rCallback"></v-fpsliderbox>
+                <li v-if="srclist[data[0].src]">
+                  <v-textbox :activeIndex="data[0].src" v-model="ratioVisible" :showdrop="1" :title="'当前输入源'" :defaultcontent="srclist[data[0].src].r" :list="srclist" @getData="selectSrc"></v-textbox>
                 </li>
                 <li>
-                  <v-fpsliderbox :title="'G(绿分量)'" :min="0" :max="255" :val="data[2].g" @callback="gCallback"></v-fpsliderbox>
+                  <v-textbox :activeIndex="0" v-model="freshVisible" :showdrop="1" :title="'缩放模式'" :defaultcontent="'自定义缩放'" :list="scalaModel" @getData="obj => {}"></v-textbox>
                 </li>
-                <li>
-                  <v-fpsliderbox :title="'B(蓝分量)'" :min="0" :max="255" :val="data[2].b" @callback="bCallback"></v-fpsliderbox>
+                <li v-if="prilist[data[0].pri]">
+                  <v-textbox :activeIndex="data[0].pri" v-model="mosicVisible" :showdrop="1" :title="'优先级'" :defaultcontent="prilist[data[0].pri].r" :list="prilist" @getData="selectPri"></v-textbox>
                 </li>
-                <li v-for="item in 2" class="noneli">
+                <li class="noneli">
                   <v-textbox></v-textbox>
                 </li>
               </ul>
-            </div>
-            <div class="showdatano showdatahr" v-if="data[2].type">
-              <div class="tabgroup pt10">
-                <div class="tabtitle">BKG</div>
-                <div class="applybtn" @click="bkgApply"><img src="~assets/icon/icon_apply.png" alt="">应用</div>
-              </div>
+
               <ul class="cardul">
-                <li @click="()=>{this.data[2].active=0}">
-                  <v-imgbox :title="'BKG1'" :hasimg="data[2].b0img" :isapply="data[2].apply == 0" :active="data[2].active == 0"></v-imgbox>
+                <li>
+                  <v-fpsliderbox :title="'窗口水平起始'" :min="0" :max="20000" :val="data[0].x" @callback="xCallback"></v-fpsliderbox>
                 </li>
-                <li @click="()=>{this.data[2].active=1}">
-                  <v-imgbox :title="'BKG2'" :hasimg="data[2].b1img" :isapply="data[2].apply == 1" :active="data[2].active == 1"></v-imgbox>
+                <li>
+                  <v-fpsliderbox :title="'窗口垂直起始'" :min="0" :max="20000" :val="data[0].y" @callback="yCallback"></v-fpsliderbox>
                 </li>
-                <li @click="()=>{this.data[2].active=2}">
-                  <v-imgbox :title="'BKG3'" :hasimg="data[2].b2img" :isapply="data[2].apply == 2" :active="data[2].active == 2"></v-imgbox>
+                <li>
+                  <v-fpsliderbox :title="'窗口水平宽度'" :min="64" :max="20000" :val="data[0].w" @callback="wCallback"></v-fpsliderbox>
                 </li>
-                <li @click="()=>{this.data[2].active=3}">
-                  <v-imgbox :title="'BKG4'" :hasimg="data[2].b3img" :isapply="data[2].apply == 3" :active="data[2].active == 3"></v-imgbox>
+                <li>
+                  <v-fpsliderbox :title="'窗口垂直宽度'" :min="64" :max="20000" :val="data[0].h" @callback="hCallback"></v-fpsliderbox>
                 </li>
                 <li class="noneli">
-                  <v-readbox></v-readbox>
+                  <v-textbox></v-textbox>
                 </li>
               </ul>
-            </div>
-            <div class="showdatano showdatahr" v-if="data[2].type">
-              <div class="tabgroup pt10">
-                <div class="tabtitle">Capture</div>
-                <div class="applybtn" @click="capture"><img src="~assets/icon/icon_capture.png" alt="">抓拍</div>
+              <div class="btncenter mosicbtn">
+                <div class="applybtn mosicc" @click="getCutInfo"><img src="~assets/icon/icon_more.png" alt="">输入截取</div>
               </div>
+            </div>
+
+            <!-- 副窗口 -->
+            <div class="tabcontent4" v-show="active == 1" :class="{active: data[1].showcutout}">
+              <!-- <span style="color:#fff;">{{data[1]}}</span> -->
+              <ul class="cardul">
+                <li v-if="switchlist[data[1].sta]">
+                  <v-textbox :showswitch="1" :title="'副窗口状态'" :defaultcontent="switchlist[data[1].sta].r" :open="data[1].sta" @switchOpen="switchMainWindow"></v-textbox>
+                </li>
+                <li v-if="srclist[data[1].src]">
+                  <v-textbox :activeIndex="data[1].src" v-model="ratioVisible" :showdrop="1" :title="'当前输入源'" :defaultcontent="srclist[data[1].src].r" :list="srclist" @getData="selectSrc"></v-textbox>
+                </li>
+                <li>
+                  <v-textbox :activeIndex="0" v-model="freshVisible" :showdrop="1" :title="'缩放模式'" :defaultcontent="'自定义缩放'" :list="scalaModel" @getData="obj => {}"></v-textbox>
+                </li>
+                <li v-if="prilist[data[1].pri]">
+                  <v-textbox :activeIndex="data[1].pri" v-model="mosicVisible" :showdrop="1" :title="'优先级'" :defaultcontent="prilist[data[1].pri].r" :list="prilist" @getData="selectPri"></v-textbox>
+                </li>
+
+                <li class="noneli">
+                  <v-textbox></v-textbox>
+                </li>
+              </ul>
               <ul class="cardul">
                 <li>
-                  <v-textbox :activeIndex="data[2].cutsrc" v-model="freshVisible" :showdrop="1" :title="'Capture源选择'" :defaultcontent="srclist[data[2].cutsrc].r" :list="srclist" @getData="obj => {this.data[2].cutsrc = obj.index;}"></v-textbox>
+                  <v-fpsliderbox :title="'窗口水平起始'" :min="0" :max="20000" :val="data[1].x" @callback="xCallback"></v-fpsliderbox>
                 </li>
                 <li>
-                  <v-textbox :activeIndex="data[2].cutapply" v-model="ratioVisible" :showdrop="1" :title="'保存位置选择'" :defaultcontent="imglist[data[2].cutapply].r" :list="imglist" @getData="obj => {this.data[2].cutapply = obj.index;}"></v-textbox>
+                  <v-fpsliderbox :title="'窗口垂直起始'" :min="0" :max="20000" :val="data[1].y" @callback="yCallback"></v-fpsliderbox>
                 </li>
-                <li v-for="item in 3" class="noneli">
-                  <v-readbox></v-readbox>
+                <li>
+                  <v-fpsliderbox :title="'窗口水平宽度'" :min="64" :max="20000" :val="data[1].w" @callback="wCallback"></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'窗口垂直宽度'" :min="64" :max="20000" :val="data[1].h" @callback="hCallback"></v-fpsliderbox>
+                </li>
+                <li class="noneli">
+                  <v-textbox></v-textbox>
+                </li>
+              </ul>
+              <div class="btncenter mosicbtn">
+                <div class="applybtn mosicc" @click="getCutInfo1"><img src="~assets/icon/icon_more.png" alt="">输入截取</div>
+              </div>
+            </div>
+            <!-- BKG -->
+            <div class="tabcontent3" v-show="active == 2">
+              <div class="showdatano" :class="{showdatahr: data[2].type}">
+                <!-- <span style="color:#fff;">{{data[2]}}</span> -->
+                <ul class="cardul">
+                  <li v-if="switchlist[data[2].sta]">
+                    <v-textbox :showswitch="1" :title="'BKG状态'" :defaultcontent="switchlist[data[2].sta].r" :open="data[2].sta" @switchOpen="switchBkg"></v-textbox>
+                  </li>
+                  <li v-if="typelist[data[2].type]">
+                    <v-textbox :activeIndex="data[2].type" v-model="mosicVisible" :showdrop="1" :title="'BKG类型'" :defaultcontent="typelist[data[2].type].r" :list="typelist" @getData="selectType"></v-textbox>
+                  </li>
+                  <li v-for="item in 3" class="noneli">
+                    <v-readbox></v-readbox>
+                  </li>
+                </ul>
+
+                <ul class="cardul" v-if="!data[2].type">
+                  <!-- <span style="color:#fff;">{{data[2]}}</span> -->
+                  <li>
+                    <v-fpsliderbox :title="'R(红分量)'" :min="0" :max="255" :val="data[2].r" @callback="rCallback"></v-fpsliderbox>
+                  </li>
+                  <li>
+                    <v-fpsliderbox :title="'G(绿分量)'" :min="0" :max="255" :val="data[2].g" @callback="gCallback"></v-fpsliderbox>
+                  </li>
+                  <li>
+                    <v-fpsliderbox :title="'B(蓝分量)'" :min="0" :max="255" :val="data[2].b" @callback="bCallback"></v-fpsliderbox>
+                  </li>
+                  <li v-for="item in 2" class="noneli">
+                    <v-textbox></v-textbox>
+                  </li>
+                </ul>
+              </div>
+              <div class="showdatano showdatahr" v-if="data[2].type">
+                <div class="tabgroup pt10">
+                  <div class="tabtitle">BKG</div>
+                  <div class="applybtn" @click="bkgApply"><img src="~assets/icon/icon_apply.png" alt="">应用</div>
+                </div>
+                <ul class="cardul">
+                  <li @click="()=>{this.data[2].active=0}">
+                    <v-imgbox :title="'BKG1'" :hasimg="data[2].b0img" :isapply="data[2].apply == 0" :active="data[2].active == 0"></v-imgbox>
+                  </li>
+                  <li @click="()=>{this.data[2].active=1}">
+                    <v-imgbox :title="'BKG2'" :hasimg="data[2].b1img" :isapply="data[2].apply == 1" :active="data[2].active == 1"></v-imgbox>
+                  </li>
+                  <li @click="()=>{this.data[2].active=2}">
+                    <v-imgbox :title="'BKG3'" :hasimg="data[2].b2img" :isapply="data[2].apply == 2" :active="data[2].active == 2"></v-imgbox>
+                  </li>
+                  <li @click="()=>{this.data[2].active=3}">
+                    <v-imgbox :title="'BKG4'" :hasimg="data[2].b3img" :isapply="data[2].apply == 3" :active="data[2].active == 3"></v-imgbox>
+                  </li>
+                  <li class="noneli">
+                    <v-readbox></v-readbox>
+                  </li>
+                </ul>
+              </div>
+              <div class="showdatano showdatahr" v-if="data[2].type">
+                <div class="tabgroup pt10">
+                  <div class="tabtitle">Capture</div>
+                  <div class="applybtn" @click="capture"><img src="~assets/icon/icon_capture.png" alt="">抓拍</div>
+                </div>
+                <ul class="cardul">
+                  <li>
+                    <v-textbox :activeIndex="data[2].cutsrc" v-model="freshVisible" :showdrop="1" :title="'Capture源选择'" :defaultcontent="srclist[data[2].cutsrc].r" :list="srclist" @getData="obj => {this.data[2].cutsrc = obj.index;}"></v-textbox>
+                  </li>
+                  <li>
+                    <v-textbox :activeIndex="data[2].cutapply" v-model="ratioVisible" :showdrop="1" :title="'保存位置选择'" :defaultcontent="imglist[data[2].cutapply].r" :list="imglist" @getData="obj => {this.data[2].cutapply = obj.index;}"></v-textbox>
+                  </li>
+                  <li v-for="item in 3" class="noneli">
+                    <v-readbox></v-readbox>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- 主窗口 副界面 -->
+          <div class="subcontainer" v-show="active == 0" :class="{active: data[0].showcutout}">
+            <div class="tabgroup">
+              <div class="tabtitle">输入截取</div>
+            </div>
+            <div class="mosic">
+              <ul class="cardul">
+                <li>
+                  <v-textbox :showswitch="1" :title="'截取状态'" :defaultcontent="switchlist[data[0].cutsta].r" :open="data[0].cutsta" @switchOpen="switchMainCut"></v-textbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'水平起始'" :val="data[0].cut_x" :min="0" :max="data[0].cut_x_max" @callback="cutXCallback" @change="mainCutCallback"></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'垂直起始'" :val="data[0].cut_y" :min="0" :max="data[0].cut_y_max" @callback="cutYCallback" @change="mainCutCallback"></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'水平宽度(px)'" :val="data[0].cut_w" :min="64" :max="data[0].cut_w_max" @callback="cutWCallback" @change="mainCutCallback"></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'垂直宽度(px)'" :val="data[0].cut_h" :min="64" :max="data[0].cut_h_max" @callback="cutHCallback" @change="mainCutCallback"></v-fpsliderbox>
                 </li>
               </ul>
             </div>
+            <div class="btncenter mosaicbtn">
+              <div class="applybtn" @click="data[0].showcutout = false"><img class="down" src="~assets/icon/icon_more.png">返回</div>
+            </div>
           </div>
-        </div>
-        <!-- 主窗口 副界面 -->
-        <div class="subcontainer" v-show="active == 0" :class="{active: data[0].showcutout}">
-          <div class="tabgroup">
-            <div class="tabtitle">输入截取</div>
-          </div>
-          <div class="mosic">
-            <ul class="cardul">
-              <li>
-                <v-textbox :showswitch="1" :title="'截取状态'" :defaultcontent="switchlist[data[0].cutsta].r" :open="data[0].cutsta" @switchOpen="switchMainCut"></v-textbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'水平起始'" :val="data[0].cut_x" :min="0" :max="data[0].cut_x_max" @callback="cutXCallback" @change="mainCutCallback"></v-fpsliderbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'垂直起始'" :val="data[0].cut_y" :min="0" :max="data[0].cut_y_max" @callback="cutYCallback" @change="mainCutCallback"></v-fpsliderbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'水平宽度(px)'" :val="data[0].cut_w" :min="64" :max="data[0].cut_w_max" @callback="cutWCallback" @change="mainCutCallback"></v-fpsliderbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'垂直宽度(px)'" :val="data[0].cut_h" :min="64" :max="data[0].cut_h_max" @callback="cutHCallback" @change="mainCutCallback"></v-fpsliderbox>
-              </li>
-            </ul>
-          </div>
-          <div class="btncenter mosaicbtn">
-            <div class="applybtn" @click="data[0].showcutout = false"><img class="down" src="~assets/icon/icon_more.png">返回</div>
-          </div>
-        </div>
-        <!-- 副窗口 副界面 -->
-        <div class="subcontainer" v-show="active == 1" :class="{active: data[1].showcutout}">
-          <div class="tabgroup">
-            <div class="tabtitle">输入截取</div>
-          </div>
-          <div class="mosic">
-            <ul class="cardul">
-              <li>
-                <v-textbox :showswitch="1" :title="'截取状态'" :defaultcontent="switchlist[data[1].cutsta].r" :open="data[1].cutsta" @switchOpen="switchMainCut"></v-textbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'水平起始'" :val="data[1].cut_x" :min="0" :max="data[1].cut_x_max" @callback="cutX1Callback" @change="subCutCallback"></v-fpsliderbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'垂直起始'" :val="data[1].cut_y" :min="0" :max="data[1].cut_y_max" @callback="cutY1Callback" @change="subCutCallback"></v-fpsliderbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'水平宽度(px)'" :val="data[1].cut_w" :min="64" :max="data[1].cut_w_max" @callback="cutW1Callback" @change="subCutCallback"></v-fpsliderbox>
-              </li>
-              <li>
-                <v-fpsliderbox :title="'垂直宽度(px)'" :val="data[1].cut_h" :min="64" :max="data[1].cut_h_max" @callback="cutH1Callback" @change="subCutCallback"></v-fpsliderbox>
-              </li>
-            </ul>
-          </div>
-          <div class="btncenter mosaicbtn">
-            <div class="applybtn" @click="data[1].showcutout = false"><img class="down" src="~assets/icon/icon_more.png">返回</div>
+          <!-- 副窗口 副界面 -->
+          <div class="subcontainer" v-show="active == 1" :class="{active: data[1].showcutout}">
+            <div class="tabgroup">
+              <div class="tabtitle">输入截取</div>
+            </div>
+            <div class="mosic">
+              <ul class="cardul">
+                <li>
+                  <v-textbox :showswitch="1" :title="'截取状态'" :defaultcontent="switchlist[data[1].cutsta].r" :open="data[1].cutsta" @switchOpen="switchMainCut"></v-textbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'水平起始'" :val="data[1].cut_x" :min="0" :max="data[1].cut_x_max" @callback="cutX1Callback" @change="subCutCallback"></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'垂直起始'" :val="data[1].cut_y" :min="0" :max="data[1].cut_y_max" @callback="cutY1Callback" @change="subCutCallback"></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'水平宽度(px)'" :val="data[1].cut_w" :min="64" :max="data[1].cut_w_max" @callback="cutW1Callback" @change="subCutCallback"></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'垂直宽度(px)'" :val="data[1].cut_h" :min="64" :max="data[1].cut_h_max" @callback="cutH1Callback" @change="subCutCallback"></v-fpsliderbox>
+                </li>
+              </ul>
+            </div>
+            <div class="btncenter mosaicbtn">
+              <div class="applybtn" @click="data[1].showcutout = false"><img class="down" src="~assets/icon/icon_more.png">返回</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div v-if="alertmask" class="alertmask"></div>
     <div v-if="alertmask" class="alertwindow">
-      <div class="border">{{waiting}}</div>
+      <div class="border">
+        <div><img src="@/assets/icon/loading.gif" alt=""></div>
+        <div>{{waiting}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -328,6 +333,9 @@
       this.active = this.getWindow.windowActive;
       this.readData(this.active);
     },
+    mounted() {
+      console.log(5555, this.$root);
+    },
     computed: {
       ...mapGetters(['getCommon', 'getWindow'])
     },
@@ -376,7 +384,6 @@
               h: +res[`L${i}_H`],
             });
             this.$set(this.data, index, temp);
-            console.log(this.data[0]);
           });
         }
         // 进入BKG页面
@@ -456,7 +463,6 @@
         let num = this.active + 1;
         if(this.data[num - 1].sta == 1) {
           let obj = {};
-          console.log('main：', this.data[num - 1].w);
           obj[`L${num}_W`] = this.data[num - 1].w;
           obj[`L${num}_H`] = this.data[num - 1].h;
           obj[`L${num}_X`] = this.data[num - 1].x;
@@ -487,7 +493,6 @@
         this.mainCallback();
       },
       wCallback(val) {
-        console.log('w', val);
         let num = this.active + 1;
         this.data[num - 1].w = val;
         this.mainCallback();
@@ -549,7 +554,6 @@
           this.data[0].cut_w = this.data[0].cut_w_max - val;
         }
         this.data[0].cut_x = val;
-        console.log(333, val);
         this.mainCutCallback();
       },
       cutYCallback(val) {
@@ -566,7 +570,6 @@
         }
         this.data[0].cut_w = val;
 
-        console.log(444, this.data[0].cut_x);
         this.mainCutCallback();
       },
       cutHCallback(val) {
@@ -671,7 +674,6 @@
       },
 
       getCutInfo1() {
-        console.log(111111);
         let i = this.data[1].src;
         let currentSrc = {};
         currentSrc[`In${i}_ResW`] = 0;
@@ -797,6 +799,9 @@
         if(state == 1 || state == 2) {
           this.waiting = '请等待...'
           this.alertmask = true;
+          console.log(777, this.$root.$children[0].$children[0].$children[0].mask);
+          this.$root.$children[0].$children[0].$children[0].mask = true;
+          console.log(222, this.$root);
           this.setCommon({ Switch: false });
 
           this.ajax({
@@ -812,14 +817,17 @@
           }).then(res => {
             // 等到返回errc: 0再消失
             this.alertmask = false;
+            this.$root.$children[0].$children[0].$children[0].mask = false;
             this.setCommon({ Switch: true });
             this.getBKGInfo();
           });
         } else {
           this.alertmask = true;
+          this.$root.$children[0].$children[0].$children[0].mask = true;
           this.waiting = '当前输入源无信号'
           setTimeout(() => {
             this.alertmask = false;
+            this.$root.$children[0].$children[0].$children[0].mask = false;
           }, 1500);
         }
       },
@@ -841,7 +849,6 @@
             BKG_PCBB: 0,
             _: this._          }
         }).then(res => {
-          console.log('----BKG-----状态信息同步', res);
           // let temp = Object.assign({}, this.data[2], {
           this.data[2].sta = +res.BKG_Sta;
           this.data[2].type = +res.BKG_Mod;
@@ -877,13 +884,13 @@
       }
     }
   }
-  .alertmask {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 99;
-  }
+  // .alertmask {
+  //   position: fixed;
+  //   top: 0;
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   z-index: 99;
+  // }
 </style>
 

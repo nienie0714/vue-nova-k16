@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper-container">
+    <!-- <div ref="wrapper" class="wrapper" :class="{subactive: subactive || mask}"> -->
     <div class="wrapper" :class="{subactive: subactive}">
       <v-header :showName="islogin"></v-header>
       <div class="contentwrapper">
@@ -20,7 +21,8 @@
     data() {
       return {
         subactive: false,
-        islogin: false
+        islogin: false,
+        mask: false
       }
     },
     created() {

@@ -7,7 +7,7 @@
       </template>
     </div>
 
-    <div class="mask" :class="{'mask-active': !afterActive}">
+    <div class="floatingmask" :class="{'mask-active': !afterActive}">
       <div class="slide-box" :class="{subactive: !slideActive}">
         <!-- MainLayer -->
         <div class="main-layer">
@@ -28,11 +28,15 @@
           <div class="infos">
             <div class="info">
               <div>大小 :</div>
-              <div>{{mainres.L2_W}}x{{mainres.L2_H}}</div>
+              <div>{{mainres.L1_W}}x{{mainres.L1_H}}</div>
             </div>
             <div class="info">
               <div>优先级 :</div>
-              <div>{{mainres.L1_Pri}}</div>
+              <!-- <div>{{mainres.L1_Pri}}</div> -->
+              <template>
+                <div v-if="mainres.L1_Pri == 1"><img src="@/assets/ctrls/icon_bottom.png" alt=""></div>
+                <div v-else><img src="@/assets/ctrls/icon_top.png" alt=""></div>
+              </template>
             </div>
             <div class="info">
               <div>位置 :</div>
@@ -40,7 +44,7 @@
             </div>
             <div class="info">
               <div>截取状态 :</div>
-              <div>{{mainres.L1_CSta}}</div>
+              <div>{{mainres.L1_CSta == 0? "关闭" : "开启"}}</div>
             </div>
           </div>
         </div>
@@ -66,7 +70,11 @@
             </div>
             <div class="info">
               <div>优先级 :</div>
-              <div>{{mainres.L2_Pri}}</div>
+              <!-- <div>{{mainres.L2_Pri}}</div> -->
+              <template>
+                <div v-if="mainres.L2_Pri == 1"><img src="@/assets/ctrls/icon_bottom.png" alt=""></div>
+                <div v-else><img src="@/assets/ctrls/icon_top.png" alt=""></div>
+              </template>
             </div>
             <div class="info">
               <div>位置 :</div>
@@ -74,7 +82,7 @@
             </div>
             <div class="info">
               <div>截取状态 :</div>
-              <div>{{mainres.L2_CSta}}</div>
+              <div>{{mainres.L2_CSta == 0? "关闭" : "开启"}}</div>
             </div>
           </div>
         </div>
@@ -100,7 +108,7 @@
               </div>
               <div class="info">
                 <div>色温 :</div>
-                <div>{{+mainres.Pic_CloTem-180}}</div>
+                <div>{{cloTem[+mainres.Pic_CloTem]}}</div>
               </div>
             </div>
           </div>
@@ -132,7 +140,8 @@
             <div class="info">
               <div>色调 :</div>
               <div>
-                <el-progress :percentage="mainres.Pic_Hue && Number(mainres.Pic_Hue)" :stroke-width="10" color="#ffffff"></el-progress>
+                <v-mprocess :percentage="mainres.Pic_Hue && Number(mainres.Pic_Hue)" :stroke-width="10" color="#ffffff"></v-mprocess>
+                <!-- <div style="float: right">180</div> -->
               </div>
             </div>
           </div>
@@ -149,11 +158,11 @@
           <div class="infos">
             <div class="info">
               <div>设备冗余 :</div>
-              <div>{{mainres.Redu_Sta}}</div>
+              <div>{{mainres.Redu_Sta == 0? "主控模式" : "备份模式"}}</div>
             </div>
             <div class="info">
               <div>同步状态 :</div>
-              <div>{{mainres.Sync_Sta}}</div>
+              <div>{{mainres.Sync_Sta == 0? "关闭" : "开启"}}</div>
             </div>
           </div>
         </div>
@@ -163,7 +172,6 @@
             输入
           </div>
           <div class="infos">
-            <!-- 同样的问题，这里如果是9个，直接写9就好 -->
             <div class="info" v-for="(item, index) in data[4].input">
               <el-tooltip effect="dark" :content="mainres[srclist[index] + '_Sta'] | itoTip" placement="top">
                 <!-- <div class="img" :style="{background :url(require(`../../assets/ctrls/DP_1.png`))}"> -->
@@ -253,13 +261,15 @@
           },
           {
             input: ['1', '0', '0', '0', '0', '0', '0', '0', '0']
-          }
+          },
         ],
+        cloTem: ['标准', '偏冷', '偏暖', '自定义'],
         // 你的业务要什么时候请求数据？ 什么时候更新数据？ 要不要更新  还会不会再请求？还是只在页面加载的时候请求一次
         // mainres: { L1_Sta: '0', L1_Src: '1', In1_ResW: '1920', In1_ResH: '1080', In1_ResR: '6000', L1_W: '1920', L1_H: '1080', L1_X: '0', L1_Y: '0', L1_Pri: '2', L1_CSta: '0', Out_Port1: '0', Out_Port2: '0', Out_Port3: '0', Out_Port4: '0', Out_Port5: '0', Out_Port6: '0', Out_Port7: '0', Out_Port8: '0', Out_Port9: '0', Out_Port10: '0', Out_Port11: '0', Out_Port12: '0', Out_Port13: '0', Out_Port14: '0', Out_Port15: '0', Out_Port16: '0', DP_Sta: '0', HDMI_Sta: '0', SDI1_Sta: '0', SDI2_Sta: '0', DVI1_Sta: '0', DVI2_Sta: '1', DVI3_Sta: '2', DVI4_Sta: '3', DVI_Mosaic_Sta: '0' },
         // pipres: { L2_Sta: '0', L2_Src: '1', In1_ResW: '1920', In1_ResH: '1080', In1_ResR: '6000', L2_W: '1920', L2_H: '1080', L2_X: '0', L2_Y: '0', L2_Pri: '2', L2_CSta: '0', Pic_Bri: '60', Pic_Con: '50', Pic_Sat: '40', Pic_Hue: '0', Pic_CloTem: '0', Pic_Gam: '15', Screen_Bri: '60', Screen_W: '2096', Screen_H: '1080', BKG_Sta: '0', HDR_Sta: '0', Sync_Sta: '0', Redu_Sta: '0', Opt1_Sta: '0', Opt2_Sta: '1', Opt3_Sta: '2', Opt4_Sta: '0' }
         mainres: {},
-        pipres: {}
+        pipres: {},
+        interval: null
       };
     },
     props: [
@@ -267,15 +277,14 @@
     ],
     watch: {
       slideActive(val) {
-        let t = null;
         clearTimeout(this.timmer);
         if(val) {
-          t = setInterval(() => {
+          this.interval = setInterval(() => {
             this.getAllInfo();
           }, 2000);
           this.afterActive = true;
         } else {
-          t = null;
+          clearInterval(this.interval);
           this.timmer = setTimeout(() => { this.afterActive = false }, 300);
         }
         this.$emit('update:subactive', val);
@@ -378,7 +387,7 @@
   }
 
   // 浮窗
-  .mask {
+  .floatingmask {
     width: 1201px; // 写死会有问题
     height: 845px;
     position: absolute;

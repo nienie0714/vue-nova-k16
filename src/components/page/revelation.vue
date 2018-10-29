@@ -59,7 +59,7 @@
       </div>
     </div>
     <div class="btncenter">
-      <v-button :maintitle="'功能'" :subtitle="'输入源'" @getBtn="(data)=>{btnactive=data, btnactive==1?active=false:active=true;}"></v-button>
+      <v-button :maintitle="'功能'" :subtitle="'输入源'" @getBtn="switchHome"></v-button>
     </div>
 
   </div>
@@ -112,7 +112,7 @@
         srclist: [
           {
             title: 'input',
-            src: 'HDMI 2.0',
+            src: 'DP 1.2',
             className: 'srcactive',
             isSingle: false,
             w: '1920',
@@ -124,7 +124,7 @@
           },
           {
             title: 'input',
-            src: 'DP 1.2',
+            src: 'HDMI 2.0',
             className: 'srcactive',
             isSingle: false,
             w: '1920',
@@ -223,26 +223,26 @@
         subactive: true,
         btnactive: 1,
         hometimer: null,
-        value: 50
+        value: -1,
+        interval: null
       };
     },
     created() {
       this.value = +this.getMosic['Screen_Bri'];
-      // todo  没轮训
-      this.initSrc();
-      this.initMP();
     },
     computed: {
       ...mapGetters(['getCommon', 'getMosic'])
     },
     watch: {
-      value(val) {
-        this.handleLight();
+      value(val, old) {
+        if(old != -1) {
+          this.handleLight();
+        }
       }
     },
     methods: {
       ...mapActions(['ajax']),
-      ...mapMutations(['setCommon']),
+      ...mapMutations(['setCommon', 'setMosic']),
       go(route) {
         this.$router.push({ name: route.path });
       },
@@ -265,6 +265,26 @@
             _: sessionStorage.getItem('_')
           }
         });
+      },
+      switchHome(val) {
+        this.btnactive = val;
+        this.btnactive == 1 ? this.active = false : this.active = true;
+        if(val == 2) {
+          this.interval = setInterval(() => {
+            this.initSrc();
+            this.initMP();
+          }, 2000);
+        } else {
+          clearInterval(this.interval);
+          this.ajax({
+            name: 'url',
+            data: { RW: 0, DevID: 0, Screen_Bri: 0, In9_MosL: 0, In9_MosM: 0, In9_MosW: 0, In9_MosH: 0, _: sessionStorage.getItem('_') }
+          }).then(res => {
+            // { "In9_MosL":"1", "In9_MosM":"2", "In9_MosW":"1920", "In9_MosH":"1080", "ERRC": "0"}
+            this.setMosic(res);
+            this.value = +this.getMosic['Screen_Bri'];
+          });
+        }
       },
       initSrc() {
         let list = ['DP_Sta', 'HDMI_Sta', 'SDI1_Sta', 'SDI2_Sta', 'DVI1_Sta', 'DVI2_Sta', 'DVI3_Sta', 'DVI4_Sta', 'DVI_Mosaic_Sta'];
@@ -357,6 +377,7 @@
   /* entire container, keeps perspective */
   .flip-container {
     perspective: 4000;
+    -webkit-perspective: 4000;
   }
   /* flip the pane when hovered */
   // .flip-container:hover .flipper,

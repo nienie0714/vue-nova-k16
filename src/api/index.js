@@ -117,13 +117,13 @@ function checkStatus(resolve, reject, response, config) {
         // resolve(response.data);
     } else {
         count += 1;
-        if (count % 5 == 0) {
+        if (count >= 5) {
             Message(response.message || '请求失败');
         }
         reject(response.data);
     }
     if (count > 2100000000) {
-        count = 0;
+        count = 5;
     }
 }
 

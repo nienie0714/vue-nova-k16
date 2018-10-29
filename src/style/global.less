@@ -258,10 +258,20 @@
 .alertmask {
     position: fixed;
     // background-color: #1f2a51;
-    top: 0;
+    top: 80px;
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 20;
+    filter: blur(5px);
+}
+.mask {
+    position: fixed;
+    // background-color: #1f2a51;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
     z-index: 20;
     filter: blur(5px);
 }
@@ -275,14 +285,18 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    z-index: 21;
+    z-index: 999;
     .border {
         width: 100%;
         height: 100%;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        border: 1px solid #adb4cf;
+        border: 1px solid #525972;
         color: #fff;
+        > div:nth-child(1) {
+            margin-bottom: 10px;
+        }
     }
 }

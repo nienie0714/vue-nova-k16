@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header" ref="mask" :class="{mask}">
     <!-- 折叠按钮 -->
     <!-- <div class="collapse-btn" @click="collapseChage">
       <i class="el-icon-menu"></i>
@@ -44,7 +44,8 @@
   export default {
     data() {
       return {
-        fullscreen: false
+        fullscreen: false,
+        mask: false
       }
     },
     props: {

@@ -7,6 +7,7 @@ import imgbox from './imgbox';
 import fpsliderbox from './fpsliderbox';
 import button from './button';
 import floating from './floating';
+import mprocess from './mprocess';
 
 export default {
     header,
@@ -17,5 +18,6 @@ export default {
     imgbox,
     fpsliderbox,
     button,
-    floating
+    floating,
+    mprocess
 };
