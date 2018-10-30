@@ -270,6 +270,8 @@
         this.btnactive = val;
         this.btnactive == 1 ? this.active = false : this.active = true;
         if(val == 2) {
+          this.initSrc();
+          this.initMP();
           this.interval = setInterval(() => {
             this.initSrc();
             this.initMP();

@@ -22,7 +22,10 @@
           <div class="details">
             <span>{{srclist[mainres.L1_Src]}}</span>
             <!-- todo  不一定是Inx_ResH -->
-            <span>{{mainres.L1_ResW}}x{{mainres.L1_ResH}}@{{mainres.L1_ResR}}Hz</span>
+            <template>
+              <span v-if="mainres.L1_ResW==0 && mainres.L1_ResH==0 && mainres.L1_ResR==0">No Signal</span>
+              <span v-else>{{mainres.L1_ResW}}x{{mainres.L1_ResH}}@{{mainres.L1_ResR}}Hz</span>
+            </template>
           </div>
           <!-- 其他信息 -->
           <div class="infos">
@@ -60,7 +63,10 @@
           <!-- 分辨率 -->
           <div class="details">
             <span>{{srclist[mainres.L2_Src]}}</span>
-            <span>{{mainres.L2_ResW}}x{{mainres.L2_ResH}}@{{mainres.L2_ResR}}Hz</span>
+            <template>
+              <span v-if="mainres.L2_ResW==0 && mainres.L2_ResH==0 && mainres.L2_ResR==0">No Signal</span>
+              <span v-else>{{mainres.L2_ResW}}x{{mainres.L2_ResH}}@{{mainres.L2_ResR}}Hz</span>
+            </template>
           </div>
           <!-- 其他信息 -->
           <div class="infos">
@@ -140,7 +146,7 @@
             <div class="info">
               <div>色调 :</div>
               <div>
-                <v-mprocess :percentage="mainres.Pic_Hue && Number(mainres.Pic_Hue)" :stroke-width="10" color="#ffffff"></v-mprocess>
+                <v-mprocess :percentage="mainres.Pic_Hue && (Number(mainres.Pic_Hue)-180)" :stroke-width="10" color="#ffffff"></v-mprocess>
                 <!-- <div style="float: right">180</div> -->
               </div>
             </div>
@@ -178,7 +184,7 @@
                 <div class="img" :style='mainres[srclist[index] + "_Sta"] && {backgroundImage:"url(" + require(`../../assets/ctrls/${pngSrcList[index]}_${mainres[srclist[index] + "_Sta"]}.png`) + ")" }'>
                 </div>
               </el-tooltip>
-              <div>{{srclist[index]}}</div>
+              <div :class="'infont'+mainres[srclist[index] + '_Sta']">{{srclist[index]}}</div>
             </div>
           </div>
         </div>
@@ -192,7 +198,7 @@
               <el-tooltip effect="dark" :content="mainres['Out_Port'+ (index+1)] | otoTip" placement="top">
                 <div class="img" :style='mainres["Out_Port" + (index+1)] && {backgroundImage:"url(" + require(`../../assets/ctrls/output_${mainres["Out_Port" +(index+1)]}.png`) + ")" }'></div>
               </el-tooltip>
-              <div>{{index+1}}</div>
+              <div :class="'outfont'+mainres['Out_Port' + (index+1)]">{{index+1}}</div>
             </div>
           </div>
         </div>
@@ -201,8 +207,8 @@
           <div class="infos">
             <!-- 这里确定是4个吗，如果要按照回多少个就生成多少个，那这里还需要搞一搞，如果确定是4个，直接写4 -->
             <div class="info" v-for="(item, index) in data[3].opt">
-              <div>OPT{{index+1}}</div>
-              <el-tooltip effect="dark" :content="mainres['Opt'+ (index+1) +'_Sta'] | toTip" placement="top">
+              <div :class="'optfont'+mainres['Opt'+ (index+1) +'_Sta']">OPT{{index+1}}</div>
+              <el-tooltip effect="dark" :content="mainres['Opt'+ (index+1) +'_Sta'] | ktoTip" placement="top">
                 <div :class="['img', 'img' + mainres['Opt'+ (index+1) +'_Sta']]"></div>
               </el-tooltip>
             </div>
@@ -239,18 +245,7 @@
             csta: '0'
           },
           {
-            name: 'PIP',
-            status: 0,
-            src: 0,
-            pri: '1',
-            w: '3840',
-            h: '2160',
-            r: '60',
-            sx: '3000',
-            sy: '1000',
-            sw: '3000',
-            sy: '1000',
-            csta: '0'
+            name: 'PIP'
           },
           // 最好确定个数之后，就不需要这些数据了
           {
@@ -279,6 +274,7 @@
       slideActive(val) {
         clearTimeout(this.timmer);
         if(val) {
+          this.getAllInfo();
           this.interval = setInterval(() => {
             this.getAllInfo();
           }, 2000);
@@ -331,7 +327,7 @@
             break;
         }
       },
-      otoTip(value) {
+      ktoTip(value) {
         switch(value) {
           case '0':
             return '未连接';
@@ -350,7 +346,7 @@
             break;
         }
       },
-      toTip(value) {
+      otoTip(value) {
         switch(value) {
           case '0':
             return '未连接';
@@ -698,6 +694,18 @@
         flex-direction: column;
         justify-content: center;
         padding: 10px 10px 0 10px;
+        .infont0 {
+          color: #666 !important;
+        }
+        .infont1 {
+          color: #0a5400 !important;
+        }
+        .infont2 {
+          color: #1bdf00 !important;
+        }
+        // .infont3 {
+        //   color: #1bdf00 !important;
+        // }
         .img {
           display: flex;
           justify-content: center;
@@ -741,6 +749,18 @@
         flex-direction: column;
         justify-content: space-between;
         padding: 0 10px;
+        .outfont0 {
+          color: #666 !important;
+        }
+        .outfont1 {
+          color: #1bdf00 !important;
+        }
+        .outfont2 {
+          color: #1bdf00 !important;
+        }
+        .outfont3 {
+          color: #1bdf00 !important;
+        }
         .img {
           width: 40px;
           height: 40px;
@@ -776,6 +796,18 @@
         display: flex;
         align-items: center;
         padding: 0 0;
+        .optfont0 {
+          color: #666 !important;
+        }
+        .optfont1 {
+          color: #1bdf00 !important;
+        }
+        .optfont2 {
+          color: #1bdf00 !important;
+        }
+        .optfont3 {
+          color: #1bdf00 !important;
+        }
         > div:nth-child(1) {
           display: flex;
           width: 48px;

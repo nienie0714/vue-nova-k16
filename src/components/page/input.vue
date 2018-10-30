@@ -588,7 +588,7 @@
           this.data[3].ratio[0].wh = val == 1 ? 11 : 22;
           this.data[3].ratio[1].w = val == 1 ? 1920 : 3840;   // 预设分辨率默认值
           this.mosic.templateList = val == 1 ? Object.assign([], this.mosic.templateList1) : Object.assign([], this.mosic.templateList2);
-          this.mosic.templateIndex = 1;
+          this.mosic.templateIndex = val == 1 ? 6 : 1;
         });
         setTimeout(() => {
           this.setCommon({ Switch: true });

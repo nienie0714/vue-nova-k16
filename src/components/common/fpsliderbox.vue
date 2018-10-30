@@ -8,7 +8,7 @@
       </div>
       <div class="card-btm">
         <div class="silder-input">
-          <el-input-number v-model="value" :step="step" :min="min" :max="max" @change="inputChange"></el-input-number>
+          <el-input-number v-model="value" :step="step" :min="min" :max="max" @change="inputChange" :disabled="disabled"></el-input-number>
         </div>
       </div>
       <div class="block">

@@ -53,6 +53,12 @@
     text-align: left;
     height: 34px;
 }
+.el-input.is-disabled .el-input__inner {
+    background-color: #1f2a51;
+    border: none;
+    color: #c0c4cc;
+    cursor: not-allowed;
+}
 
 .el-input__inner {
     order: 0;
@@ -81,10 +87,11 @@
         display: none;
     }
 }
-// .el-input-number__decrease,
-// .el-input-number__increase {
-//     width: 52px;
-// }
+.el-input-number.is-disabled .el-input-number__decrease,
+.el-input-number.is-disabled .el-input-number__increase {
+    border-color: #525972;
+    color: #e4e7ed;
+}
 
 .el-input-number__decrease {
     order: 1;

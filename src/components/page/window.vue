@@ -184,7 +184,26 @@
               <div class="tabtitle">输入截取</div>
             </div>
             <div class="mosic">
-              <ul class="cardul">
+              <ul class="cardul" v-if="data[0].srcnosignal">
+                <!-- true -->
+                <li>
+                  <v-textbox :showswitch="1" :title="'截取状态'" :defaultcontent="switchlist[data[0].cutsta].r" :open="data[0].cutsta" @switchOpen="switchMainCut"></v-textbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'水平起始'" :val="0" :min="0" :max="0" disabled></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'垂直起始'" :val="0" :min="0" :max="0" disabled></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'水平宽度(px)'" :val="64" :min="64" :max="64" disabled></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'垂直宽度(px)'" :val="64" :min="64" :max="64" disabled></v-fpsliderbox>
+                </li>
+              </ul>
+              <ul class="cardul" v-else>
+                <!-- false -->
                 <li>
                   <v-textbox :showswitch="1" :title="'截取状态'" :defaultcontent="switchlist[data[0].cutsta].r" :open="data[0].cutsta" @switchOpen="switchMainCut"></v-textbox>
                 </li>
@@ -212,7 +231,24 @@
               <div class="tabtitle">输入截取</div>
             </div>
             <div class="mosic">
-              <ul class="cardul">
+              <ul class="cardul" v-if="data[1].srcnosignal">
+                <li>
+                  <v-textbox :showswitch="1" :title="'截取状态'" :defaultcontent="switchlist[data[1].cutsta].r" :open="data[1].cutsta" @switchOpen="switchMainCut"></v-textbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'水平起始'" :val="0" :min="0" :max="0" disabled></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'垂直起始'" :val="0" :min="0" :max="0" disabled></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'水平宽度(px)'" :val="64" :min="64" :max="64" disabled></v-fpsliderbox>
+                </li>
+                <li>
+                  <v-fpsliderbox :title="'垂直宽度(px)'" :val="64" :min="64" :max="64" disabled></v-fpsliderbox>
+                </li>
+              </ul>
+              <ul class="cardul" v-else>
                 <li>
                   <v-textbox :showswitch="1" :title="'截取状态'" :defaultcontent="switchlist[data[1].cutsta].r" :open="data[1].cutsta" @switchOpen="switchMainCut"></v-textbox>
                 </li>
@@ -240,7 +276,7 @@
     <div v-if="alertmask" class="alertmask"></div>
     <div v-if="alertmask" class="alertwindow">
       <div class="border">
-        <div><img src="@/assets/icon/loading.gif" alt=""></div>
+        <div v-if="showloading"><img src="@/assets/icon/loading.gif" alt=""></div>
         <div>{{waiting}}</div>
       </div>
     </div>
@@ -268,11 +304,13 @@
         imglist: [{ r: 'BKG1' }, { r: 'BKG2' }, { r: 'BKG3' }, { r: 'BKG4' }],
         alertmask: false,
         waiting: '请等待...',
+        showloading: true,
         data: [
           {
             name: '主窗口',
             sta: 0,
             src: 0,
+            srcnosignal: false,
             pri: 0,
             x: 0,
             y: 0,
@@ -292,6 +330,7 @@
           {
             name: '副窗口',
             sta: 0,
+            srcnosignal: false,
             src: 0,
             pri: 0,
             x: 0,
@@ -432,6 +471,14 @@
             _: this._          }
         }).then(res => {
           Message('当前输入源已切换至' + this.srclist[this.data[num - 1].src].r);
+          let statelist = [this.getCommon['DP_Sta'], this.getCommon['HDMI_Sta'], this.getCommon['SDI1_Sta'], this.getCommon['SDI2_Sta'], this.getCommon['DVI1_Sta'], this.getCommon['DVI2_Sta'], this.getCommon['DVI3_Sta'], this.getCommon['DVI4_Sta'], "1"];
+
+          if(statelist[obj.index] == 1 || statelist[obj.index] == 2) {
+            this.data[num - 1].srcnosignal = false;
+          } else {
+            this.data[num - 1].srcnosignal = true;
+          }
+          console.log('--------------------------------------', this.data[num - 1].srcnosignal);
         });
       },
       // 主优先级 + 副优先级
@@ -797,6 +844,7 @@
         let state = this.getCommon[list[this.data[2].cutsrc]];
         // 有信号
         if(state == 1 || state == 2) {
+          this.showloading = true;
           this.waiting = '请等待...'
           this.alertmask = true;
           console.log(777, this.$root.$children[0].$children[0].$children[0].mask);
@@ -824,6 +872,7 @@
         } else {
           this.alertmask = true;
           this.$root.$children[0].$children[0].$children[0].mask = true;
+          this.showloading = false;
           this.waiting = '当前输入源无信号'
           setTimeout(() => {
             this.alertmask = false;
