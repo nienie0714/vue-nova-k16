@@ -4,7 +4,7 @@ import store from '../store';
 import data from './mockData';
 
 Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
-    console.log('请求的URL', res.url);
+    // console.log('请求的URL', res.url);
 
     // 将参数截为对象数组
     let params = {};
@@ -204,11 +204,9 @@ Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
 
         // 拼接成功标志
         ret['ERRC'] = '0';
-        // ret['Account'] = params['Account'] == '0' ?sessionStorage.removeItem('_') : params['Account'];
         ret['Account'] = sessionStorage.getItem('_');
 
-        // console.log('Param', params);
-        console.log('回复的数据', ret);
+        // console.log('回复的数据', ret);
         return Mock.mock(ret);
     }
 });

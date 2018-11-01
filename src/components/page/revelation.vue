@@ -228,7 +228,9 @@
       };
     },
     created() {
+      // console.log('------------ watch  Screen_Bri ------------', this.getMosic['Screen_Bri']);
       this.value = +this.getMosic['Screen_Bri'];
+      // console.log('------------ watch  value ---------------------', this.value);
     },
     computed: {
       ...mapGetters(['getCommon', 'getMosic'])

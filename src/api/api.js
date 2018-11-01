@@ -10,6 +10,7 @@ for (var k in api) {
     if (process.env.NODE_ENV === 'development') {
         urlHost = '/proxy/';
     }
+    console.log('urlHost', urlHost);
     api[k].url = urlHost + url;
 }
 

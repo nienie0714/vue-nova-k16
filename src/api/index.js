@@ -192,7 +192,7 @@ let xhr = config => {
                 return new Promise((resolve, reject) => {
                     axios
                         .get(url, {
-                            params: data,
+                            params: Object.assign(data, { _: new Date().getTime() }),
                             headers
                         })
                         .then(res => {

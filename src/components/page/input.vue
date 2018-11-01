@@ -263,7 +263,7 @@
 </template>
 <script>
   import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
-  import { getLoc } from '../../utils';
+  import { getSen } from '../../utils';
   import { Message } from 'element-ui';
   export default {
     name: 'aaa',
@@ -357,7 +357,7 @@
       this.active = this.getCommon.sourceActive;
       this.readData(this.getCommon['sourceActive']);
 
-      this._ = getLoc('_');
+      this._ = getSen('_');
       this.mosic.link = +this.getMosic.In9_MosL + 1;
 
       if(this.mosic.link == 1) {
@@ -441,7 +441,6 @@
         val.forEach((item, i) => {
           let name = this.data[index].name.split(" ")[0];
           let state = this.getCommon[name + (val.length > 1 ? (i + 1) : '') + '_Sta'];
-          console.log(111, state);
           if(state == 1 || state == 2) {
             inx[`In${item}_ResW`] = 0;
             inx[`In${item}_ResH`] = 0;
@@ -578,11 +577,9 @@
           this.alertMessage = '正在切换模式, 请等待...'
           // home遮罩层
           // this.$refs['text-box1'].$parent.$parent.mask = true;
-          // console.log(77, this.$root.$children[0].$children[0].$children[0]);
           this.$root.$children[0].$children[0].$children[0].mask = true;
           this.setCommon({ Switch: false });
           this.mosic.link = val;
-          // this.list1 = JSON.parse(JSON.stringify(val == 1 ? this.list1_1 : this.list1_2));   // error: w of undefined
           this.data[3].name = val == 1 ? 'DVI 1/2/3/4' : 'DVI 1/3';
           this.data[3].dvimax = val == 1 ? 2048 : 3840;
           this.data[3].ratio[0].wh = val == 1 ? 11 : 22;

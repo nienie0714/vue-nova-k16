@@ -51,7 +51,7 @@
                   <v-fpsliderbox :title="'窗口水平宽度'" :min="64" :max="20000" :val="data[0].w" @callback="wCallback"></v-fpsliderbox>
                 </li>
                 <li>
-                  <v-fpsliderbox :title="'窗口垂直宽度'" :min="64" :max="20000" :val="data[0].h" @callback="hCallback"></v-fpsliderbox>
+                  <v-fpsliderbox :title="'窗口垂直高度'" :min="64" :max="20000" :val="data[0].h" @callback="hCallback"></v-fpsliderbox>
                 </li>
                 <li class="noneli">
                   <v-textbox></v-textbox>
@@ -94,7 +94,7 @@
                   <v-fpsliderbox :title="'窗口水平宽度'" :min="64" :max="20000" :val="data[1].w" @callback="wCallback"></v-fpsliderbox>
                 </li>
                 <li>
-                  <v-fpsliderbox :title="'窗口垂直宽度'" :min="64" :max="20000" :val="data[1].h" @callback="hCallback"></v-fpsliderbox>
+                  <v-fpsliderbox :title="'窗口垂直高度'" :min="64" :max="20000" :val="data[1].h" @callback="hCallback"></v-fpsliderbox>
                 </li>
                 <li class="noneli">
                   <v-textbox></v-textbox>
@@ -199,7 +199,7 @@
                   <v-fpsliderbox :title="'水平宽度(px)'" :val="64" :min="64" :max="64" disabled></v-fpsliderbox>
                 </li>
                 <li>
-                  <v-fpsliderbox :title="'垂直宽度(px)'" :val="64" :min="64" :max="64" disabled></v-fpsliderbox>
+                  <v-fpsliderbox :title="'垂直高度(px)'" :val="64" :min="64" :max="64" disabled></v-fpsliderbox>
                 </li>
               </ul>
               <ul class="cardul" v-else>
@@ -217,7 +217,7 @@
                   <v-fpsliderbox :title="'水平宽度(px)'" :val="data[0].cut_w" :min="64" :max="data[0].cut_w_max" @callback="cutWCallback" @change="mainCutCallback"></v-fpsliderbox>
                 </li>
                 <li>
-                  <v-fpsliderbox :title="'垂直宽度(px)'" :val="data[0].cut_h" :min="64" :max="data[0].cut_h_max" @callback="cutHCallback" @change="mainCutCallback"></v-fpsliderbox>
+                  <v-fpsliderbox :title="'垂直高度(px)'" :val="data[0].cut_h" :min="64" :max="data[0].cut_h_max" @callback="cutHCallback" @change="mainCutCallback"></v-fpsliderbox>
                 </li>
               </ul>
             </div>
@@ -245,7 +245,7 @@
                   <v-fpsliderbox :title="'水平宽度(px)'" :val="64" :min="64" :max="64" disabled></v-fpsliderbox>
                 </li>
                 <li>
-                  <v-fpsliderbox :title="'垂直宽度(px)'" :val="64" :min="64" :max="64" disabled></v-fpsliderbox>
+                  <v-fpsliderbox :title="'垂直高度(px)'" :val="64" :min="64" :max="64" disabled></v-fpsliderbox>
                 </li>
               </ul>
               <ul class="cardul" v-else>
@@ -262,7 +262,7 @@
                   <v-fpsliderbox :title="'水平宽度(px)'" :val="data[1].cut_w" :min="64" :max="data[1].cut_w_max" @callback="cutW1Callback" @change="subCutCallback"></v-fpsliderbox>
                 </li>
                 <li>
-                  <v-fpsliderbox :title="'垂直宽度(px)'" :val="data[1].cut_h" :min="64" :max="data[1].cut_h_max" @callback="cutH1Callback" @change="subCutCallback"></v-fpsliderbox>
+                  <v-fpsliderbox :title="'垂直高度(px)'" :val="data[1].cut_h" :min="64" :max="data[1].cut_h_max" @callback="cutH1Callback" @change="subCutCallback"></v-fpsliderbox>
                 </li>
               </ul>
             </div>
@@ -276,7 +276,10 @@
     <div v-if="alertmask" class="alertmask"></div>
     <div v-if="alertmask" class="alertwindow">
       <div class="border">
-        <div v-if="showloading"><img src="@/assets/icon/loading.gif" alt=""></div>
+        <div>
+          <img v-if="showloading" src="@/assets/icon/loading.gif" alt="">
+          <img v-else src="@/assets/icon/tanhao.png" alt="">
+        </div>
         <div>{{waiting}}</div>
       </div>
     </div>
@@ -284,7 +287,7 @@
 </template>
 <script>
   import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
-  import { getLoc } from '../../utils';
+  import { getSen } from '../../utils';
   import { Message } from 'element-ui';
   export default {
     name: 'window',
@@ -368,26 +371,21 @@
       }
     },
     created() {
-      this._ = getLoc('_');
+      this._ = getSen('_');
       this.active = this.getWindow.windowActive;
       this.readData(this.active);
     },
     mounted() {
-      console.log(5555, this.$root);
     },
     computed: {
       ...mapGetters(['getCommon', 'getWindow'])
     },
     watch: {
-      // data(val, oldVal) {
-      //   console.log(val[1], oldVal[1]);
-      // }
     },
     methods: {
       ...mapActions(['ajax']),
       ...mapMutations(['setCommon', 'setWindow']),
       readData(index) {
-        console.log('-----------' + index + '请求--------');
         // 激活菜单tab
         this.active = index || 0;
         this.setWindow({ windowActive: index });
@@ -453,6 +451,11 @@
         }).then(res => {
           let msg = num == 1 ? '主窗口' : '副窗口'
           Message(msg + this.switchlist[this.data[num - 1].sta].r);
+          // Message({
+          //   showClose: true,
+          //   message: `${msg}${this.switchlist[this.data[num - 1].sta].r}`,
+          //   duration: 0  // 不会自动关闭
+          // });
         });
       },
       // 主当前输入源   +   副当前输入源
@@ -478,7 +481,6 @@
           } else {
             this.data[num - 1].srcnosignal = true;
           }
-          console.log('--------------------------------------', this.data[num - 1].srcnosignal);
         });
       },
       // 主优先级 + 副优先级
@@ -568,6 +570,11 @@
         }).then(res => {
           let msg = num == 1 ? '主窗口截取' : '副窗口截取'
           Message(msg + this.switchlist[this.data[num - 1].cutsta].r);
+          if(val == 1) {
+            this.data[num - 1].srcnosignal = false;
+          } else if(val == 0) {
+            this.data[num - 1].srcnosignal = true;
+          }
         });
       },
       // 主窗口截取滑杆
@@ -606,7 +613,7 @@
       cutYCallback(val) {
         if(val + this.data[0].cut_h > this.data[0].cut_h_max) {
 
-          this.data[0].cut_h = this.data[0].cut_y_max - val;
+          this.data[0].cut_h = this.data[0].cut_h_max - val;
         }
         this.data[0].cut_y = val;
         this.mainCutCallback();
@@ -622,7 +629,7 @@
       cutHCallback(val) {
         if(val + this.data[0].cut_y > this.data[0].cut_h_max) {
 
-          this.data[0].cut_y = this.data[0].cut_y_max - val;
+          this.data[0].cut_y = this.data[0].cut_h_max - val;
         }
         this.data[0].cut_h = val;
         this.mainCutCallback();
@@ -662,7 +669,7 @@
       cutY1Callback(val) {
         if(val + this.data[1].cut_h > this.data[1].cut_h_max) {
 
-          this.data[1].cut_h = this.data[1].cut_y_max - val;
+          this.data[1].cut_h = this.data[1].cut_h_max - val;
         }
         this.data[1].cut_y = val;
         this.subCutCallback();
@@ -677,7 +684,7 @@
       cutH1Callback(val) {
         if(val + this.data[1].cut_y > this.data[1].cut_h_max) {
 
-          this.data[1].cut_y = this.data[1].cut_y_max - val;
+          this.data[1].cut_y = this.data[1].cut_h_max - val;
         }
         this.data[1].cut_h = val;
         this.subCutCallback();
@@ -847,9 +854,7 @@
           this.showloading = true;
           this.waiting = '请等待...'
           this.alertmask = true;
-          console.log(777, this.$root.$children[0].$children[0].$children[0].mask);
           this.$root.$children[0].$children[0].$children[0].mask = true;
-          console.log(222, this.$root);
           this.setCommon({ Switch: false });
 
           this.ajax({

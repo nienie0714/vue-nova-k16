@@ -102,7 +102,6 @@
     methods: {
       change(val) {
         // this.$emit('change', val);
-        console.log(111);
         if(val != this.oldVal) {
           this.$emit('callback', val);
         }

@@ -36,6 +36,7 @@
       }
     },
     created() {
+
     },
     methods: {
       ...mapMutations(['setMosic']),

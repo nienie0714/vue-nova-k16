@@ -17,6 +17,7 @@
 </template>
 
 <script>
+  import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
   export default {
     data() {
       return {
@@ -31,6 +32,9 @@
       } else {
         this.islogin = true;
       }
+      if(this.$route.path == "/") {
+        this.getMosaicData();
+      }
     },
     computed: {
     },
@@ -41,6 +45,23 @@
         } else {
           this.islogin = true;
         }
+        if(this.$route.path == "/") {
+          this.getMosaicData();
+          // console.log('------------ watch  light ---------------------');
+        }
+      }
+    },
+    methods: {
+      ...mapActions(['ajax']),
+      ...mapMutations(['setMosic']),
+      getMosaicData() {
+        this.ajax({
+          name: 'url',
+          data: { RW: 0, DevID: 0, Screen_Bri: 0, In9_MosL: 0, In9_MosM: 0, In9_MosW: 0, In9_MosH: 0, _: sessionStorage.getItem('_') }
+        }).then(res => {
+          // { "In9_MosL":"1", "In9_MosM":"2", "In9_MosW":"1920", "In9_MosH":"1080", "ERRC": "0"}
+          this.setMosic(res);
+        });
       }
     }
   }
