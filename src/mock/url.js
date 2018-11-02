@@ -4,7 +4,7 @@ import store from '../store';
 import data from './mockData';
 
 Mock.mock(RegExp(api.url.url + '*'), 'get', res => {
-    // console.log('请求的URL', res.url);
+    console.log('请求的URL', res.url);
 
     // 将参数截为对象数组
     let params = {};

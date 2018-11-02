@@ -104,15 +104,14 @@
       box-sizing: border-box;
       width: 100%;
       height: 100%;
-      background-color: #1f2a51; // 背景色
+      background-color: #2e3c67; // 背景色
       margin-bottom: 2px;
-      padding: 30px 20px 20px 20px;
+      padding: 20px 20px 20px 20px;
       z-index: 1;
       .card-title {
         width: 90%;
-        font-size: 20px;
+        font-size: 16px;
         margin-bottom: 15px;
-        font-size: 20px;
         color: #acacc7;
       }
       .card-icon {
@@ -143,7 +142,7 @@
       }
       .card-btm {
         width: 100%;
-        font-size: 24px;
+        font-size: 20px;
         margin-bottom: 15px;
         color: #ffffff;
       }
@@ -201,7 +200,7 @@
       }
     }
     &-drop::-webkit-scrollbar {
-      width: 4px; /*高宽分别对应横竖滚动条的尺寸*/
+      width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
       height: 4px;
     }
     &-drop::-webkit-scrollbar-thumb {

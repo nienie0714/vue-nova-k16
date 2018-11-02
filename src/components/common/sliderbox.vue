@@ -132,15 +132,15 @@
       box-sizing: border-box;
       width: 100%;
       height: 100%;
-      background-color: #1f2a51; // 背景色
+      background-color: #2e3c67; // 背景色
       margin-bottom: 2px;
-      padding: 30px 20px 20px 20px;
+      padding: 20px 20px 20px 20px;
       z-index: 1;
       .card-title {
         width: 90%;
         font-size: 20px;
         margin-bottom: 15px;
-        font-size: 20px;
+        font-size: 16px;
         color: #acacc7;
       }
       .card-icon {
@@ -169,7 +169,7 @@
           .decrease {
             width: 50px;
             height: 32px;
-            border: 1px solid #525972;
+            border: 1px solid #606a89;
             border-right: none;
             display: flex;
             justify-content: center;
@@ -187,7 +187,7 @@
           .increase {
             width: 50px;
             height: 32px;
-            border: 1px solid #525972;
+            border: 1px solid #606a89;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -211,8 +211,8 @@
   input {
     border: none;
     width: 65%;
-    font-size: 24px;
-    background-color: #1f2a51;
+    font-size: 20px;
+    background-color: #2e3c67;
     color: white;
   }
 </style>

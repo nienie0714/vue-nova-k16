@@ -1,5 +1,5 @@
 <template>
-  <div class="card" :class="{active: dpActive}">
+  <div class="card cannotselect" :class="{active: dpActive}">
     <!-- 卡片上半部分 -->
     <div class="card-top" :class="{active: dpActive}">
       <!-- 卡片：标题+内容 -->
@@ -50,11 +50,11 @@
       height: 100%;
       color: #adb4cf;
       margin-bottom: 2px;
-      padding: 30px 20px 20px 20px;
+      padding: 20px 20px 20px 20px;
       z-index: 1;
       .card-title {
         width: 90%;
-        font-size: 20px;
+        font-size: 16px;
         margin-bottom: 15px;
       }
       .card-icon {
@@ -71,7 +71,7 @@
       }
       .card-btm {
         width: 100%;
-        font-size: 24px;
+        font-size: 20px;
         margin-bottom: 15px;
       }
       &.active {
@@ -129,6 +129,13 @@
       border-radius: 0;
       background: rgba(0, 0, 0, 0.1);
     }
+  }
+  .cannotselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
   input {
     border: none;

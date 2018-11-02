@@ -124,7 +124,7 @@
     display: flex;
     align-items: center;
     float: right;
-    padding-right: 40px;
+    padding-right: 65px;
   }
   .header-user-con {
     display: flex;
@@ -133,7 +133,7 @@
   }
   .btn-fullscreen {
     margin-top: 5px;
-    margin-right: 15px;
+    margin-right: 10px;
     font-size: 24px;
   }
   .btn-bell,

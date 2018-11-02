@@ -403,6 +403,8 @@
 
         // 主窗口同步读命令  + 副窗口同步读命令
         if(index == 0 || index == 1) {
+          // 关闭副界面
+          this.data[index].showcutout = false;
           this.ajax({
             name: 'url',
             data: {
@@ -450,7 +452,6 @@
             _: this._          }
         }).then(res => {
           let msg = num == 1 ? '主窗口' : '副窗口'
-          Message(msg + this.switchlist[this.data[num - 1].sta].r);
           // Message({
           //   showClose: true,
           //   message: `${msg}${this.switchlist[this.data[num - 1].sta].r}`,
@@ -569,7 +570,7 @@
             _: this._          }
         }).then(res => {
           let msg = num == 1 ? '主窗口截取' : '副窗口截取'
-          Message(msg + this.switchlist[this.data[num - 1].cutsta].r);
+          // Message(msg + this.switchlist[this.data[num - 1].cutsta].r);
           if(val == 1) {
             this.data[num - 1].srcnosignal = false;
           } else if(val == 0) {
@@ -928,9 +929,10 @@
     width: 100%;
     // flex-grow: 0; // 不允许变大
     li {
+      // overflow: hidden;
       position: relative;
       width: 364px;
-      height: 160px;
+      height: 140px;
       padding-right: 4px;
       padding-bottom: 4px;
       &.noneli {

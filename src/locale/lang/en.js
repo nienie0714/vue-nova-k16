@@ -3,7 +3,7 @@
  */
 export default {
     lang: 'English',
-    chinese: 'Chinese',
+    chinese: '简体中文',
     english: 'English',
     common: {
         dot: '.',

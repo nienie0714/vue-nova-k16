@@ -50,8 +50,8 @@
                 </template>
               </div>
               <div class="srcactive">
-                <div class="main" @click="setMain(index)">Main</div>
-                <div class="pip" @click="setPIP(index)">PIP</div>
+                <div class="main" :class="{active: srclist[index].isMain}" @click="setMain(index)">Main</div>
+                <div class="pip" :class="{active: srclist[index].isPIP}" @click="setPIP(index)">PIP</div>
               </div>
             </div>
           </div>
@@ -59,7 +59,7 @@
       </div>
     </div>
     <div class="btncenter">
-      <v-button :maintitle="'功能'" :subtitle="'输入源'" @getBtn="switchHome"></v-button>
+      <v-button class="home-btngroup" :maintitle="'功能'" :subtitle="'输入源'" @getBtn="switchHome"></v-button>
     </div>
 
   </div>
@@ -224,7 +224,9 @@
         btnactive: 1,
         hometimer: null,
         value: -1,
-        interval: null
+        interval: null,
+        time: new Date(),
+        oldVal: 0
       };
     },
     created() {
@@ -237,8 +239,12 @@
     },
     watch: {
       value(val, old) {
+        this.oldVal = old;
         if(old != -1) {
-          this.handleLight();
+          if(new Date() - this.time > 200) {
+            this.time = new Date();
+            this.handleLight();
+          }
         }
       }
     },
@@ -375,7 +381,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 135px;
+    margin-top: 120px;
   }
   //  正反面反转
   /* entire container, keeps perspective */
@@ -580,7 +586,7 @@
           width: 48px;
           height: 24px;
           // padding: 14px 33px;
-          background-color: #62c655;
+          background-color: #1bdf00;
           color: #061031;
           font-size: 16px;
         }
@@ -645,6 +651,14 @@
       color: #febe00;
       font-size: 24px;
       cursor: pointer;
+      &.active {
+        background-color: #febe00;
+        color: #061031;
+      }
+      &:hover {
+        background-color: #febe00;
+        color: #061031;
+      }
     }
     .pip {
       display: flex;
@@ -654,11 +668,56 @@
       width: 60px;
       height: 48px;
       padding: 14px 33px;
-      background-color: #62c655;
-      color: #061031;
+      border: 1px solid #1bdf00;
+      color: #1bdf00;
+      // background-color: #1bdf00;
+      // color: #061031;
       font-size: 24px;
       cursor: pointer;
+      &.active {
+        background-color: #1bdf00;
+        color: #061031;
+      }
+      &:hover {
+        background-color: #1bdf00;
+        color: #061031;
+      }
+    }
+  }
+
+  input {
+    background-color: #2e3c67;
+  }
+</style>
+<style lang="less">
+  .revelation {
+    .btngroup {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      font-size: 20px;
+    }
+    //按钮
+    .btn {
+      height: 50px;
+      width: 180px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      float: left;
+      border: solid 2px #828298;
+      color: #828298;
+      font-size: 20px;
+      cursor: pointer;
+      &.btnactive {
+        font-size: 20px;
+        color: #080532;
+        background-color: #828298;
+      }
     }
   }
 </style>
+
 

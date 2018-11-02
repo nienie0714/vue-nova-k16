@@ -1,5 +1,6 @@
 <template>
   <div class="card" :class="{'hasimg': hasimg, 'active': active}">
+    <div class="hoverimg"><img src="~@/assets/icon/icon_img_apply.png" alt=""></div>
     <div v-if="isapply" class="isapply">
       <img src="~@/assets/icon/icon_img_apply.png" alt="">
     </div>
@@ -41,10 +42,35 @@
     height: 100%;
     display: flex;
     position: relative;
-    background-color: #1f2a51; // 背景色
+    background-color: #2e3c67; // 背景色
     background-position: center center;
     background-repeat: no-repeat;
     background-image: url('~@/assets/icon/icon_none.png');
+    &:hover {
+      border: 1px solid #febe00;
+    }
+    .hoverimg {
+      // display: none;
+      // width: 100px;
+      // height: 60px;
+      // position: absolute;
+      // top: 0px;
+      // right: -100px;
+      opacity: 0;
+      width: 100px;
+      height: 60px;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+    }
+    &:hover .hoverimg {
+      // display: block;
+      // top: 0px;
+      // right: 0px;
+      // transition: all 0.5s;
+      opacity: 1;
+      transition: all 0.5s;
+    }
     &.active {
       border: 1px solid #febe00;
     }
@@ -60,6 +86,7 @@
       right: 0px;
     }
     &-top {
+      overflow: hidden;
       position: absolute;
       box-sizing: border-box;
       width: 100%;

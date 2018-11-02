@@ -73,7 +73,7 @@
     watch: {
       value: function(newVal, oldVal) {
         this.oldVal = oldVal;
-        if(new Date() - this.time > 50) {
+        if(new Date() - this.time > 70) {
           this.time = new Date();
           if(this.count && this.drag) {
             if(!this.islock) {
@@ -130,15 +130,14 @@
       box-sizing: border-box;
       width: 100%;
       height: 100%;
-      background-color: #1f2a51; // 背景色
+      background-color: #2e3c67; // 背景色
       margin-bottom: 2px;
-      padding: 30px 20px 20px 20px;
+      padding: 20px 20px 20px 20px;
       z-index: 1;
       .card-title {
         width: 90%;
-        font-size: 20px;
+        font-size: 16px;
         margin-bottom: 15px;
-        font-size: 20px;
         color: #acacc7;
       }
       .card-btm {

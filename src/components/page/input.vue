@@ -336,6 +336,7 @@
           link: 1,
           linklist: [],
           showmosaic: false,
+          isshowmosaicfirst: true,
           w: 800,
           h: 600,
           wm: 4096,
@@ -386,10 +387,10 @@
     computed: {
       ...mapGetters(['getCommon', 'getCount', 'getMosic']),
       cRationumH() {     // 不用在data里写么
-        return Math.round((this.mosic.w - 800) * (480 - 400) / (4096 - 800) + 400);
+        return Math.round((this.mosic.w - 800) * (480 - 400) * 10 / (4096 - 800) + 400);
       },
       cRationumZ() {
-        return Math.round((this.mosic.h - 600) * (270 - 200) / (2160 - 600) + 200);
+        return Math.round((this.mosic.h - 600) * (270 - 200) * 1.4 / (2160 - 600) + 200);
       }
     },
     watch: {
@@ -418,6 +419,9 @@
       readData(index) {
         // 激活菜单tab
         this.active = index || 0;
+
+        // todo
+        // 点击 tab: DVI  mosic.showmosaic=false;
 
         if(this.active == 3 && this.mosic.link == 1) {   // dvi的单链模式
           this.list1 = Object.assign([], this.list1_1);
@@ -555,6 +559,8 @@
             In9_MosH: this.mosic.h,
             _: this._
           }
+        }).then(res => {
+          Message('应用Mosaic成功');
         });
       },
       closeCard() {
@@ -605,7 +611,7 @@
     li {
       position: relative;
       width: 364px;
-      height: 160px;
+      height: 140px;
       padding-right: 4px;
       padding-bottom: 4px;
       &.noneli {
@@ -616,7 +622,7 @@
 
   .mosic {
     width: 100%;
-    height: 488px;
+    height: 428px;
     display: flex;
     .mosicleft {
       width: 364px;
@@ -628,7 +634,7 @@
         li {
           position: relative;
           width: 364px;
-          height: 160px;
+          height: 140px;
           padding-right: 4px;
           padding-bottom: 4px;
           &.noneli {
@@ -640,15 +646,15 @@
     .mosicright {
       flex: 1;
       padding: 30px 20px 20px 20px;
-      background-color: #1f2a51;
+      background-color: #2e3c67;
       font-size: 20px;
       color: white;
     }
   }
 
-  .aa {
-    margin-bottom: 30px;
-  }
+  // .aa {
+  //   margin-bottom: 30px;
+  // }
 
   .bb {
     position: relative;
@@ -656,7 +662,7 @@
     border-top: 1px dashed #8d8da2;
     width: 200px;
     height: 200px;
-    left: 180px;
+    left: 331px;
     top: 80px;
     display: flex;
     flex-direction: column;
@@ -701,7 +707,7 @@
             width: 30px;
             flex-grow: 0;
             text-align: center;
-            background-color: #1f2a51;
+            background-color: #2e3c67;
             font-size: 12px;
             position: relative;
             color: #8d8da2;
@@ -730,7 +736,7 @@
             width: 100%;
             flex-grow: 0;
             text-align: center;
-            background-color: #1f2a51;
+            background-color: #2e3c67;
             font-size: 12px;
             position: relative;
             color: #8d8da2;

@@ -4,7 +4,7 @@
 export default {
     lang: '简体中文',
     chinese: '简体中文',
-    english: '英语',
+    english: 'English',
     home: {
         light: '亮度',
         input: '输入设置',

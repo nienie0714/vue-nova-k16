@@ -33,30 +33,4 @@
 </script>
 <style lang="less" scoped>
   //按钮组
-  .btngroup {
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    font-size: 20px;
-  }
-  //按钮
-  .btn {
-    height: 50px;
-    width: 180px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    float: left;
-    border: solid 2px #828298;
-    color: #828298;
-    font-size: 20px;
-    cursor: pointer;
-    &.btnactive {
-      font-size: 20px;
-      color: #080532;
-      background-color: #828298;
-    }
-  }
 </style>
