@@ -837,6 +837,27 @@
       }
     }
   }
+
+  // @iconList: DP, HDMI, SDI1, SDI2, DVI1, DVI2, DVI3, DVI4, MOSAIC;
+  // @src: '../../../';
+
+  // .icon (@className) {
+  //   .@{className} {
+  //     background: url('@{src}assets/equipment/@{className}.png') no-repeat left center;
+  //     &-white {
+  //       background: url('@{src}assets/equipment/@{className}-white.png') no-repeat left center;
+  //     }
+  //     &-green {
+  //       background: url('@{src}assets/equipment/@{className}-green.png') no-repeat left center;
+  //     }
+  //   }
+  // }
+  // .loop(@i) when (@i < length(@iconList)+1) {
+  //   .icon(extract(@iconList, @i));
+  //   .loop(@i + 1);
+  // }
+  // .loop(1);
+
   // 这里的 DVI_Mosaic  最好让后端把接口名字一换，如果人家不换，在收到数据的时候换一下就可以界面上显示 MOSAIC。。。。
   // 充分展示了如何在屎山上继续铲屎
   // 有没有发现问题？　为什么你的实现需要依赖后端数据呢　为什么呢？　　这里你就需要去考虑如何解耦　前提是你把之前的实现看懂了
@@ -854,5 +875,8 @@
   // 我在上面用了一种最耦合的方法给你展示了什么是烂代码，基本的写法，思路都告诉你了，你用半个小时就能看完这个例子并且重构，fighting。。。
   // 希望你下面的输出模块能用这种解耦的思想来做哦~   加油狗子，做一个不被后端支配的前端大神
 </style>
+
+
+
 
 
