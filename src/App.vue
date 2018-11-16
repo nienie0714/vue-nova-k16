@@ -21,7 +21,7 @@
 
 <style lang="less">
   @import '../static/css/main.css';
-  // @import './style/index.less';
+  @import './style/index.less';
 
   #app {
     background: url('./assets/img_BG.png') center no-repeat;

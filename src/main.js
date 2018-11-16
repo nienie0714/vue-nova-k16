@@ -1,15 +1,15 @@
 import Vue from 'vue';
-import App from './App';
 import router from './router';
 import ElementUI from 'element-ui';
 import VueI18n from 'vue-i18n';
 import Locales from './locale';
 import store from './store';
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
+import App from './App';
 // import '../static/css/theme-green/index.css';       // 浅绿色主题
 import 'babel-polyfill';
 import components from './components/common/index'; // 加载公共组件
-require('!style-loader!css-loader!less-loader!./style/index.less');
+// require('!style-loader!css-loader!less-loader!./style/index.less');
 import { serialize, getLoc, setLoc, getSen, setSen, clearKey } from './utils';
 
 // mock.js实现假接口
